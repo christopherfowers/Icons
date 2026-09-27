@@ -7,19 +7,28 @@
  * GlyphCore font, so Flutter's release-mode icon tree-shaker can empty out the
  * other families entirely.
  *
+ * The set has to work on desktop, mobile and web, which means two container
+ * formats from the same glyphs:
+ *   TTF    - Flutter (desktop + mobile), and anything that installs a font
+ *   WOFF2  - the web, at roughly half the bytes
+ *
  * Writes:
- *   build/fonts/<Family>.svg  intermediate SVG font, handy for debugging
- *   fonts/<Family>.ttf        the committed deliverable, for any consumer
- *   flutter/fonts/<Family>.ttf  the same file, inside the Flutter package,
- *                             because Flutter can only load assets that live
- *                             under the package that declares them
+ *   build/fonts/<Family>.svg    intermediate SVG font, handy for debugging
+ *   fonts/<Family>.ttf          the committed deliverable, for any consumer
+ *   fonts/<Family>.woff2        the same glyphs, for the web
+ *   fonts/<name>-icons.css      @font-face blocks plus a class per icon
+ *   flutter/fonts/<Family>.ttf  the same TTF, inside the Flutter package,
+ *                               because Flutter can only load assets that live
+ *                               under the package that declares them
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { Readable } from 'node:stream';
 import { SVGIcons2SVGFontStream } from 'svgicons2svgfont';
 import svg2ttf from 'svg2ttf';
+import { compress as woff2Compress } from 'wawoff2';
 import { PATHS, p } from './lib/paths.js';
+import { loadConfig } from './lib/config.js';
 import { readMetadata } from './build-outlines.js';
 
 /**
@@ -59,8 +68,58 @@ function svgFontFor(group, metadata) {
   });
 }
 
+/** The web stylesheet: one @font-face per group, one class per icon. */
+function stylesheet(metadata, cssPrefix) {
+  const lines = [
+    `/* ${metadata.displayName} - GENERATED FILE, DO NOT EDIT. */`,
+    '/* Regenerate with `npm run build` from the repository root. */',
+    '',
+  ];
+  for (const group of metadata.groups) {
+    lines.push(
+      '@font-face {',
+      `  font-family: "${group.family}";`,
+      `  src: url("${group.family}.woff2") format("woff2"),`,
+      `       url("${group.family}.ttf") format("truetype");`,
+      '  font-weight: normal;',
+      '  font-style: normal;',
+      '  font-display: block;',
+      '}',
+      '',
+    );
+  }
+  lines.push(
+    `[class^="${cssPrefix}-"],`,
+    `[class*=" ${cssPrefix}-"] {`,
+    '  display: inline-block;',
+    '  font-style: normal;',
+    '  font-weight: normal;',
+    '  font-variant: normal;',
+    '  text-transform: none;',
+    '  line-height: 1;',
+    '  speak: never;',
+    '  -webkit-font-smoothing: antialiased;',
+    '  -moz-osx-font-smoothing: grayscale;',
+    '}',
+    '',
+  );
+  for (const group of metadata.groups) {
+    lines.push(`/* ${group.name} */`);
+    for (const icon of group.icons) {
+      const cp = icon.codepoint.toString(16);
+      lines.push(
+        `.${cssPrefix}-${icon.name} { font-family: "${group.family}"; }`,
+        `.${cssPrefix}-${icon.name}::before { content: "\\${cp}"; }`,
+      );
+    }
+    lines.push('');
+  }
+  return lines.join('\n');
+}
+
 export async function buildFonts({ quiet = false } = {}) {
   const metadata = readMetadata();
+  const config = loadConfig();
   const log = quiet ? () => {} : (...args) => console.log(...args);
 
   const destinations = [PATHS.fonts, PATHS.fontsOut, p('flutter', 'fonts')];
@@ -68,10 +127,10 @@ export async function buildFonts({ quiet = false } = {}) {
 
   // Drop fonts for groups that no longer exist, so a renamed or deleted group
   // does not leave a stale asset behind.
-  const expected = new Set(metadata.groups.map((g) => `${g.family}.ttf`));
+  const expected = new Set(metadata.groups.flatMap((g) => [`${g.family}.ttf`, `${g.family}.woff2`]));
   for (const dir of destinations) {
     for (const file of fs.readdirSync(dir)) {
-      if (file.endsWith('.ttf') && !expected.has(file)) {
+      if ((file.endsWith('.ttf') || file.endsWith('.woff2')) && !expected.has(file)) {
         fs.rmSync(path.join(dir, file));
         log(`  removed stale font ${path.relative(p(), path.join(dir, file))}`);
       }
@@ -87,14 +146,27 @@ export async function buildFonts({ quiet = false } = {}) {
       svg2ttf(svgFont, { description: metadata.displayName, ts: FONT_TIMESTAMP }).buffer,
     );
     for (const dir of destinations) fs.writeFileSync(path.join(dir, `${group.family}.ttf`), ttf);
-    built.push({ family: group.family, icons: group.icons.length, bytes: ttf.length });
+
+    // WOFF2 for the web. Same glyphs, roughly half the bytes.
+    const woff2 = Buffer.from(await woff2Compress(ttf));
+    for (const dir of [PATHS.fonts, PATHS.fontsOut]) {
+      fs.writeFileSync(path.join(dir, `${group.family}.woff2`), woff2);
+    }
+    built.push({
+      family: group.family, icons: group.icons.length, bytes: ttf.length, woff2: woff2.length,
+    });
   }
 
-  for (const { family, icons, bytes } of built) {
-    log(`  ${family}: ${icons} glyphs, ${(bytes / 1024).toFixed(1)} KiB`);
+  const css = stylesheet(metadata, config.cssPrefix);
+  fs.writeFileSync(path.join(PATHS.fontsOut, `${metadata.name}-icons.css`), css);
+
+  for (const { family, icons, bytes, woff2 } of built) {
+    log(`  ${family}: ${icons} glyphs, ${(bytes / 1024).toFixed(1)} KiB ttf / ${(woff2 / 1024).toFixed(1)} KiB woff2`);
   }
   const total = built.reduce((n, b) => n + b.bytes, 0);
-  log(`  ${built.length} fonts, ${(total / 1024).toFixed(1)} KiB total -> fonts/`);
+  const totalW = built.reduce((n, b) => n + b.woff2, 0);
+  log(`  ${built.length} fonts -> fonts/ (${(total / 1024).toFixed(1)} KiB ttf, ${(totalW / 1024).toFixed(1)} KiB woff2)`);
+  log(`  ${metadata.name}-icons.css written for web use`);
   return built;
 }
 

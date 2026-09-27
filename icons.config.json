@@ -34,5 +34,6 @@
   "codepoints": {
     "start": "e000",
     "end": "f8ff"
-  }
+  },
+  "cssPrefix": "gi"
 }

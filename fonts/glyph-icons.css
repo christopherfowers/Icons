@@ -1,0 +1,264 @@
+/* Glyph Icons - GENERATED FILE, DO NOT EDIT. */
+/* Regenerate with `npm run build` from the repository root. */
+
+@font-face {
+  font-family: "GlyphActions";
+  src: url("GlyphActions.woff2") format("woff2"),
+       url("GlyphActions.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCore";
+  src: url("GlyphCore.woff2") format("woff2"),
+       url("GlyphCore.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphData";
+  src: url("GlyphData.woff2") format("woff2"),
+       url("GlyphData.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphEditing";
+  src: url("GlyphEditing.woff2") format("woff2"),
+       url("GlyphEditing.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphFitting";
+  src: url("GlyphFitting.woff2") format("woff2"),
+       url("GlyphFitting.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphNavigation";
+  src: url("GlyphNavigation.woff2") format("woff2"),
+       url("GlyphNavigation.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphOps";
+  src: url("GlyphOps.woff2") format("woff2"),
+       url("GlyphOps.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphShips";
+  src: url("GlyphShips.woff2") format("woff2"),
+       url("GlyphShips.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphSpace";
+  src: url("GlyphSpace.woff2") format("woff2"),
+       url("GlyphSpace.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphStatus";
+  src: url("GlyphStatus.woff2") format("woff2"),
+       url("GlyphStatus.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphToggles";
+  src: url("GlyphToggles.woff2") format("woff2"),
+       url("GlyphToggles.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="gi-"],
+[class*=" gi-"] {
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  speak: never;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* actions */
+.gi-download { font-family: "GlyphActions"; }
+.gi-download::before { content: "\e00e"; }
+.gi-refresh { font-family: "GlyphActions"; }
+.gi-refresh::before { content: "\e01b"; }
+.gi-share { font-family: "GlyphActions"; }
+.gi-share::before { content: "\e01f"; }
+.gi-upload { font-family: "GlyphActions"; }
+.gi-upload::before { content: "\e023"; }
+
+/* core */
+.gi-close { font-family: "GlyphCore"; }
+.gi-close::before { content: "\e00b"; }
+.gi-home { font-family: "GlyphCore"; }
+.gi-home::before { content: "\e016"; }
+.gi-menu { font-family: "GlyphCore"; }
+.gi-menu::before { content: "\e01a"; }
+.gi-search { font-family: "GlyphCore"; }
+.gi-search::before { content: "\e01d"; }
+.gi-settings { font-family: "GlyphCore"; }
+.gi-settings::before { content: "\e01e"; }
+.gi-user { font-family: "GlyphCore"; }
+.gi-user::before { content: "\e024"; }
+.gi-users { font-family: "GlyphCore"; }
+.gi-users::before { content: "\e025"; }
+
+/* data */
+.gi-calendar { font-family: "GlyphData"; }
+.gi-calendar::before { content: "\e004"; }
+.gi-clock { font-family: "GlyphData"; }
+.gi-clock::before { content: "\e00a"; }
+.gi-filter { font-family: "GlyphData"; }
+.gi-filter::before { content: "\e014"; }
+.gi-sort { font-family: "GlyphData"; }
+.gi-sort::before { content: "\e020"; }
+
+/* editing */
+.gi-add { font-family: "GlyphEditing"; }
+.gi-add::before { content: "\e000"; }
+.gi-check { font-family: "GlyphEditing"; }
+.gi-check::before { content: "\e005"; }
+.gi-copy { font-family: "GlyphEditing"; }
+.gi-copy::before { content: "\e00c"; }
+.gi-delete { font-family: "GlyphEditing"; }
+.gi-delete::before { content: "\e00d"; }
+.gi-edit { font-family: "GlyphEditing"; }
+.gi-edit::before { content: "\e00f"; }
+.gi-remove { font-family: "GlyphEditing"; }
+.gi-remove::before { content: "\e01c"; }
+
+/* fitting */
+.gi-afterburner { font-family: "GlyphFitting"; }
+.gi-afterburner::before { content: "\e027"; }
+.gi-armor { font-family: "GlyphFitting"; }
+.gi-armor::before { content: "\e028"; }
+.gi-capacitor { font-family: "GlyphFitting"; }
+.gi-capacitor::before { content: "\e02b"; }
+.gi-drone { font-family: "GlyphFitting"; }
+.gi-drone::before { content: "\e02f"; }
+.gi-launcher { font-family: "GlyphFitting"; }
+.gi-launcher::before { content: "\e034"; }
+.gi-shield { font-family: "GlyphFitting"; }
+.gi-shield::before { content: "\e037"; }
+.gi-turret { font-family: "GlyphFitting"; }
+.gi-turret::before { content: "\e03c"; }
+
+/* navigation */
+.gi-arrow-left { font-family: "GlyphNavigation"; }
+.gi-arrow-left::before { content: "\e001"; }
+.gi-arrow-right { font-family: "GlyphNavigation"; }
+.gi-arrow-right::before { content: "\e002"; }
+.gi-chevron-down { font-family: "GlyphNavigation"; }
+.gi-chevron-down::before { content: "\e006"; }
+.gi-chevron-left { font-family: "GlyphNavigation"; }
+.gi-chevron-left::before { content: "\e007"; }
+.gi-chevron-right { font-family: "GlyphNavigation"; }
+.gi-chevron-right::before { content: "\e008"; }
+.gi-chevron-up { font-family: "GlyphNavigation"; }
+.gi-chevron-up::before { content: "\e009"; }
+.gi-external-link { font-family: "GlyphNavigation"; }
+.gi-external-link::before { content: "\e011"; }
+.gi-link { font-family: "GlyphNavigation"; }
+.gi-link::before { content: "\e018"; }
+
+/* ops */
+.gi-blueprint { font-family: "GlyphOps"; }
+.gi-blueprint::before { content: "\e02a"; }
+.gi-cargo { font-family: "GlyphOps"; }
+.gi-cargo::before { content: "\e02c"; }
+.gi-fleet { font-family: "GlyphOps"; }
+.gi-fleet::before { content: "\e030"; }
+.gi-market { font-family: "GlyphOps"; }
+.gi-market::before { content: "\e035"; }
+.gi-probe { font-family: "GlyphOps"; }
+.gi-probe::before { content: "\e036"; }
+.gi-target-lock { font-family: "GlyphOps"; }
+.gi-target-lock::before { content: "\e03b"; }
+
+/* ships */
+.gi-battleship { font-family: "GlyphShips"; }
+.gi-battleship::before { content: "\e029"; }
+.gi-cruiser { font-family: "GlyphShips"; }
+.gi-cruiser::before { content: "\e02d"; }
+.gi-frigate { font-family: "GlyphShips"; }
+.gi-frigate::before { content: "\e031"; }
+.gi-industrial { font-family: "GlyphShips"; }
+.gi-industrial::before { content: "\e032"; }
+.gi-shuttle { font-family: "GlyphShips"; }
+.gi-shuttle::before { content: "\e038"; }
+
+/* space */
+.gi-dock { font-family: "GlyphSpace"; }
+.gi-dock::before { content: "\e02e"; }
+.gi-jump-gate { font-family: "GlyphSpace"; }
+.gi-jump-gate::before { content: "\e033"; }
+.gi-star-map { font-family: "GlyphSpace"; }
+.gi-star-map::before { content: "\e039"; }
+.gi-station { font-family: "GlyphSpace"; }
+.gi-station::before { content: "\e03a"; }
+.gi-undock { font-family: "GlyphSpace"; }
+.gi-undock::before { content: "\e03d"; }
+.gi-warp { font-family: "GlyphSpace"; }
+.gi-warp::before { content: "\e03e"; }
+.gi-wormhole { font-family: "GlyphSpace"; }
+.gi-wormhole::before { content: "\e03f"; }
+
+/* status */
+.gi-bell { font-family: "GlyphStatus"; }
+.gi-bell::before { content: "\e003"; }
+.gi-error { font-family: "GlyphStatus"; }
+.gi-error::before { content: "\e010"; }
+.gi-info { font-family: "GlyphStatus"; }
+.gi-info::before { content: "\e017"; }
+.gi-warning { font-family: "GlyphStatus"; }
+.gi-warning::before { content: "\e026"; }
+
+/* toggles */
+.gi-eye { font-family: "GlyphToggles"; }
+.gi-eye::before { content: "\e012"; }
+.gi-eye-off { font-family: "GlyphToggles"; }
+.gi-eye-off::before { content: "\e013"; }
+.gi-heart { font-family: "GlyphToggles"; }
+.gi-heart::before { content: "\e015"; }
+.gi-lock { font-family: "GlyphToggles"; }
+.gi-lock::before { content: "\e019"; }
+.gi-star { font-family: "GlyphToggles"; }
+.gi-star::before { content: "\e021"; }
+.gi-unlock { font-family: "GlyphToggles"; }
+.gi-unlock::before { content: "\e022"; }

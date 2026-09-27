@@ -22,6 +22,7 @@
     "fast-xml-parser": "^4.5.0",
     "paper-jsdom": "^0.12.18",
     "svg2ttf": "^6.0.3",
-    "svgicons2svgfont": "^14.0.1"
+    "svgicons2svgfont": "^14.0.1",
+    "wawoff2": "^2.0.1"
   }
 }

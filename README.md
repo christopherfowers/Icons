@@ -15,7 +15,7 @@ freely in the same UI.
 
 ```
 svg/               source icons — the only files you hand-edit
-fonts/             generated TTFs, one per group (committed)
+fonts/             generated TTF + WOFF2 per group, plus the web CSS (committed)
 codepoints.json    permanent name → codepoint map (committed, never renumbered)
 build/             generated outlines, SVG fonts, metadata (gitignored)
 preview/           generated HTML gallery of every icon
@@ -59,20 +59,37 @@ icon artwork, CCP's logos, and the four empire faction marks. Names are generic
 
 ## Using the fonts
 
-Each group is an ordinary TTF in `fonts/`, with its glyphs at the codepoints in
-`codepoints.json`. Metrics are 1000 units/em, ascent 1000, descent 0, so a glyph
-fills its em box exactly and a 24px font size draws a 24px icon.
+Every group ships in two container formats from the same glyphs, because the set
+has to work on desktop, mobile and web:
 
-```css
-@font-face {
-  font-family: "GlyphShips";
-  src: url("fonts/GlyphShips.ttf") format("truetype");
-}
-.icon { font-family: "GlyphShips"; font-style: normal; line-height: 1; }
-.icon-cruiser::before { content: "\e02d"; }
+| Format | For |
+|---|---|
+| `fonts/<Family>.ttf` | Flutter (desktop + mobile), and anything that installs a font |
+| `fonts/<Family>.woff2` | the web, at roughly half the bytes |
+
+Metrics are 1000 units/em, ascent 1000, descent 0, so a glyph fills its em box
+exactly and a 24px font size draws a 24px icon. Icons are single-colour and
+inherit `color`, so they tint like text.
+
+### Web
+
+`fonts/<name>-icons.css` is generated with the `@font-face` blocks and one class
+per icon, so the whole set is two lines:
+
+```html
+<link rel="stylesheet" href="fonts/glyph-icons.css">
+<i class="gi-home"></i>
+<i class="gi-jump-gate" style="font-size: 32px; color: #7fd0de"></i>
 ```
 
-Icons are single-colour and inherit `color`, so they tint like text.
+Each class pulls only its own group's font, so a page that uses three `core`
+icons downloads one 2 KiB WOFF2 and nothing else.
+
+### Desktop and mobile
+
+Install or bundle the TTF and address the glyph by its codepoint from
+`codepoints.json`. For Flutter the generated package does this for you — see
+below.
 
 `preview/index.html` is a self-contained gallery of the whole set — open it
 straight from a clone, no build step and no network. Click an icon to copy its
@@ -133,7 +150,9 @@ Then commit the source SVG **together with** everything the build regenerated:
 ```
 svg/ships/destroyer.svg    the source
 codepoints.json            destroyer's permanent codepoint
-fonts/GlyphShips.ttf       the rebuilt font
+fonts/GlyphShips.ttf       the rebuilt font (desktop, mobile)
+fonts/GlyphShips.woff2     the rebuilt font (web)
+fonts/glyph-icons.css      the web stylesheet
 preview/index.html         the gallery
 ```
 
@@ -156,8 +175,10 @@ One command: `npm run build`. Each step also runs on its own for debugging
    at every step; if paper.js trips over degenerate geometry the icon falls back
    to overlapping contours (heavier, still correct) and the build says so.
 3. **Assign codepoints.** See below.
-4. **Generate one TTF per group** at 1000 units/em with a pinned timestamp, so
-   builds are byte-for-byte reproducible and CI can diff them.
+4. **Generate one font per group** at 1000 units/em with a pinned timestamp, so
+   builds are byte-for-byte reproducible and CI can diff them. Each is emitted
+   as TTF (desktop, mobile) and WOFF2 (web), plus a stylesheet with a class per
+   icon.
 5. **Generate the Flutter package** (parked, but kept in sync).
 6. **Regenerate `preview/index.html`** from the normalised geometry.
 
@@ -184,12 +205,6 @@ and a test suite. It is not being actively worked on, and its CI job only runs
 on manual dispatch. When it comes back, the entry points are
 `package:glyph_icons/glyph_<group>.dart` per group, or
 `package:glyph_icons/glyph_icons.dart` for everything.
-
-## Web (not built yet)
-
-The repo is structured for it: `build/outlines/` already holds clean filled
-SVGs, which is what a web package would ship, and the fonts are plain TTFs that
-`fonttools` can convert to WOFF2 in one step. Nothing has been built for it yet.
 
 ## Repository commands
 
