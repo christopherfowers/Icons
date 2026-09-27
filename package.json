@@ -1,0 +1,27 @@
+{
+  "name": "glyph-icons-source",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Source, build pipeline and Flutter package for the Glyph icon set.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "node scripts/lint.js",
+    "build": "node scripts/build.js",
+    "build:outlines": "node scripts/build-outlines.js",
+    "build:codepoints": "node scripts/build-codepoints.js",
+    "build:font": "node scripts/build-font.js",
+    "build:dart": "node scripts/build-dart.js",
+    "build:preview": "node scripts/build-preview.js",
+    "check": "node scripts/build.js && node scripts/check-clean.js",
+    "new": "node scripts/new-icon.js"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.0",
+    "paper-jsdom": "^0.12.18",
+    "svg2ttf": "^6.0.3",
+    "svgicons2svgfont": "^14.0.1"
+  }
+}

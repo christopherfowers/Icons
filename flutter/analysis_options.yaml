@@ -1,0 +1,6 @@
+# The example app is a separate package with its own pubspec and its own
+# `flutter pub get`. Analysing it from here would fail to resolve
+# `package:glyph_icons`, so CI analyses it in its own step instead.
+analyzer:
+  exclude:
+    - example/**

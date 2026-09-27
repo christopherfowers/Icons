@@ -1,0 +1,38 @@
+{
+  "name": "glyph",
+  "displayName": "Glyph Icons",
+  "packageName": "glyph_icons",
+  "packageVersion": "0.1.0",
+  "packageDescription": "Glyph Icons \u2014 a grouped, self-hosted icon set for Flutter.",
+  "classPrefix": "Glyph",
+  "fontFamilyPrefix": "Glyph",
+  "repository": "https://github.com/christopherfowers/Icons",
+  "styles": {
+    "line": {
+      "viewBox": 24,
+      "padding": 2,
+      "strokeWidth": 2,
+      "linecap": "round",
+      "linejoin": "round"
+    },
+    "solid": {
+      "viewBox": 24,
+      "padding": 1
+    }
+  },
+  "defaultStyle": "line",
+  "groupStyles": {
+    "ships": "solid",
+    "fitting": "solid",
+    "space": "solid",
+    "ops": "solid"
+  },
+  "font": {
+    "unitsPerEm": 1000,
+    "descent": 0
+  },
+  "codepoints": {
+    "start": "e000",
+    "end": "f8ff"
+  }
+}

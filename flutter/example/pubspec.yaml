@@ -1,0 +1,24 @@
+# GENERATED FILE - DO NOT EDIT.
+#
+# Regenerate with `npm run build` from the repository root.
+name: glyph_icons_example
+description: Example app showing every icon in Glyph Icons.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  glyph_icons:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

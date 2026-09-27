@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  icons:
+    name: Lint and build icons
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint source SVGs against the design spec
+        run: npm run lint
+
+      - name: Run the full build
+        run: npm run build
+
+      # Generated files are committed so consumers get them straight from a
+      # clone. If the build changed anything, the commit is missing them.
+      - name: Check generated files are committed
+        run: node scripts/check-clean.js
+
+      - name: Upload build output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: icon-build
+          path: |
+            build/
+            fonts/
+            preview/index.html
+          retention-days: 7
+
+  # The Flutter package is generated on every build but is parked for now: the
+  # current focus is the SVG sources and the fonts. Run this job by hand from
+  # the Actions tab when Flutter work resumes, then make it run on push again.
+  flutter:
+    name: Analyze and test Flutter package
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Resolve package dependencies
+        working-directory: flutter
+        run: flutter pub get
+
+      - name: Analyze
+        working-directory: flutter
+        run: flutter analyze
+
+      - name: Test
+        working-directory: flutter
+        run: flutter test
+
+      - name: Resolve example dependencies
+        working-directory: flutter/example
+        run: flutter pub get
+
+      - name: Analyze example
+        working-directory: flutter/example
+        run: flutter analyze

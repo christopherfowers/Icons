@@ -1,0 +1,56 @@
+# GENERATED FILE - DO NOT EDIT.
+#
+# Regenerate with `npm run build` from the repository root. The font list is
+# derived from the directories under `svg/`.
+name: glyph_icons
+description: Glyph Icons — a grouped, self-hosted icon set for Flutter.
+version: 0.1.0
+repository: https://github.com/christopherfowers/Icons
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  fonts:
+    - family: GlyphActions
+      fonts:
+        - asset: fonts/GlyphActions.ttf
+    - family: GlyphCore
+      fonts:
+        - asset: fonts/GlyphCore.ttf
+    - family: GlyphData
+      fonts:
+        - asset: fonts/GlyphData.ttf
+    - family: GlyphEditing
+      fonts:
+        - asset: fonts/GlyphEditing.ttf
+    - family: GlyphFitting
+      fonts:
+        - asset: fonts/GlyphFitting.ttf
+    - family: GlyphNavigation
+      fonts:
+        - asset: fonts/GlyphNavigation.ttf
+    - family: GlyphOps
+      fonts:
+        - asset: fonts/GlyphOps.ttf
+    - family: GlyphShips
+      fonts:
+        - asset: fonts/GlyphShips.ttf
+    - family: GlyphSpace
+      fonts:
+        - asset: fonts/GlyphSpace.ttf
+    - family: GlyphStatus
+      fonts:
+        - asset: fonts/GlyphStatus.ttf
+    - family: GlyphToggles
+      fonts:
+        - asset: fonts/GlyphToggles.ttf
