@@ -21,14 +21,20 @@ import { buildPreview } from './build-preview.js';
 
 const steps = [
   ['lint source SVGs', () => {
-    const report = lintAll();
-    const total = report.reduce((n, entry) => n + entry.problems.length, 0);
+    const entries = lintAll();
+    const warnings = entries.filter((e) => e.warning);
+    const failures = entries.filter((e) => !e.warning);
+    for (const { file, problems } of warnings) {
+      console.warn(`  note: ${file}`);
+      for (const problem of problems) console.warn(`    ! ${problem}`);
+    }
+    const total = failures.reduce((n, entry) => n + entry.problems.length, 0);
     if (total > 0) {
-      for (const { file, problems } of report) {
+      for (const { file, problems } of failures) {
         console.error(`\n${file}`);
         for (const problem of problems) console.error(`  - ${problem}`);
       }
-      throw new Error(`${total} spec violation(s) in ${report.length} file(s)`);
+      throw new Error(`${total} spec violation(s) in ${failures.length} file(s)`);
     }
     console.log('  all source icons conform to the spec');
   }],

@@ -3,18 +3,14 @@
 A self-hosted icon set — our own small Font Awesome. Icons are drawn once as
 SVGs and compiled into per-group icon fonts.
 
-The set has **two drawing styles**:
-
-- **`line`** — 2px stroked centerlines, round caps and joins. The generic UI
-  set: navigation, editing, status, and so on.
-- **`solid`** — filled silhouettes with hard 45° chamfers. A space-sim set
-  drawn for a 2D space game: hulls, fitted modules, gates, stations, fleet ops.
-
-They share one 24×24 grid, one build and one codepoint space, so they mix
-freely in the same UI.
+Every icon ships in **two variants** — `outline` and `filled` — the way Font
+Awesome splits regular and solid. Crucially they are the *same icon*: one name,
+one codepoint, and the variant is chosen by picking a font family. Switching an
+icon's weight never changes what you address it by.
 
 ```
-svg/               source icons — the only files you hand-edit
+svg/<variant>/<group>/<icon>.svg
+                   source icons — the only files you hand-edit
 fonts/             generated TTF + WOFF2 per group, plus the web CSS (committed)
 codepoints.json    permanent name → codepoint map (committed, never renumbered)
 build/             generated outlines, SVG fonts, metadata (gitignored)
@@ -23,39 +19,49 @@ scripts/           the build pipeline
 flutter/           generated Flutter package (parked — see below)
 ```
 
-## Groups
+## Variants and groups
 
-A group is a directory under `svg/`, and **the group is the unit of bundling**:
-each one compiles to its own font file so a project only ships the icons it
-actually uses.
+Two axes, doing different jobs.
 
-| Group | Style | Font family | What's in it |
+**Variant** is how an icon is drawn, and it decides which spec the linter
+applies:
+
+| Variant | Drawn as | Font family | Dart class |
 |---|---|---|---|
-| `core` | line | `GlyphCore` | home, search, settings, user, users, menu, close |
-| `editing` | line | `GlyphEditing` | add, remove, edit, delete, check, copy |
-| `navigation` | line | `GlyphNavigation` | chevrons, arrows, link, external-link |
-| `actions` | line | `GlyphActions` | refresh, download, upload, share |
-| `status` | line | `GlyphStatus` | bell, info, warning, error |
-| `data` | line | `GlyphData` | calendar, clock, filter, sort |
-| `toggles` | line | `GlyphToggles` | eye, eye-off, lock, unlock, star, heart |
-| `ships` | solid | `GlyphShips` | shuttle, frigate, cruiser, battleship, industrial |
-| `fitting` | solid | `GlyphFitting` | turret, launcher, shield, armor, capacitor, afterburner, drone |
-| `space` | solid | `GlyphSpace` | warp, jump-gate, dock, undock, station, star-map, wormhole |
-| `ops` | solid | `GlyphOps` | target-lock, fleet, probe, cargo, market, blueprint |
+| `outline` | 2px stroked centerlines, round caps and joins | `GlyphCore` | `GlyphCore` |
+| `filled` | solid silhouettes with interior cut-outs | `GlyphCoreFilled` | `GlyphCoreFilled` |
 
-Which style a group uses is declared in `icons.config.json` under
-`groupStyles`; anything unlisted uses `defaultStyle`. Icon **names are unique
-across the whole set**, so moving an icon between groups keeps its codepoint
-and only changes which font carries it.
+`outline` is the default variant: it gets the unsuffixed family name, and the
+plain CSS class resolves to it.
 
-### On the space set and EVE
+**Group** is what an icon is for, and it is the unit of bundling — one font per
+(variant, group), so a project only ships what it imports:
 
-The solid set is drawn to sit comfortably next to EVE-style UI without copying
-it. Everything here is original geometry in a shared genre — chunky monochrome
-silhouettes, hard chamfers, top-down hulls — which is exactly the part that is
-free to borrow. What is **not** free, and is deliberately absent: EVE's actual
-icon artwork, CCP's logos, and the four empire faction marks. Names are generic
-(`cruiser`, `jump-gate`, `capacitor`), never lore-specific.
+| Group | Icons |
+|---|---|
+| `core` | home, search, settings, user, users, menu, close |
+| `editing` | add, remove, edit, delete, check, copy |
+| `navigation` | chevrons, arrows, link, external-link |
+| `actions` | refresh, download, upload, share |
+| `status` | bell, info, warning, error |
+| `data` | calendar, clock, filter, sort |
+| `toggles` | eye, eye-off, lock, unlock, star, heart |
+
+Groups and variants are just directories. Adding either is
+`npm run new -- <variant>/<group>/<icon>`; the build picks it up and generates
+its font, CSS, class and library automatically.
+
+Icon **names are unique within a variant**, so moving an icon between groups
+keeps its codepoint and only changes which font carries it. An icon that exists
+in one variant but not the other is legal — the build says so as a note rather
+than failing.
+
+### Coverage
+
+`outline` is complete at 39 icons. `filled` currently covers 14 of them
+(`home`, `user`, `users`, `search`, `settings`, `bell`, `info`, `warning`,
+`error`, `star`, `heart`, `lock`, `unlock`, `eye`) — enough to exercise the
+whole variant path end to end. The rest are still to draw.
 
 ## Using the fonts
 
@@ -78,12 +84,17 @@ per icon, so the whole set is two lines:
 
 ```html
 <link rel="stylesheet" href="fonts/glyph-icons.css">
-<i class="gi-home"></i>
-<i class="gi-jump-gate" style="font-size: 32px; color: #7fd0de"></i>
+
+<i class="gi-home"></i>                <!-- default variant: outline -->
+<i class="gi-filled gi-home"></i>      <!-- same icon, filled -->
+<i class="gi-outline gi-home"></i>     <!-- explicit, same as the first -->
+
+<i class="gi-star" style="font-size: 32px; color: #7fd0de"></i>
 ```
 
-Each class pulls only its own group's font, so a page that uses three `core`
-icons downloads one 2 KiB WOFF2 and nothing else.
+The icon class carries the codepoint; the variant class swaps the font family.
+Each class pulls only its own (variant, group) font, so a page using three
+outline `core` icons downloads one 2 KiB WOFF2 and nothing else.
 
 ### Desktop and mobile
 
@@ -108,24 +119,25 @@ shared by both styles:
 | `currentColor` only, no hard-coded colours | lets the consumer tint the glyph |
 | kebab-case filename, unique across all groups | the filename *is* the public API and the codepoint key |
 
-Then, per style:
+Then, per variant:
 
-| | `line` | `solid` |
+| | `outline` | `filled` |
 |---|---|---|
 | root `<svg>` | `fill="none" stroke="currentColor"` | `fill="currentColor" stroke="none"` |
 | stroke | `stroke-width="2"`, `round` cap and join, uniform | none — silhouettes only |
+| holes | n/a | wind a contour against its parent; overlapping cut-outs wind back to filled |
 | padding | geometry inside `2 … 22` (centerlines) | geometry inside `1 … 23` (the silhouette) |
 | elements | `path` `circle` `ellipse` `rect` `line` `polyline` `polygon` | same, minus `line` and `polyline`, which have no area |
 
 ```svg
-<!-- line -->
+<!-- outline -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="10.4" cy="10.4" r="6.6"/>
   <path d="M15.1 15.1 20.6 20.6"/>
 </svg>
 
-<!-- solid -->
+<!-- filled -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none">
   <path d="M12 1.4 21.4 5.6 21.4 12.4 12 22.6 2.6 12.4 2.6 5.6Z"/>
 </svg>
@@ -139,7 +151,7 @@ weight even, keep solid features at least ~2 units thick so they survive at
 
 ```bash
 npm install                      # once
-npm run new -- ships/destroyer   # scaffolds the right template for the group's style
+npm run new -- filled/core/menu  # scaffolds the right template for the variant
 # ...draw it...
 npm run build                    # lint, outline, codepoint, font, preview
 open preview/index.html          # check it at 16px and 48px
@@ -148,12 +160,12 @@ open preview/index.html          # check it at 16px and 48px
 Then commit the source SVG **together with** everything the build regenerated:
 
 ```
-svg/ships/destroyer.svg    the source
-codepoints.json            destroyer's permanent codepoint
-fonts/GlyphShips.ttf       the rebuilt font (desktop, mobile)
-fonts/GlyphShips.woff2     the rebuilt font (web)
-fonts/glyph-icons.css      the web stylesheet
-preview/index.html         the gallery
+svg/filled/core/menu.svg      the source
+codepoints.json               menu's permanent codepoint (shared with outline)
+fonts/GlyphCoreFilled.ttf     the rebuilt font (desktop, mobile)
+fonts/GlyphCoreFilled.woff2   the rebuilt font (web)
+fonts/glyph-icons.css         the web stylesheet
+preview/index.html            the gallery
 ```
 
 CI fails the build if any of those are missing, so a partial commit cannot land.
@@ -165,8 +177,8 @@ One command: `npm run build`. Each step also runs on its own for debugging
 
 1. **Lint** every source SVG against the spec above. Nothing else runs until
    this passes.
-2. **Normalise geometry.** `solid` icons are unioned into one clean contour set
-   with correct nonzero winding. `line` icons get outlined: fonts cannot render
+2. **Normalise geometry.** `filled` icons are unioned into one clean contour set
+   with correct nonzero winding. `outline` icons get outlined: fonts cannot render
    strokes, so each centerline is converted into the filled region its 2px round
    stroke covers — every curve is split until it turns gently, offset to both
    sides, and the resulting ribbons are unioned with a circle at each node. The
@@ -196,6 +208,8 @@ a built font is resolved by codepoint, not by name.
 - Restoring a deleted icon under its old name gives it its original codepoint
   back.
 - Renaming a *group* changes nothing: codepoints are keyed by icon name.
+- Variants share codepoints. `filled/core/home.svg` and `outline/core/home.svg`
+  are one icon at one codepoint, in two font families.
 
 ## Flutter (parked)
 

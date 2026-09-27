@@ -12,57 +12,86 @@ export const camel = (s) => {
   return pc[0].toLowerCase() + pc.slice(1);
 };
 
+const snake = (s) => s.replace(/-/g, '_');
+
 /**
- * Discover icon groups from the `svg/` tree. Each immediate subdirectory is a
- * group; every `*.svg` directly inside it is an icon. Groups are the unit of
- * bundling: one font file, one Dart class and one importable Dart library each,
- * so an app only pays for the groups it imports.
+ * Discover the icon tree: `svg/<variant>/<group>/<icon>.svg`.
+ *
+ * Two axes, and they do different jobs:
+ *
+ *   variant - how an icon is drawn (outline vs filled). The same icon name in
+ *             both variants is the *same icon*: it keeps one codepoint, and the
+ *             variant is chosen by picking a font family. That is how Font
+ *             Awesome's regular/solid split works, and it means switching an
+ *             icon's weight never changes what you address it by.
+ *   group   - what the icon is for. Groups are the unit of bundling: one font
+ *             per (variant, group), so an app only ships what it imports.
  */
-export function discoverGroups(svgRoot = PATHS.svg) {
+export function discoverVariants(svgRoot = PATHS.svg) {
   if (!fs.existsSync(svgRoot)) return [];
-  return fs
-    .readdirSync(svgRoot, { withFileTypes: true })
+  const dirs = (dir) => fs.readdirSync(dir, { withFileTypes: true })
     .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
     .map((e) => e.name)
-    .sort()
-    .map((name) => ({
-      name,
-      dir: path.join(svgRoot, name),
-      icons: fs
-        .readdirSync(path.join(svgRoot, name))
-        .filter((f) => f.endsWith('.svg'))
-        .map((f) => f.slice(0, -4))
-        .sort(),
-    }));
+    .sort();
+
+  return dirs(svgRoot).map((variant) => {
+    const variantDir = path.join(svgRoot, variant);
+    return {
+      name: variant,
+      dir: variantDir,
+      groups: dirs(variantDir).map((group) => ({
+        name: group,
+        dir: path.join(variantDir, group),
+        icons: fs.readdirSync(path.join(variantDir, group))
+          .filter((f) => f.endsWith('.svg'))
+          .map((f) => f.slice(0, -4))
+          .sort(),
+      })),
+    };
+  });
 }
 
 export function loadConfig() {
   const config = JSON.parse(fs.readFileSync(PATHS.config, 'utf8'));
-  const groups = discoverGroups();
+  const variants = discoverVariants();
 
-  /**
-   * Which drawing style a group is authored in. `line` icons are stroked
-   * centerlines that the build converts to outlines; `solid` icons are already
-   * filled silhouettes and go through untouched apart from a cleanup union.
-   */
-  const styleFor = (group) => config.groupStyles?.[group] ?? config.defaultStyle;
-  const specFor = (group) => {
-    const style = styleFor(group);
-    const spec = config.styles[style];
-    if (!spec) throw new Error(`group "${group}" uses unknown style "${style}"`);
-    return { style, ...spec };
+  const variantSpec = (variant) => {
+    const declared = config.variants[variant];
+    if (!declared) {
+      throw new Error(
+        `svg/${variant}/ is not a declared variant - add it to "variants" in icons.config.json`,
+      );
+    }
+    const spec = config.styles[declared.style];
+    if (!spec) throw new Error(`variant "${variant}" uses unknown style "${declared.style}"`);
+    return { variant, ...declared, ...spec };
+  };
+
+  /** Font family / Dart class for one (variant, group), e.g. "GlyphCoreFilled". */
+  const familyFor = (variant, group) =>
+    `${config.fontFamilyPrefix}${pascal(group)}${config.variants[variant].familySuffix}`;
+  const classFor = (variant, group) =>
+    `${config.classPrefix}${pascal(group)}${config.variants[variant].classSuffix}`;
+  const libraryFor = (variant, group) => {
+    const suffix = config.variants[variant].classSuffix;
+    return `${config.name}_${snake(group)}${suffix ? `_${snake(suffix.toLowerCase())}` : ''}.dart`;
   };
 
   return {
     ...config,
-    styleFor,
-    specFor,
-    groups,
-    /** Font family + Dart class name for a group, e.g. "core" -> "GlyphCore". */
-    familyFor: (group) => `${config.fontFamilyPrefix}${pascal(group)}`,
-    classFor: (group) => `${config.classPrefix}${pascal(group)}`,
-    /** Dart library file for a group, e.g. "core" -> "glyph_core.dart". */
-    libraryFor: (group) => `${config.name}_${group.replace(/-/g, '_')}.dart`,
-    allIcons: () => groups.flatMap((g) => g.icons.map((name) => ({ group: g.name, name, style: styleFor(g.name) }))),
+    /** The declared variants from icons.config.json, keyed by name. */
+    declaredVariants: config.variants,
+    /** The variants actually present under svg/, with their groups and icons. */
+    variants,
+    variantSpec,
+    familyFor,
+    classFor,
+    libraryFor,
+    /** Every (variant, group, name) triple in the tree. */
+    allIcons: () => variants.flatMap((v) =>
+      v.groups.flatMap((g) => g.icons.map((name) => ({ variant: v.name, group: g.name, name })))),
+    /** Distinct icon names across all variants - what codepoints are keyed by. */
+    allNames: () => [...new Set(variants.flatMap((v) =>
+      v.groups.flatMap((g) => g.icons)))].sort(),
   };
 }

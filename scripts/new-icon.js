@@ -9,23 +9,31 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { PATHS } from './lib/paths.js';
-import { loadConfig, discoverGroups } from './lib/config.js';
+import { loadConfig, discoverVariants } from './lib/config.js';
 
 const KEBAB_CASE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function main() {
   const config = loadConfig();
   const target = process.argv[2];
+  const parts = (target ?? '').split('/').filter(Boolean);
 
-  if (!target || !target.includes('/')) {
-    const groups = discoverGroups().map((g) => g.name);
-    console.error('usage: npm run new -- <group>/<icon-name>');
-    console.error(`\nexisting groups: ${groups.join(', ') || '(none yet)'}`);
+  if (parts.length !== 3) {
+    const found = discoverVariants();
+    console.error('usage: npm run new -- <variant>/<group>/<icon-name>');
+    console.error(`\nvariants: ${Object.keys(config.declaredVariants).join(', ')}`);
+    for (const v of found) {
+      console.error(`  ${v.name}: ${v.groups.map((g) => g.name).join(', ') || '(no groups yet)'}`);
+    }
     console.error('a group that does not exist yet is created for you');
     process.exit(1);
   }
 
-  const [group, name] = target.split('/');
+  const [variant, group, name] = parts;
+  if (!config.declaredVariants[variant]) {
+    console.error(`unknown variant "${variant}" - declared variants: ${Object.keys(config.declaredVariants).join(', ')}`);
+    process.exit(1);
+  }
   for (const [label, value] of [['group', group], ['icon name', name]]) {
     if (!KEBAB_CASE.test(value)) {
       console.error(`${label} "${value}" must be kebab-case: lowercase letters, digits, single hyphens`);
@@ -33,13 +41,14 @@ function main() {
     }
   }
 
-  const existing = discoverGroups().find((g) => g.icons.includes(name));
-  if (existing) {
-    console.error(`"${name}" already exists in group "${existing.name}" - icon names are unique across the whole set`);
+  const inVariant = discoverVariants().find((v) => v.name === variant);
+  const clash = inVariant?.groups.find((g) => g.icons.includes(name));
+  if (clash) {
+    console.error(`"${name}" already exists in ${variant}/${clash.name} - names are unique within a variant`);
     process.exit(1);
   }
 
-  const spec = config.specFor(group);
+  const spec = config.variantSpec(variant);
   const { style, viewBox, padding, strokeWidth, linecap, linejoin } = spec;
   const safe = `${padding}..${viewBox - padding}`;
 
@@ -60,14 +69,14 @@ function main() {
 </svg>
 `;
 
-  const dir = path.join(PATHS.svg, group);
+  const dir = path.join(PATHS.svg, variant, group);
   fs.mkdirSync(dir, { recursive: true });
   const file = path.join(dir, `${name}.svg`);
   fs.writeFileSync(file, template);
 
-  console.log(`created svg/${group}/${name}.svg (${style} style)`);
+  console.log(`created svg/${variant}/${group}/${name}.svg (${style} style)`);
   console.log('\nnext:');
-  console.log(`  1. draw the icon in svg/${group}/${name}.svg (centerlines inside ${safe})`);
+  console.log(`  1. draw the icon in svg/${variant}/${group}/${name}.svg (inside ${safe})`);
   console.log('  2. npm run build');
   console.log('  3. commit the source SVG together with the regenerated files');
 }

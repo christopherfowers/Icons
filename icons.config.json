@@ -6,6 +6,7 @@
   "packageDescription": "Glyph Icons \u2014 a grouped, self-hosted icon set for Flutter.",
   "classPrefix": "Glyph",
   "fontFamilyPrefix": "Glyph",
+  "cssPrefix": "gi",
   "repository": "https://github.com/christopherfowers/Icons",
   "styles": {
     "line": {
@@ -20,13 +21,21 @@
       "padding": 1
     }
   },
-  "defaultStyle": "line",
-  "groupStyles": {
-    "ships": "solid",
-    "fitting": "solid",
-    "space": "solid",
-    "ops": "solid"
+  "variants": {
+    "outline": {
+      "style": "line",
+      "familySuffix": "",
+      "classSuffix": "",
+      "description": "Stroked centerlines, converted to filled contours for the font."
+    },
+    "filled": {
+      "style": "solid",
+      "familySuffix": "Filled",
+      "classSuffix": "Filled",
+      "description": "Solid silhouettes with interior cuts."
+    }
   },
+  "defaultVariant": "outline",
   "font": {
     "unitsPerEm": 1000,
     "descent": 0
@@ -34,6 +43,5 @@
   "codepoints": {
     "start": "e000",
     "end": "f8ff"
-  },
-  "cssPrefix": "gi"
+  }
 }

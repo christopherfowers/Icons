@@ -64,10 +64,9 @@ function walk(nodes, depth = 0, out = []) {
 
 const attr = (node, name) => node.attrs[`@${name}`];
 
-function lintFile({ group, name, file, config }) {
+function lintFile({ spec, name, file }) {
   const problems = [];
   const fail = (message) => problems.push(message);
-  const spec = config.specFor(group);
   const { style, viewBox, padding, strokeWidth, linecap, linejoin } = spec;
   const allowedElements = ALLOWED_ELEMENTS[style];
   const rootAttributes = ROOT_ATTRIBUTES[style];
@@ -197,44 +196,86 @@ function lintFile({ group, name, file, config }) {
 export function lintAll() {
   const config = loadConfig();
   const report = [];
-  const seen = new Map();
 
-  if (config.groups.length === 0) report.push({ file: 'svg/', problems: ['no icon groups found'] });
+  if (config.variants.length === 0) {
+    return [{ file: 'svg/', problems: ['no variants found - expected svg/<variant>/<group>/<icon>.svg'] }];
+  }
 
-  for (const group of config.groups) {
-    if (!KEBAB_CASE.test(group.name)) {
-      report.push({ file: `svg/${group.name}/`, problems: [`group directory name is not kebab-case`] });
+  for (const variant of config.variants) {
+    let spec;
+    try {
+      spec = config.variantSpec(variant.name);
+    } catch (error) {
+      report.push({ file: `svg/${variant.name}/`, problems: [error.message] });
+      continue;
     }
-    if (group.icons.length === 0) {
-      report.push({ file: `svg/${group.name}/`, problems: ['group contains no icons'] });
-    }
-    for (const name of group.icons) {
-      const file = path.join(group.dir, `${name}.svg`);
-      const relative = path.relative(PATHS.svg, file);
-      const problems = lintFile({ group: group.name, name, file, config });
-      // Names are the public API (and the codepoint key), so they must be
-      // globally unique even though the folders are separate.
-      if (seen.has(name)) {
-        problems.push(`duplicate icon name - also defined in group "${seen.get(name)}"`);
-      } else {
-        seen.set(name, group.name);
+
+    const seen = new Map();
+    for (const group of variant.groups) {
+      if (!KEBAB_CASE.test(group.name)) {
+        report.push({
+          file: `svg/${variant.name}/${group.name}/`,
+          problems: ['group directory name is not kebab-case'],
+        });
       }
-      if (problems.length) report.push({ file: `svg/${relative}`, problems });
+      if (group.icons.length === 0) {
+        report.push({
+          file: `svg/${variant.name}/${group.name}/`,
+          problems: ['group contains no icons'],
+        });
+      }
+      for (const name of group.icons) {
+        const file = path.join(group.dir, `${name}.svg`);
+        const problems = lintFile({ spec, name, file });
+        // Within a variant a name is the public API and the codepoint key, so
+        // it has to be unique even though the folders are separate.
+        if (seen.has(name)) {
+          problems.push(`duplicate icon name - also defined in group "${seen.get(name)}"`);
+        } else {
+          seen.set(name, group.name);
+        }
+        if (problems.length) {
+          report.push({ file: `svg/${path.relative(PATHS.svg, file)}`, problems });
+        }
+      }
     }
   }
+
+  // An icon present in one variant but not another is legal but worth saying
+  // out loud, because a UI that switches weight will fall back unexpectedly.
+  const byVariant = new Map(config.variants.map((v) => [
+    v.name, new Set(v.groups.flatMap((g) => g.icons)),
+  ]));
+  const gaps = [];
+  for (const name of config.allNames()) {
+    const missing = [...byVariant.entries()].filter(([, names]) => !names.has(name)).map(([v]) => v);
+    if (missing.length && missing.length < byVariant.size) {
+      gaps.push(`"${name}" is missing from: ${missing.join(', ')}`);
+    }
+  }
+  if (gaps.length) report.push({ file: 'svg/ (variant coverage)', problems: gaps, warning: true });
+
   return report;
 }
 
 const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
 if (isMain) {
-  const report = lintAll();
+  const report = lintAll().filter((e) => !e.warning);
+  const warnings = lintAll().filter((e) => e.warning);
+  for (const { file, problems } of warnings) {
+    console.warn(`\n${file}`);
+    for (const problem of problems) console.warn(`  ! ${problem}`);
+  }
   const total = report.reduce((n, entry) => n + entry.problems.length, 0);
   if (total === 0) {
     const config = loadConfig();
     const icons = config.allIcons();
-    const byStyle = icons.reduce((acc, icon) => ({ ...acc, [icon.style]: (acc[icon.style] ?? 0) + 1 }), {});
-    const summary = Object.entries(byStyle).map(([style, n]) => `${n} ${style}`).join(', ');
-    console.log(`lint: ${icons.length} icons in ${config.groups.length} groups (${summary}), all conform to the spec`);
+    const summary = config.variants
+      .map((v) => `${v.groups.reduce((n, g) => n + g.icons.length, 0)} ${v.name}`).join(', ');
+    console.log(
+      `lint: ${icons.length} source files (${summary}) across `
+      + `${config.allNames().length} distinct icons, all conform to the spec`,
+    );
     process.exit(0);
   }
   for (const { file, problems } of report) {

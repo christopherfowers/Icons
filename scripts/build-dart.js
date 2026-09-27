@@ -45,19 +45,19 @@ export function dartMemberName(name) {
 const hex = (codepoint) => `0x${codepoint.toString(16)}`;
 const unicode = (codepoint) => `U+${codepoint.toString(16).toUpperCase().padStart(4, '0')}`;
 
-function groupLibrary(group, config, metadata) {
-  const className = config.classFor(group.name);
+function groupLibrary(variant, group, config, metadata) {
+  const className = config.classFor(variant.name, group.name);
   const lines = [
     ...BANNER,
-    `/// ${metadata.displayName} - the \`${group.name}\` group.`,
+    `/// ${metadata.displayName} - the \`${group.name}\` group, \`${variant.name}\` variant.`,
     '///',
     `/// Importing this library pulls in the \`${group.family}\` font only, so an app`,
-    '/// never pays for groups it does not use.',
+    '/// never pays for groups or variants it does not use.',
     'library;',
     '',
     "import 'package:flutter/widgets.dart';",
     '',
-    `/// The ${group.icons.length} icons in the \`${group.name}\` group.`,
+    `/// The ${group.icons.length} icons in the \`${group.name}\` group (\`${variant.name}\`).`,
     '///',
     '/// Every member is a `const IconData`, which lets `flutter build` strip the',
     '/// glyphs an app never references.',
@@ -76,7 +76,7 @@ function groupLibrary(group, config, metadata) {
     lines.push(
       `  /// The \`${icon.name}\` icon (${unicode(icon.codepoint)}).`,
       '  ///',
-      `  /// Source: \`svg/${group.name}/${icon.name}.svg\``,
+      `  /// Source: \`svg/${variant.name}/${group.name}/${icon.name}.svg\``,
       `  static const IconData ${dartMemberName(icon.name)} =`,
       `      IconData(${hex(icon.codepoint)}, fontFamily: fontFamily, fontPackage: fontPackage);`,
       '',
@@ -88,20 +88,24 @@ function groupLibrary(group, config, metadata) {
   return lines.join('\n');
 }
 
+const eachGroup = (metadata) => metadata.variants.flatMap((v) =>
+  v.groups.map((g) => ({ variant: v, group: g })));
+
 function umbrellaLibrary(config, metadata) {
-  const total = metadata.groups.reduce((n, g) => n + g.icons.length, 0);
+  const pairs = eachGroup(metadata);
+  const total = pairs.reduce((n, { group }) => n + group.icons.length, 0);
   return [
     ...BANNER,
-    `/// ${metadata.displayName}: all ${total} icons across ${metadata.groups.length} groups.`,
+    `/// ${metadata.displayName}: ${total} icons across ${pairs.length} group/variant libraries.`,
     '///',
     '/// Prefer importing a single group library when you only need part of the set:',
     '///',
     '/// ```dart',
-    `/// import 'package:${config.packageName}/${config.libraryFor(metadata.groups[0].name)}';`,
+    `/// import 'package:${config.packageName}/${config.libraryFor(pairs[0].variant.name, pairs[0].group.name)}';`,
     '/// ```',
     'library;',
     '',
-    ...metadata.groups.map((g) => `export '${config.libraryFor(g.name)}';`),
+    ...pairs.map(({ variant, group }) => `export '${config.libraryFor(variant.name, group.name)}';`),
     '',
   ].join('\n');
 }
@@ -118,26 +122,41 @@ function catalogLibrary(config, metadata) {
     '',
     "import 'package:flutter/widgets.dart';",
     '',
-    ...metadata.groups.map((g) => `import '${config.libraryFor(g.name)}';`),
+    ...eachGroup(metadata).map(({ variant, group }) =>
+      `import '${config.libraryFor(variant.name, group.name)}';`),
     '',
   ];
 
-  for (const group of metadata.groups) {
-    const variable = `${config.name}${pascal(group.name)}Catalog`;
+  const nameOf = (variant, group) =>
+    `${config.name}${pascal(group.name)}${config.variantSpec(variant.name).classSuffix}Catalog`;
+
+  for (const { variant, group } of eachGroup(metadata)) {
     lines.push(
-      `/// Every icon in the \`${group.name}\` group, keyed by its source name.`,
-      `const Map<String, IconData> ${variable} = <String, IconData>{`,
-      ...group.icons.map((icon) => `  '${icon.name}': ${config.classFor(group.name)}.${dartMemberName(icon.name)},`),
+      `/// Every icon in the \`${group.name}\` group (\`${variant.name}\`), keyed by source name.`,
+      `const Map<String, IconData> ${nameOf(variant, group)} = <String, IconData>{`,
+      ...group.icons.map((icon) =>
+        `  '${icon.name}': ${config.classFor(variant.name, group.name)}.${dartMemberName(icon.name)},`),
+      '};',
+      '',
+    );
+  }
+
+  for (const variant of metadata.variants) {
+    const v = `${config.name}${pascal(variant.name)}Catalog`;
+    lines.push(
+      `/// The \`${variant.name}\` variant, keyed by group name.`,
+      `const Map<String, Map<String, IconData>> ${v} = <String, Map<String, IconData>>{`,
+      ...variant.groups.map((g) => `  '${g.name}': ${nameOf(variant, g)},`),
       '};',
       '',
     );
   }
 
   lines.push(
-    '/// Every group, keyed by group name, in the order the groups are laid out',
-    '/// under `svg/`.',
-    `const Map<String, Map<String, IconData>> ${config.name}Catalog = <String, Map<String, IconData>>{`,
-    ...metadata.groups.map((g) => `  '${g.name}': ${config.name}${pascal(g.name)}Catalog,`),
+    '/// Every variant, keyed by variant name then group name.',
+    `const Map<String, Map<String, Map<String, IconData>>> ${config.name}Catalog =`,
+    '    <String, Map<String, Map<String, IconData>>>{',
+    ...metadata.variants.map((v) => `  '${v.name}': ${config.name}${pascal(v.name)}Catalog,`),
     '};',
     '',
   );
@@ -170,7 +189,7 @@ function pubspec(config, metadata) {
     'flutter:',
     '  fonts:',
   ];
-  for (const group of metadata.groups) {
+  for (const { group } of eachGroup(metadata)) {
     lines.push(
       `    - family: ${group.family}`,
       '      fonts:',
@@ -230,8 +249,11 @@ export function buildDart({ quiet = false } = {}) {
   files.set(p('flutter', 'example', 'pubspec.yaml'), examplePubspec(config));
   files.set(path.join(PATHS.flutterLib, `${config.packageName}.dart`), umbrellaLibrary(config, metadata));
   files.set(path.join(PATHS.flutterLib, `${config.name}_catalog.dart`), catalogLibrary(config, metadata));
-  for (const group of metadata.groups) {
-    files.set(path.join(PATHS.flutterLib, config.libraryFor(group.name)), groupLibrary(group, config, metadata));
+  for (const { variant, group } of eachGroup(metadata)) {
+    files.set(
+      path.join(PATHS.flutterLib, config.libraryFor(variant.name, group.name)),
+      groupLibrary(variant, group, config, metadata),
+    );
   }
 
   // Remove generated libraries for groups that no longer exist.
@@ -249,7 +271,7 @@ export function buildDart({ quiet = false } = {}) {
   let changed = 0;
   for (const [file, contents] of files) if (writeIfChanged(file, contents)) changed++;
 
-  const total = metadata.groups.reduce((n, g) => n + g.icons.length, 0);
+  const total = eachGroup(metadata).reduce((n, { group }) => n + group.icons.length, 0);
   log(`  generated ${files.size} Dart/pubspec files for ${total} icons (${changed} changed)`);
 
   // A renamed icon set leaves the hand-written example and tests importing the

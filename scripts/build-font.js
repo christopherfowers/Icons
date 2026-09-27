@@ -38,6 +38,9 @@ import { readMetadata } from './build-outlines.js';
  */
 const FONT_TIMESTAMP = 0;
 
+const eachGroup = (metadata) => metadata.variants.flatMap((v) =>
+  v.groups.map((g) => ({ variant: v, group: g })));
+
 function svgFontFor(group, metadata) {
   const { unitsPerEm, descent } = metadata.font;
   return new Promise((resolve, reject) => {
@@ -68,14 +71,24 @@ function svgFontFor(group, metadata) {
   });
 }
 
-/** The web stylesheet: one @font-face per group, one class per icon. */
+/**
+ * The web stylesheet.
+ *
+ * A name maps to one codepoint, so `content` is written once per icon. The
+ * variant is chosen by swapping font family, which is what `.gi-filled` does:
+ *
+ *     <i class="gi-home"></i>              <!-- default variant -->
+ *     <i class="gi-filled gi-home"></i>    <!-- same icon, filled -->
+ */
 function stylesheet(metadata, cssPrefix) {
+  const px = cssPrefix;
   const lines = [
     `/* ${metadata.displayName} - GENERATED FILE, DO NOT EDIT. */`,
     '/* Regenerate with `npm run build` from the repository root. */',
     '',
   ];
-  for (const group of metadata.groups) {
+
+  for (const { group } of eachGroup(metadata)) {
     lines.push(
       '@font-face {',
       `  font-family: "${group.family}";`,
@@ -88,9 +101,10 @@ function stylesheet(metadata, cssPrefix) {
       '',
     );
   }
+
   lines.push(
-    `[class^="${cssPrefix}-"],`,
-    `[class*=" ${cssPrefix}-"] {`,
+    `[class^="${px}-"],`,
+    `[class*=" ${px}-"] {`,
     '  display: inline-block;',
     '  font-style: normal;',
     '  font-weight: normal;',
@@ -103,17 +117,31 @@ function stylesheet(metadata, cssPrefix) {
     '}',
     '',
   );
-  for (const group of metadata.groups) {
-    lines.push(`/* ${group.name} */`);
-    for (const icon of group.icons) {
-      const cp = icon.codepoint.toString(16);
-      lines.push(
-        `.${cssPrefix}-${icon.name} { font-family: "${group.family}"; }`,
-        `.${cssPrefix}-${icon.name}::before { content: "\\${cp}"; }`,
-      );
+
+  // Family selection, one rule per (variant, group).
+  for (const variant of metadata.variants) {
+    for (const group of variant.groups) {
+      const names = group.icons.map((i) => i.name);
+      const scoped = names.map((n) => `.${px}-${variant.name}.${px}-${n}`);
+      lines.push(`/* ${group.name} - ${variant.name} */`);
+      if (variant.name === metadata.defaultVariant) {
+        lines.push(`${names.map((n) => `.${px}-${n}`).join(',\n')} {`,
+          `  font-family: "${group.family}";`, '}');
+      }
+      lines.push(`${scoped.join(',\n')} {`, `  font-family: "${group.family}";`, '}', '');
     }
-    lines.push('');
   }
+
+  // Codepoints, one rule per distinct icon name.
+  const byName = new Map();
+  for (const { group } of eachGroup(metadata)) {
+    for (const icon of group.icons) byName.set(icon.name, icon.codepoint);
+  }
+  lines.push('/* codepoints */');
+  for (const [name, codepoint] of [...byName].sort(([a], [b]) => (a < b ? -1 : 1))) {
+    lines.push(`.${px}-${name}::before { content: "\\${codepoint.toString(16)}"; }`);
+  }
+  lines.push('');
   return lines.join('\n');
 }
 
@@ -127,7 +155,8 @@ export async function buildFonts({ quiet = false } = {}) {
 
   // Drop fonts for groups that no longer exist, so a renamed or deleted group
   // does not leave a stale asset behind.
-  const expected = new Set(metadata.groups.flatMap((g) => [`${g.family}.ttf`, `${g.family}.woff2`]));
+  const expected = new Set(eachGroup(metadata)
+    .flatMap(({ group }) => [`${group.family}.ttf`, `${group.family}.woff2`]));
   for (const dir of destinations) {
     for (const file of fs.readdirSync(dir)) {
       if ((file.endsWith('.ttf') || file.endsWith('.woff2')) && !expected.has(file)) {
@@ -138,7 +167,7 @@ export async function buildFonts({ quiet = false } = {}) {
   }
 
   const built = [];
-  for (const group of metadata.groups) {
+  for (const { variant, group } of eachGroup(metadata)) {
     const svgFont = await svgFontFor(group, metadata);
     fs.writeFileSync(path.join(PATHS.fonts, `${group.family}.svg`), svgFont);
 
@@ -153,7 +182,8 @@ export async function buildFonts({ quiet = false } = {}) {
       fs.writeFileSync(path.join(dir, `${group.family}.woff2`), woff2);
     }
     built.push({
-      family: group.family, icons: group.icons.length, bytes: ttf.length, woff2: woff2.length,
+      family: group.family, variant: variant.name, icons: group.icons.length,
+      bytes: ttf.length, woff2: woff2.length,
     });
   }
 

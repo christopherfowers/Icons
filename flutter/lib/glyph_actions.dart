@@ -2,15 +2,15 @@
 //
 // Regenerate with `npm run build` from the repository root.
 
-/// Glyph Icons - the `actions` group.
+/// Glyph Icons - the `actions` group, `outline` variant.
 ///
 /// Importing this library pulls in the `GlyphActions` font only, so an app
-/// never pays for groups it does not use.
+/// never pays for groups or variants it does not use.
 library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 4 icons in the `actions` group.
+/// The 4 icons in the `actions` group (`outline`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -25,25 +25,25 @@ class GlyphActions {
 
   /// The `download` icon (U+E00E).
   ///
-  /// Source: `svg/actions/download.svg`
+  /// Source: `svg/outline/actions/download.svg`
   static const IconData download =
       IconData(0xe00e, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `refresh` icon (U+E01B).
   ///
-  /// Source: `svg/actions/refresh.svg`
+  /// Source: `svg/outline/actions/refresh.svg`
   static const IconData refresh =
       IconData(0xe01b, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `share` icon (U+E01F).
   ///
-  /// Source: `svg/actions/share.svg`
+  /// Source: `svg/outline/actions/share.svg`
   static const IconData share =
       IconData(0xe01f, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `upload` icon (U+E023).
   ///
-  /// Source: `svg/actions/upload.svg`
+  /// Source: `svg/outline/actions/upload.svg`
   static const IconData upload =
       IconData(0xe023, fontFamily: fontFamily, fontPackage: fontPackage);
 }

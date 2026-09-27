@@ -15,6 +15,10 @@ import { loadConfig, pascal } from './lib/config.js';
 import { dartMemberName } from './build-dart.js';
 import { readMetadata } from './build-outlines.js';
 
+/** Every (variant, group) pair in tree order. */
+const allPairs = (metadata) => metadata.variants.flatMap((v) =>
+  v.groups.map((g) => ({ variant: v, group: g })));
+
 const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const STYLE = `
@@ -81,14 +85,17 @@ h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.07em; color: 
 const SCRIPT = `
 const search = document.getElementById('search');
 const sizeChips = document.querySelectorAll('[data-size]');
-const groupChips = document.querySelectorAll('[data-group]');
+const groupChips = document.querySelectorAll('.chip[data-group]');
+const variantChips = document.querySelectorAll('.chip[data-variant]');
 const toast = document.getElementById('toast');
 let group = 'all';
+let variant = 'all';
 
 function apply() {
   const query = search.value.trim().toLowerCase();
   for (const section of document.querySelectorAll('section')) {
-    const inGroup = group === 'all' || section.dataset.group === group;
+    const inGroup = (group === 'all' || section.dataset.group === group)
+      && (variant === 'all' || section.dataset.variant === variant);
     let shown = 0;
     for (const icon of section.querySelectorAll('.icon')) {
       const match = inGroup && (query === '' || icon.dataset.search.includes(query));
@@ -106,6 +113,13 @@ for (const chip of groupChips) {
   chip.addEventListener('click', () => {
     group = chip.dataset.group;
     for (const other of groupChips) other.setAttribute('aria-pressed', String(other === chip));
+    apply();
+  });
+}
+for (const chip of variantChips) {
+  chip.addEventListener('click', () => {
+    variant = chip.dataset.variant;
+    for (const other of variantChips) other.setAttribute('aria-pressed', String(other === chip));
     apply();
   });
 }
@@ -133,16 +147,16 @@ export function buildPreview({ quiet = false } = {}) {
   const config = loadConfig();
   const metadata = readMetadata();
   const log = quiet ? () => {} : (...args) => console.log(...args);
-  const size = config.styles[config.defaultStyle].viewBox;
-  const total = metadata.groups.reduce((n, g) => n + g.icons.length, 0);
+  const size = config.variantSpec(config.defaultVariant).viewBox;
+  const total = allPairs(metadata).reduce((n, { group }) => n + group.icons.length, 0);
 
-  const sections = metadata.groups.map((group) => {
+  const sections = allPairs(metadata).map(({ variant, group }) => {
     const cards = group.icons.map((icon) => {
       const cp = icon.codepoint.toString(16).toUpperCase().padStart(4, '0');
-      const dart = `${config.classFor(group.name)}.${dartMemberName(icon.name)}`;
-      const title = `${icon.name}  ·  U+${cp}  ·  ${group.family}  ·  ${dart}`;
+      const dart = `${config.classFor(variant.name, group.name)}.${dartMemberName(icon.name)}`;
+      const title = `${icon.name}  ·  U+${cp}  ·  ${variant.name}  ·  ${group.family}  ·  ${dart}`;
       return [
-        `      <button class="icon" type="button" data-search="${escapeHtml(`${icon.name} ${group.name} ${dart.toLowerCase()}`)}" data-copy="${escapeHtml(icon.name)}" title="${escapeHtml(title)}">`,
+        `      <button class="icon" type="button" data-search="${escapeHtml(`${icon.name} ${group.name} ${variant.name} ${dart.toLowerCase()}`)}" data-copy="${escapeHtml(icon.name)}" title="${escapeHtml(title)}">`,
         `        <svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><path d="${icon.pathData}"/></svg>`,
         `        <span class="name">${escapeHtml(icon.name)}</span>`,
         `        <span class="cp">U+${cp}</span>`,
@@ -150,8 +164,8 @@ export function buildPreview({ quiet = false } = {}) {
       ].join('\n');
     });
     return [
-      `    <section data-group="${escapeHtml(group.name)}" data-style="${escapeHtml(group.style)}">`,
-      `      <h2>${escapeHtml(group.name)} &middot; ${group.icons.length} &middot; ${escapeHtml(group.style)} &middot; <code>${escapeHtml(group.family)}</code></h2>`,
+      `    <section data-group="${escapeHtml(group.name)}" data-variant="${escapeHtml(variant.name)}">`,
+      `      <h2>${escapeHtml(group.name)} &middot; ${escapeHtml(variant.name)} &middot; ${group.icons.length} &middot; <code>${escapeHtml(group.family)}</code></h2>`,
       '      <div class="grid">',
       ...cards,
       '      </div>',
@@ -159,10 +173,17 @@ export function buildPreview({ quiet = false } = {}) {
     ].join('\n');
   });
 
+  const groupNames = [...new Set(allPairs(metadata).map(({ group }) => group.name))].sort();
   const groupChips = [
     '      <button class="chip" type="button" data-group="all" aria-pressed="true">all</button>',
-    ...metadata.groups.map(
-      (g) => `      <button class="chip" type="button" data-group="${escapeHtml(g.name)}" aria-pressed="false">${escapeHtml(g.name)}</button>`,
+    ...groupNames.map(
+      (g) => `      <button class="chip" type="button" data-group="${escapeHtml(g)}" aria-pressed="false">${escapeHtml(g)}</button>`,
+    ),
+  ].join('\n');
+  const variantChips = [
+    '      <button class="chip" type="button" data-variant="all" aria-pressed="true">all</button>',
+    ...metadata.variants.map(
+      (v) => `      <button class="chip" type="button" data-variant="${escapeHtml(v.name)}" aria-pressed="false">${escapeHtml(v.name)}</button>`,
     ),
   ].join('\n');
 
@@ -178,9 +199,12 @@ export function buildPreview({ quiet = false } = {}) {
 <body>
 <header>
   <h1>${escapeHtml(metadata.displayName)}</h1>
-  <p class="sub">${total} icons in ${metadata.groups.length} groups &middot; ${size}&times;${size} grid, outlined for the font &middot; click an icon to copy its name</p>
+  <p class="sub">${total} icons &middot; ${metadata.variants.map((v) => v.name).join(' + ')} &middot; ${size}&times;${size} grid, outlined for the font &middot; click an icon to copy its name</p>
   <div class="controls">
     <input id="search" type="search" placeholder="Search icons&hellip;" autocomplete="off" spellcheck="false">
+    <div class="chips">
+${variantChips}
+    </div>
     <div class="chips">
 ${groupChips}
     </div>
