@@ -10,7 +10,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 5 icons in the `toggles` group (`filled`).
+/// The 6 icons in the `toggles` group (`filled`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -28,6 +28,12 @@ class GlyphTogglesFilled {
   /// Source: `svg/filled/toggles/eye.svg`
   static const IconData eye =
       IconData(0xe012, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `eye-off` icon (U+E013).
+  ///
+  /// Source: `svg/filled/toggles/eye-off.svg`
+  static const IconData eyeOff =
+      IconData(0xe013, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `heart` icon (U+E015).
   ///

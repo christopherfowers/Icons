@@ -2,9 +2,45 @@
 /* Regenerate with `npm run build` from the repository root. */
 
 @font-face {
+  font-family: "GlyphActionsFilled";
+  src: url("GlyphActionsFilled.woff2") format("woff2"),
+       url("GlyphActionsFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphCoreFilled";
   src: url("GlyphCoreFilled.woff2") format("woff2"),
        url("GlyphCoreFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphDataFilled";
+  src: url("GlyphDataFilled.woff2") format("woff2"),
+       url("GlyphDataFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphEditingFilled";
+  src: url("GlyphEditingFilled.woff2") format("woff2"),
+       url("GlyphEditingFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphNavigationFilled";
+  src: url("GlyphNavigationFilled.woff2") format("woff2"),
+       url("GlyphNavigationFilled.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -104,13 +140,53 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* actions - filled */
+.gi-filled.gi-download,
+.gi-filled.gi-refresh,
+.gi-filled.gi-share,
+.gi-filled.gi-upload {
+  font-family: "GlyphActionsFilled";
+}
+
 /* core - filled */
+.gi-filled.gi-close,
 .gi-filled.gi-home,
+.gi-filled.gi-menu,
 .gi-filled.gi-search,
 .gi-filled.gi-settings,
 .gi-filled.gi-user,
 .gi-filled.gi-users {
   font-family: "GlyphCoreFilled";
+}
+
+/* data - filled */
+.gi-filled.gi-calendar,
+.gi-filled.gi-clock,
+.gi-filled.gi-filter,
+.gi-filled.gi-sort {
+  font-family: "GlyphDataFilled";
+}
+
+/* editing - filled */
+.gi-filled.gi-add,
+.gi-filled.gi-check,
+.gi-filled.gi-copy,
+.gi-filled.gi-delete,
+.gi-filled.gi-edit,
+.gi-filled.gi-remove {
+  font-family: "GlyphEditingFilled";
+}
+
+/* navigation - filled */
+.gi-filled.gi-arrow-left,
+.gi-filled.gi-arrow-right,
+.gi-filled.gi-chevron-down,
+.gi-filled.gi-chevron-left,
+.gi-filled.gi-chevron-right,
+.gi-filled.gi-chevron-up,
+.gi-filled.gi-external-link,
+.gi-filled.gi-link {
+  font-family: "GlyphNavigationFilled";
 }
 
 /* status - filled */
@@ -123,6 +199,7 @@
 
 /* toggles - filled */
 .gi-filled.gi-eye,
+.gi-filled.gi-eye-off,
 .gi-filled.gi-heart,
 .gi-filled.gi-lock,
 .gi-filled.gi-star,

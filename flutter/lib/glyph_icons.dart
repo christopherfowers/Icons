@@ -2,16 +2,20 @@
 //
 // Regenerate with `npm run build` from the repository root.
 
-/// Glyph Icons: 53 icons across 10 group/variant libraries.
+/// Glyph Icons: 78 icons across 14 group/variant libraries.
 ///
 /// Prefer importing a single group library when you only need part of the set:
 ///
 /// ```dart
-/// import 'package:glyph_icons/glyph_core_filled.dart';
+/// import 'package:glyph_icons/glyph_actions_filled.dart';
 /// ```
 library;
 
+export 'glyph_actions_filled.dart';
 export 'glyph_core_filled.dart';
+export 'glyph_data_filled.dart';
+export 'glyph_editing_filled.dart';
+export 'glyph_navigation_filled.dart';
 export 'glyph_status_filled.dart';
 export 'glyph_toggles_filled.dart';
 export 'glyph_actions.dart';

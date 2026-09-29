@@ -21,9 +21,21 @@ dev_dependencies:
 
 flutter:
   fonts:
+    - family: GlyphActionsFilled
+      fonts:
+        - asset: fonts/GlyphActionsFilled.ttf
     - family: GlyphCoreFilled
       fonts:
         - asset: fonts/GlyphCoreFilled.ttf
+    - family: GlyphDataFilled
+      fonts:
+        - asset: fonts/GlyphDataFilled.ttf
+    - family: GlyphEditingFilled
+      fonts:
+        - asset: fonts/GlyphEditingFilled.ttf
+    - family: GlyphNavigationFilled
+      fonts:
+        - asset: fonts/GlyphNavigationFilled.ttf
     - family: GlyphStatusFilled
       fonts:
         - asset: fonts/GlyphStatusFilled.ttf
