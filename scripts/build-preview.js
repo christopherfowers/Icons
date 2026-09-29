@@ -169,24 +169,11 @@ input[type=search]::placeholder { color: var(--fg-faint); }
 }
 
 /* ---- grid ------------------------------------------------------------ */
-main { padding: 20px; padding-bottom: 80px; transition: padding-right .16s; }
+main { padding: 20px; padding-bottom: 40px; transition: padding-right .16s; }
 @media (min-width: 721px) {
   :root.detail-open main { padding-right: 380px; }
 }
 @media (prefers-reduced-motion: reduce) { main { transition: none; } }
-section { margin-bottom: 28px; }
-section h2 {
-  font-family: var(--cond);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  color: var(--fg-faint);
-  margin: 0 0 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-section h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
@@ -218,7 +205,42 @@ section h2::after { content: ""; flex: 1; height: 1px; background: var(--line); 
 }
 .tile .name { font-size: 11.5px; line-height: 1.3; word-break: break-word; min-width: 0; }
 .tile .cp { font-family: var(--mono); font-size: 10px; color: var(--fg-faint); font-variant-numeric: tabular-nums; }
+.tile .grp {
+  font-family: var(--cond); font-size: 9.5px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--fg-faint);
+}
 .tile .flag { color: var(--warn); }
+
+/* ---- pager ----------------------------------------------------------- */
+.pager {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.pager-count {
+  font-family: var(--mono); font-size: 11.5px; color: var(--fg-dim);
+  font-variant-numeric: tabular-nums;
+}
+.pager-count b { color: var(--fg); font-weight: 500; }
+.pager-nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.page-btn {
+  min-width: 32px; padding: 5px 9px;
+  font: inherit; font-size: 12px; font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  color: var(--fg-dim); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px;
+}
+.page-btn:hover:not(:disabled) { color: var(--fg); border-color: var(--fg-faint); }
+.page-btn[aria-current="page"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.page-btn:disabled { opacity: .4; cursor: default; }
+.page-gap { padding: 0 2px; color: var(--fg-faint); }
+.per-page { display: flex; align-items: center; gap: 6px; }
+.per-page select {
+  font: inherit; font-size: 12px; padding: 5px 8px;
+  color: var(--fg); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px;
+}
 
 .empty { color: var(--fg-dim); padding: 40px 0; text-align: center; }
 
@@ -316,44 +338,151 @@ section h2::after { content: ""; flex: 1; height: 1px; background: var(--line); 
 
 const SCRIPT = String.raw`
 const $ = (s) => document.querySelector(s);
-const state = { q: '', group: 'all', variant: 'all', gapsOnly: false, size: 28, selected: null };
+const state = { q: '', group: 'all', variant: 'all', gapsOnly: false, page: 1, per: 48 };
 
-const tiles = [...document.querySelectorAll('.tile')];
-const sections = [...document.querySelectorAll('section')];
+const grid = $('#grid');
+const SVG_NS = 'http://www.w3.org/2000/svg';
 
-function apply() {
+/** The filtered set, in group-then-name order. */
+function matching() {
   const q = state.q.trim().toLowerCase();
-  let shown = 0;
-  for (const section of sections) {
-    let visible = 0;
-    for (const tile of section.querySelectorAll('.tile')) {
-      const d = tile.dataset;
-      const ok = (state.group === 'all' || d.group === state.group)
-        && (state.variant === 'all' || d.variants.split(',').includes(state.variant))
-        && (!state.gapsOnly || d.complete === 'false')
-        && (q === '' || d.search.includes(q));
-      tile.hidden = !ok;
-      if (ok) visible++;
-    }
-    section.hidden = visible === 0;
-    shown += visible;
-  }
-  // When one variant is isolated, hide the other swatch so the grid reads clean.
-  for (const sw of document.querySelectorAll('.swatch')) {
-    sw.hidden = state.variant !== 'all' && sw.dataset.variant !== state.variant;
-  }
-  $('#empty').hidden = shown > 0;
-  $('#shown').textContent = shown;
+  return ICONS.filter((icon) => {
+    if (state.group !== 'all' && icon.group !== state.group) return false;
+    if (state.variant !== 'all' && !icon.has.includes(state.variant)) return false;
+    if (state.gapsOnly && icon.has.length === VARIANTS.length) return false;
+    if (q === '' ) return true;
+    return icon.name.includes(q) || icon.group.includes(q) || ('u+' + icon.hex.toLowerCase()).includes(q);
+  });
 }
 
-function bindChips(selector, key, after) {
+function svgFor(pathData, size) {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + VIEWBOX + ' ' + VIEWBOX);
+  svg.setAttribute('aria-hidden', 'true');
+  if (size) { svg.setAttribute('width', size); svg.setAttribute('height', size); }
+  const p = document.createElementNS(SVG_NS, 'path');
+  p.setAttribute('d', pathData);
+  svg.append(p);
+  return svg;
+}
+
+function tileFor(icon) {
+  const complete = icon.has.length === VARIANTS.length;
+  const button = document.createElement('button');
+  button.className = 'tile';
+  button.type = 'button';
+  button.dataset.index = icon.index;
+  button.setAttribute('aria-label', icon.name + ', ' + icon.group + ', U+' + icon.hex);
+
+  const swatches = document.createElement('span');
+  swatches.className = 'swatches';
+  for (const v of VARIANTS) {
+    const cell = document.createElement('span');
+    cell.dataset.variant = v.name;
+    if (icon.d[v.name]) {
+      cell.className = 'swatch';
+      cell.append(svgFor(icon.d[v.name]));
+    } else {
+      cell.className = 'swatch absent';
+      cell.title = v.name + ' not drawn yet';
+    }
+    cell.hidden = state.variant !== 'all' && v.name !== state.variant;
+    swatches.append(cell);
+  }
+
+  const name = document.createElement('span');
+  name.className = 'name';
+  name.textContent = icon.name;
+  if (!complete) {
+    const flag = document.createElement('span');
+    flag.className = 'flag';
+    flag.textContent = ' ·';
+    name.append(flag);
+  }
+
+  const group = document.createElement('span');
+  group.className = 'grp';
+  group.textContent = icon.group;
+
+  const cp = document.createElement('span');
+  cp.className = 'cp';
+  cp.textContent = 'U+' + icon.hex;
+
+  button.append(swatches, name, group, cp);
+  button.addEventListener('click', () => openDetail(icon, button));
+  return button;
+}
+
+/** Page numbers with ellipses, so a thousand icons still fits one row. */
+function pageButtons(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const out = [1];
+  const from = Math.max(2, current - 1);
+  const to = Math.min(total - 1, current + 1);
+  if (from > 2) out.push('gap');
+  for (let i = from; i <= to; i++) out.push(i);
+  if (to < total - 1) out.push('gap');
+  out.push(total);
+  return out;
+}
+
+function render() {
+  const items = matching();
+  const per = state.per === 0 ? Math.max(items.length, 1) : state.per;
+  const totalPages = Math.max(1, Math.ceil(items.length / per));
+  state.page = Math.min(Math.max(1, state.page), totalPages);
+
+  const start = (state.page - 1) * per;
+  const slice = items.slice(start, start + per);
+  grid.replaceChildren(...slice.map(tileFor));
+
+  $('#empty').hidden = items.length > 0;
+  $('#pager').hidden = items.length === 0;
+  $('#shown').textContent = items.length;
+  $('#count').innerHTML = items.length
+    ? '<b>' + (start + 1) + '</b>&ndash;<b>' + (start + slice.length) + '</b> of <b>' + items.length + '</b>'
+    : '';
+
+  const nav = $('#pages');
+  nav.replaceChildren();
+  const step = (to, label, disabled, current) => {
+    const b = document.createElement('button');
+    b.className = 'page-btn';
+    b.type = 'button';
+    b.textContent = label;
+    b.disabled = !!disabled;
+    if (current) b.setAttribute('aria-current', 'page');
+    if (!disabled) b.addEventListener('click', () => { state.page = to; render(); scrollTop(); });
+    return b;
+  };
+  nav.append(step(state.page - 1, '‹', state.page === 1));
+  for (const p of pageButtons(state.page, totalPages)) {
+    if (p === 'gap') {
+      const span = document.createElement('span');
+      span.className = 'page-gap';
+      span.textContent = '…';
+      nav.append(span);
+    } else {
+      nav.append(step(p, String(p), false, p === state.page));
+    }
+  }
+  nav.append(step(state.page + 1, '›', state.page === totalPages));
+}
+
+function scrollTop() {
+  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  window.scrollTo({ top: 0, behavior });
+}
+
+function reset() { state.page = 1; render(); }
+
+function bindChips(selector, key) {
   const chips = [...document.querySelectorAll(selector)];
   for (const chip of chips) {
     chip.addEventListener('click', () => {
       state[key] = chip.dataset[key];
       for (const other of chips) other.setAttribute('aria-pressed', String(other === chip));
-      if (after) after();
-      apply();
+      reset();
     });
   }
 }
@@ -362,8 +491,7 @@ bindChips('.chip[data-variant]', 'variant');
 
 for (const chip of document.querySelectorAll('.chip[data-size]')) {
   chip.addEventListener('click', () => {
-    state.size = Number(chip.dataset.size);
-    document.documentElement.style.setProperty('--size', state.size + 'px');
+    document.documentElement.style.setProperty('--size', chip.dataset.size + 'px');
     for (const other of document.querySelectorAll('.chip[data-size]')) {
       other.setAttribute('aria-pressed', String(other === chip));
     }
@@ -374,18 +502,26 @@ const gapsChip = $('#gaps');
 gapsChip.addEventListener('click', () => {
   state.gapsOnly = !state.gapsOnly;
   gapsChip.setAttribute('aria-pressed', String(state.gapsOnly));
-  apply();
+  reset();
 });
 
 const search = $('#search');
-search.addEventListener('input', () => { state.q = search.value; apply(); });
+search.addEventListener('input', () => { state.q = search.value; reset(); });
+
+const per = $('#per');
+per.addEventListener('change', () => { state.per = Number(per.value); reset(); });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === '/' && document.activeElement !== search) { e.preventDefault(); search.focus(); }
+  const typing = document.activeElement === search;
+  if (e.key === '/' && !typing) { e.preventDefault(); search.focus(); return; }
   if (e.key === 'Escape') {
     if (!$('#detail').hidden) closeDetail();
-    else if (search.value) { search.value = ''; state.q = ''; apply(); }
+    else if (search.value) { search.value = ''; state.q = ''; reset(); }
+    return;
   }
+  if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'ArrowLeft') { state.page--; render(); }
+  if (e.key === 'ArrowRight') { state.page++; render(); }
 });
 
 /* ---- detail ---------------------------------------------------------- */
@@ -394,36 +530,22 @@ const detail = $('#detail');
 function closeDetail() {
   detail.hidden = true;
   document.documentElement.classList.remove('detail-open');
-  for (const t of tiles) t.removeAttribute('aria-current');
-  state.selected = null;
+  for (const t of grid.children) t.removeAttribute('aria-current');
 }
 $('#close').addEventListener('click', closeDetail);
 
-function openDetail(tile) {
-  const icon = ICONS[Number(tile.dataset.index)];
-  state.selected = icon;
-  for (const t of tiles) t.removeAttribute('aria-current');
+function openDetail(icon, tile) {
+  for (const t of grid.children) t.removeAttribute('aria-current');
   tile.setAttribute('aria-current', 'true');
 
   $('#d-name').textContent = icon.name;
   $('#d-sub').textContent = icon.group + '  ·  U+' + icon.hex;
 
-  // The tile already carries the geometry, so clone it rather than shipping
-  // every path a second time in the data.
-  const svgFor = (variant) => {
-    const source = tile.querySelector('.swatch[data-variant="' + variant + '"] svg');
-    return source ? source.cloneNode(true) : null;
-  };
-
-  const previews = $('#d-previews');
-  previews.replaceChildren(...VARIANTS.map((v) => {
+  $('#d-previews').replaceChildren(...VARIANTS.map((v) => {
     const cell = document.createElement('div');
     cell.className = 'preview-cell';
-    const svg = svgFor(v.name);
-    if (svg) {
-      svg.removeAttribute('width');
-      svg.removeAttribute('height');
-      cell.append(svg);
+    if (icon.d[v.name]) {
+      cell.append(svgFor(icon.d[v.name]));
     } else {
       cell.classList.add('absent');
       const note = document.createElement('div');
@@ -438,23 +560,20 @@ function openDetail(tile) {
     return cell;
   }));
 
-  const first = VARIANTS.find((v) => icon.has.includes(v.name));
-  const sizes = $('#d-sizes');
-  sizes.replaceChildren(...(first ? [16, 24, 32, 48].map((px) => {
+  const first = VARIANTS.find((v) => icon.d[v.name]);
+  $('#d-sizes').replaceChildren(...(first ? [16, 24, 32, 48].map((px) => {
     const figure = document.createElement('figure');
-    const svg = svgFor(first.name);
-    svg.setAttribute('width', px);
-    svg.setAttribute('height', px);
     const caption = document.createElement('figcaption');
     caption.textContent = px;
-    figure.append(svg, caption);
+    figure.append(svgFor(icon.d[first.name], px), caption);
     return figure;
   }) : []));
 
   const rows = [];
   for (const v of VARIANTS) {
-    if (!icon.has.includes(v.name)) continue;
-    const cls = v.name === DEFAULT_VARIANT ? CSS_PREFIX + '-' + icon.name
+    if (!icon.d[v.name]) continue;
+    const cls = v.name === DEFAULT_VARIANT
+      ? CSS_PREFIX + '-' + icon.name
       : CSS_PREFIX + '-' + v.name + ' ' + CSS_PREFIX + '-' + icon.name;
     rows.push([v.name + ' · css', cls]);
     rows.push([v.name + ' · dart', icon.dart[v.name]]);
@@ -462,16 +581,28 @@ function openDetail(tile) {
   rows.push(['codepoint', '0x' + icon.hex.toLowerCase()]);
   rows.push(['name', icon.name]);
 
-  $('#d-rows').innerHTML = rows.map(([k, val]) =>
-    '<div class="row"><span class="k">' + k + '</span>'
-    + '<button class="copy" type="button" data-value="' + val.replace(/"/g, '&quot;') + '">'
-    + '<span>' + val.replace(/</g, '&lt;') + '</span><em>copy</em></button></div>').join('');
+  $('#d-rows').replaceChildren(...rows.map(([k, value]) => {
+    const row = document.createElement('div');
+    row.className = 'row';
+    const key = document.createElement('span');
+    key.className = 'k';
+    key.textContent = k;
+    const button = document.createElement('button');
+    button.className = 'copy';
+    button.type = 'button';
+    button.dataset.value = value;
+    const text = document.createElement('span');
+    text.textContent = value;
+    const tag = document.createElement('em');
+    tag.textContent = 'copy';
+    button.append(text, tag);
+    row.append(key, button);
+    return row;
+  }));
 
   detail.hidden = false;
   document.documentElement.classList.add('detail-open');
 }
-
-for (const tile of tiles) tile.addEventListener('click', () => openDetail(tile));
 
 /* ---- copy ------------------------------------------------------------ */
 let toastTimer;
@@ -501,7 +632,7 @@ document.addEventListener('click', async (e) => {
   }
 });
 
-apply();
+render();
 `;
 
 export function buildPreview({ quiet = false } = {}) {
@@ -549,8 +680,6 @@ export function buildPreview({ quiet = false } = {}) {
   const gaps = icons.filter((i) => ordered.some((v) => !i.variants[v])).length;
   const glyphs = icons.reduce((n, i) => n + Object.keys(i.variants).length, 0);
 
-  // Path data lives in the markup so the page is complete before script runs;
-  // the data block carries only what the detail panel cannot read off a tile.
   const data = icons.map((icon, index) => ({
     index,
     name: icon.name,
@@ -558,6 +687,7 @@ export function buildPreview({ quiet = false } = {}) {
     hex: icon.hex,
     has: ordered.filter((v) => icon.variants[v]),
     dart: icon.dart,
+    d: icon.variants,
   }));
 
   const tile = (icon, index) => {
@@ -574,23 +704,17 @@ export function buildPreview({ quiet = false } = {}) {
       `          aria-label="${esc(icon.name)}, ${esc(icon.group)}, U+${icon.hex}">`,
       `          <span class="swatches">${swatches}</span>`,
       `          <span class="name">${esc(icon.name)}${complete ? '' : ' <span class="flag">·</span>'}</span>`,
+      `          <span class="grp">${esc(icon.group)}</span>`,
       `          <span class="cp">U+${icon.hex}</span>`,
       '        </button>',
     ].join('\n');
   };
 
-  const indexOf = new Map(icons.map((icon, i) => [icon.name, i]));
-  const sections = groups.map((group) => {
-    const members = icons.filter((i) => i.group === group);
-    return [
-      `      <section data-group="${esc(group)}">`,
-      `        <h2>${esc(group)} <span>${members.length}</span></h2>`,
-      '        <div class="grid">',
-      ...members.map((icon) => tile(icon, indexOf.get(icon.name))),
-      '        </div>',
-      '      </section>',
-    ].join('\n');
-  }).join('\n');
+  // The first page is rendered into the markup so the page is complete before
+  // script runs; script re-renders from the data on every filter or page change.
+  const FIRST_PAGE = 48;
+  const firstPage = icons.slice(0, FIRST_PAGE)
+    .map((icon, index) => tile(icon, index)).join('\n');
 
   const statLine = ordered.map((v) =>
     `<span><b>${counts[v]}</b>/${icons.length} ${esc(v)}</span>`).join('\n      ');
@@ -632,8 +756,24 @@ export function buildPreview({ quiet = false } = {}) {
 </header>
 
 <main>
-${sections}
+  <div class="grid" id="grid">
+${firstPage}
+  </div>
   <p class="empty" id="empty" hidden>No icons match that search.</p>
+  <nav class="pager" id="pager" aria-label="Pagination">
+    <span class="pager-count" id="count"></span>
+    <span class="pager-nav" id="pages"></span>
+    <span class="per-page">
+      <label for="per">Per page</label>
+      <select id="per">
+        <option value="24">24</option>
+        <option value="48" selected>48</option>
+        <option value="96">96</option>
+        <option value="192">192</option>
+        <option value="0">All</option>
+      </select>
+    </span>
+  </nav>
 </main>
 
 <aside id="detail" hidden aria-label="Icon detail">

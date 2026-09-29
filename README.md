@@ -102,9 +102,38 @@ Install or bundle the TTF and address the glyph by its codepoint from
 `codepoints.json`. For Flutter the generated package does this for you — see
 below.
 
-`preview/index.html` is a self-contained gallery of the whole set — open it
-straight from a clone, no build step and no network. Click an icon to copy its
-name.
+## Browsing the set
+
+`preview/index.html` is a self-contained gallery — paginated, searchable, and
+built around what is *missing* as much as what exists. Open it straight from a
+clone: no build step, no server, no network beyond the webfont.
+
+To read it on a phone, serve it on your own network:
+
+```bash
+npm run serve
+#   this machine     http://localhost:4173/
+#   on your network  http://192.168.1.42:4173/
+```
+
+Open the network address on any device on the same wifi. The page never leaves
+it — no tunnel, no public host, no outbound calls.
+
+| Flag | Does |
+|---|---|
+| `--port 8080` | listen somewhere else |
+| `--host 127.0.0.1` | this machine only, nothing on the network |
+| `--token SECRET` | require `?t=SECRET` once, then a cookie (also reads `ICONS_TOKEN`) |
+
+The server has no dependencies and serves exactly three things: the gallery,
+`fonts/`, and `svg/`. It refuses anything else and anything that tries to climb
+out of them.
+
+In the gallery: `/` focuses search, arrow keys page, Escape closes the detail
+panel or clears the search. The **incomplete** filter isolates icons that are
+missing a variant, which is the list to work through when growing the set.
+Selecting an icon shows both variants, a 16/24/32/48 size ladder, and
+copy-ready CSS class, Dart name and codepoint.
 
 ## Design rules
 
@@ -226,6 +255,7 @@ on manual dispatch. When it comes back, the entry points are
 |---|---|
 | `npm run build` | the whole pipeline |
 | `npm run lint` | spec check only |
-| `npm run new -- <group>/<name>` | scaffold a new source icon |
+| `npm run new -- <variant>/<group>/<name>` | scaffold a new source icon |
+| `npm run serve` | serve the gallery on your own network |
 | `npm run check` | build, then fail if generated files are uncommitted (what CI runs) |
 | `npm run build:outlines` / `:font` / `:dart` / `:preview` | individual steps |
