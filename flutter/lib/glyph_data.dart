@@ -10,7 +10,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 4 icons in the `data` group (`outline`).
+/// The 6 icons in the `data` group (`outline`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -35,11 +35,23 @@ class GlyphData {
   static const IconData clock =
       IconData(0xe00a, fontFamily: fontFamily, fontPackage: fontPackage);
 
+  /// The `file` icon (U+E042).
+  ///
+  /// Source: `svg/outline/data/file.svg`
+  static const IconData file =
+      IconData(0xe042, fontFamily: fontFamily, fontPackage: fontPackage);
+
   /// The `filter` icon (U+E014).
   ///
   /// Source: `svg/outline/data/filter.svg`
   static const IconData filter =
       IconData(0xe014, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `folder` icon (U+E043).
+  ///
+  /// Source: `svg/outline/data/folder.svg`
+  static const IconData folder =
+      IconData(0xe043, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `sort` icon (U+E020).
   ///

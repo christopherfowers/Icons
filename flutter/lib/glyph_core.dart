@@ -10,7 +10,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 7 icons in the `core` group (`outline`).
+/// The 9 icons in the `core` group (`outline`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -29,6 +29,12 @@ class GlyphCore {
   static const IconData close =
       IconData(0xe00b, fontFamily: fontFamily, fontPackage: fontPackage);
 
+  /// The `help` icon (U+E044).
+  ///
+  /// Source: `svg/outline/core/help.svg`
+  static const IconData help =
+      IconData(0xe044, fontFamily: fontFamily, fontPackage: fontPackage);
+
   /// The `home` icon (U+E016).
   ///
   /// Source: `svg/outline/core/home.svg`
@@ -40,6 +46,12 @@ class GlyphCore {
   /// Source: `svg/outline/core/menu.svg`
   static const IconData menu =
       IconData(0xe01a, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `more` icon (U+E048).
+  ///
+  /// Source: `svg/outline/core/more.svg`
+  static const IconData more =
+      IconData(0xe048, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `search` icon (U+E01D).
   ///

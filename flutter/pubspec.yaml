@@ -24,6 +24,9 @@ flutter:
     - family: GlyphActionsFilled
       fonts:
         - asset: fonts/GlyphActionsFilled.ttf
+    - family: GlyphCommsFilled
+      fonts:
+        - asset: fonts/GlyphCommsFilled.ttf
     - family: GlyphCoreFilled
       fonts:
         - asset: fonts/GlyphCoreFilled.ttf
@@ -33,6 +36,9 @@ flutter:
     - family: GlyphEditingFilled
       fonts:
         - asset: fonts/GlyphEditingFilled.ttf
+    - family: GlyphMediaFilled
+      fonts:
+        - asset: fonts/GlyphMediaFilled.ttf
     - family: GlyphNavigationFilled
       fonts:
         - asset: fonts/GlyphNavigationFilled.ttf
@@ -45,6 +51,9 @@ flutter:
     - family: GlyphActions
       fonts:
         - asset: fonts/GlyphActions.ttf
+    - family: GlyphComms
+      fonts:
+        - asset: fonts/GlyphComms.ttf
     - family: GlyphCore
       fonts:
         - asset: fonts/GlyphCore.ttf
@@ -54,6 +63,9 @@ flutter:
     - family: GlyphEditing
       fonts:
         - asset: fonts/GlyphEditing.ttf
+    - family: GlyphMedia
+      fonts:
+        - asset: fonts/GlyphMedia.ttf
     - family: GlyphNavigation
       fonts:
         - asset: fonts/GlyphNavigation.ttf

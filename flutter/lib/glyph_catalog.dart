@@ -12,16 +12,20 @@ library;
 import 'package:flutter/widgets.dart';
 
 import 'glyph_actions_filled.dart';
+import 'glyph_comms_filled.dart';
 import 'glyph_core_filled.dart';
 import 'glyph_data_filled.dart';
 import 'glyph_editing_filled.dart';
+import 'glyph_media_filled.dart';
 import 'glyph_navigation_filled.dart';
 import 'glyph_status_filled.dart';
 import 'glyph_toggles_filled.dart';
 import 'glyph_actions.dart';
+import 'glyph_comms.dart';
 import 'glyph_core.dart';
 import 'glyph_data.dart';
 import 'glyph_editing.dart';
+import 'glyph_media.dart';
 import 'glyph_navigation.dart';
 import 'glyph_status.dart';
 import 'glyph_toggles.dart';
@@ -34,11 +38,25 @@ const Map<String, IconData> glyphActionsundefinedCatalog = <String, IconData>{
   'upload': GlyphActionsFilled.upload,
 };
 
+/// Every icon in the `comms` group (`filled`), keyed by source name.
+const Map<String, IconData> glyphCommsundefinedCatalog = <String, IconData>{
+  'chat': GlyphCommsFilled.chat,
+  'mail': GlyphCommsFilled.mail,
+  'message': GlyphCommsFilled.message,
+  'mic': GlyphCommsFilled.mic,
+  'phone': GlyphCommsFilled.phone,
+  'radio': GlyphCommsFilled.radio,
+  'send': GlyphCommsFilled.send,
+  'signal': GlyphCommsFilled.signal,
+};
+
 /// Every icon in the `core` group (`filled`), keyed by source name.
 const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
   'close': GlyphCoreFilled.close,
+  'help': GlyphCoreFilled.help,
   'home': GlyphCoreFilled.home,
   'menu': GlyphCoreFilled.menu,
+  'more': GlyphCoreFilled.more,
   'search': GlyphCoreFilled.search,
   'settings': GlyphCoreFilled.settings,
   'user': GlyphCoreFilled.user,
@@ -49,7 +67,9 @@ const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
 const Map<String, IconData> glyphDataundefinedCatalog = <String, IconData>{
   'calendar': GlyphDataFilled.calendar,
   'clock': GlyphDataFilled.clock,
+  'file': GlyphDataFilled.file,
   'filter': GlyphDataFilled.filter,
+  'folder': GlyphDataFilled.folder,
   'sort': GlyphDataFilled.sort,
 };
 
@@ -61,6 +81,14 @@ const Map<String, IconData> glyphEditingundefinedCatalog = <String, IconData>{
   'delete': GlyphEditingFilled.delete,
   'edit': GlyphEditingFilled.edit,
   'remove': GlyphEditingFilled.remove,
+};
+
+/// Every icon in the `media` group (`filled`), keyed by source name.
+const Map<String, IconData> glyphMediaundefinedCatalog = <String, IconData>{
+  'camera': GlyphMediaFilled.camera,
+  'pause': GlyphMediaFilled.pause,
+  'play': GlyphMediaFilled.play,
+  'volume': GlyphMediaFilled.volume,
 };
 
 /// Every icon in the `navigation` group (`filled`), keyed by source name.
@@ -101,11 +129,25 @@ const Map<String, IconData> glyphActionsundefinedCatalog = <String, IconData>{
   'upload': GlyphActions.upload,
 };
 
+/// Every icon in the `comms` group (`outline`), keyed by source name.
+const Map<String, IconData> glyphCommsundefinedCatalog = <String, IconData>{
+  'chat': GlyphComms.chat,
+  'mail': GlyphComms.mail,
+  'message': GlyphComms.message,
+  'mic': GlyphComms.mic,
+  'phone': GlyphComms.phone,
+  'radio': GlyphComms.radio,
+  'send': GlyphComms.send,
+  'signal': GlyphComms.signal,
+};
+
 /// Every icon in the `core` group (`outline`), keyed by source name.
 const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
   'close': GlyphCore.close,
+  'help': GlyphCore.help,
   'home': GlyphCore.home,
   'menu': GlyphCore.menu,
+  'more': GlyphCore.more,
   'search': GlyphCore.search,
   'settings': GlyphCore.settings,
   'user': GlyphCore.user,
@@ -116,7 +158,9 @@ const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
 const Map<String, IconData> glyphDataundefinedCatalog = <String, IconData>{
   'calendar': GlyphData.calendar,
   'clock': GlyphData.clock,
+  'file': GlyphData.file,
   'filter': GlyphData.filter,
+  'folder': GlyphData.folder,
   'sort': GlyphData.sort,
 };
 
@@ -128,6 +172,14 @@ const Map<String, IconData> glyphEditingundefinedCatalog = <String, IconData>{
   'delete': GlyphEditing.delete,
   'edit': GlyphEditing.edit,
   'remove': GlyphEditing.remove,
+};
+
+/// Every icon in the `media` group (`outline`), keyed by source name.
+const Map<String, IconData> glyphMediaundefinedCatalog = <String, IconData>{
+  'camera': GlyphMedia.camera,
+  'pause': GlyphMedia.pause,
+  'play': GlyphMedia.play,
+  'volume': GlyphMedia.volume,
 };
 
 /// Every icon in the `navigation` group (`outline`), keyed by source name.
@@ -163,9 +215,11 @@ const Map<String, IconData> glyphTogglesundefinedCatalog = <String, IconData>{
 /// The `filled` variant, keyed by group name.
 const Map<String, Map<String, IconData>> glyphFilledCatalog = <String, Map<String, IconData>>{
   'actions': glyphActionsundefinedCatalog,
+  'comms': glyphCommsundefinedCatalog,
   'core': glyphCoreundefinedCatalog,
   'data': glyphDataundefinedCatalog,
   'editing': glyphEditingundefinedCatalog,
+  'media': glyphMediaundefinedCatalog,
   'navigation': glyphNavigationundefinedCatalog,
   'status': glyphStatusundefinedCatalog,
   'toggles': glyphTogglesundefinedCatalog,
@@ -174,9 +228,11 @@ const Map<String, Map<String, IconData>> glyphFilledCatalog = <String, Map<Strin
 /// The `outline` variant, keyed by group name.
 const Map<String, Map<String, IconData>> glyphOutlineCatalog = <String, Map<String, IconData>>{
   'actions': glyphActionsundefinedCatalog,
+  'comms': glyphCommsundefinedCatalog,
   'core': glyphCoreundefinedCatalog,
   'data': glyphDataundefinedCatalog,
   'editing': glyphEditingundefinedCatalog,
+  'media': glyphMediaundefinedCatalog,
   'navigation': glyphNavigationundefinedCatalog,
   'status': glyphStatusundefinedCatalog,
   'toggles': glyphTogglesundefinedCatalog,

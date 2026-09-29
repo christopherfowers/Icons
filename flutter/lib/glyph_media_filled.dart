@@ -1,0 +1,49 @@
+// GENERATED FILE - DO NOT EDIT.
+//
+// Regenerate with `npm run build` from the repository root.
+
+/// Glyph Icons - the `media` group, `filled` variant.
+///
+/// Importing this library pulls in the `GlyphMediaFilled` font only, so an app
+/// never pays for groups or variants it does not use.
+library;
+
+import 'package:flutter/widgets.dart';
+
+/// The 4 icons in the `media` group (`filled`).
+///
+/// Every member is a `const IconData`, which lets `flutter build` strip the
+/// glyphs an app never references.
+class GlyphMediaFilled {
+  const GlyphMediaFilled._();
+
+  /// Font family backing every icon in this group.
+  static const String fontFamily = 'GlyphMediaFilled';
+
+  /// Package that ships the font asset.
+  static const String fontPackage = 'glyph_icons';
+
+  /// The `camera` icon (U+E040).
+  ///
+  /// Source: `svg/filled/media/camera.svg`
+  static const IconData camera =
+      IconData(0xe040, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `pause` icon (U+E049).
+  ///
+  /// Source: `svg/filled/media/pause.svg`
+  static const IconData pause =
+      IconData(0xe049, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `play` icon (U+E04B).
+  ///
+  /// Source: `svg/filled/media/play.svg`
+  static const IconData play =
+      IconData(0xe04b, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `volume` icon (U+E04F).
+  ///
+  /// Source: `svg/filled/media/volume.svg`
+  static const IconData volume =
+      IconData(0xe04f, fontFamily: fontFamily, fontPackage: fontPackage);
+}

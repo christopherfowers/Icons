@@ -11,6 +11,15 @@
 }
 
 @font-face {
+  font-family: "GlyphCommsFilled";
+  src: url("GlyphCommsFilled.woff2") format("woff2"),
+       url("GlyphCommsFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphCoreFilled";
   src: url("GlyphCoreFilled.woff2") format("woff2"),
        url("GlyphCoreFilled.ttf") format("truetype");
@@ -32,6 +41,15 @@
   font-family: "GlyphEditingFilled";
   src: url("GlyphEditingFilled.woff2") format("woff2"),
        url("GlyphEditingFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphMediaFilled";
+  src: url("GlyphMediaFilled.woff2") format("woff2"),
+       url("GlyphMediaFilled.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -74,6 +92,15 @@
 }
 
 @font-face {
+  font-family: "GlyphComms";
+  src: url("GlyphComms.woff2") format("woff2"),
+       url("GlyphComms.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphCore";
   src: url("GlyphCore.woff2") format("woff2"),
        url("GlyphCore.ttf") format("truetype");
@@ -95,6 +122,15 @@
   font-family: "GlyphEditing";
   src: url("GlyphEditing.woff2") format("woff2"),
        url("GlyphEditing.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphMedia";
+  src: url("GlyphMedia.woff2") format("woff2"),
+       url("GlyphMedia.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -148,10 +184,24 @@
   font-family: "GlyphActionsFilled";
 }
 
+/* comms - filled */
+.gi-filled.gi-chat,
+.gi-filled.gi-mail,
+.gi-filled.gi-message,
+.gi-filled.gi-mic,
+.gi-filled.gi-phone,
+.gi-filled.gi-radio,
+.gi-filled.gi-send,
+.gi-filled.gi-signal {
+  font-family: "GlyphCommsFilled";
+}
+
 /* core - filled */
 .gi-filled.gi-close,
+.gi-filled.gi-help,
 .gi-filled.gi-home,
 .gi-filled.gi-menu,
+.gi-filled.gi-more,
 .gi-filled.gi-search,
 .gi-filled.gi-settings,
 .gi-filled.gi-user,
@@ -162,7 +212,9 @@
 /* data - filled */
 .gi-filled.gi-calendar,
 .gi-filled.gi-clock,
+.gi-filled.gi-file,
 .gi-filled.gi-filter,
+.gi-filled.gi-folder,
 .gi-filled.gi-sort {
   font-family: "GlyphDataFilled";
 }
@@ -175,6 +227,14 @@
 .gi-filled.gi-edit,
 .gi-filled.gi-remove {
   font-family: "GlyphEditingFilled";
+}
+
+/* media - filled */
+.gi-filled.gi-camera,
+.gi-filled.gi-pause,
+.gi-filled.gi-play,
+.gi-filled.gi-volume {
+  font-family: "GlyphMediaFilled";
 }
 
 /* navigation - filled */
@@ -215,10 +275,24 @@
   font-family: "GlyphActions";
 }
 
+/* comms - outline */
+.gi-chat,
+.gi-mail,
+.gi-message,
+.gi-mic,
+.gi-phone,
+.gi-radio,
+.gi-send,
+.gi-signal {
+  font-family: "GlyphComms";
+}
+
 /* core - outline */
 .gi-close,
+.gi-help,
 .gi-home,
 .gi-menu,
+.gi-more,
 .gi-search,
 .gi-settings,
 .gi-user,
@@ -229,7 +303,9 @@
 /* data - outline */
 .gi-calendar,
 .gi-clock,
+.gi-file,
 .gi-filter,
+.gi-folder,
 .gi-sort {
   font-family: "GlyphData";
 }
@@ -242,6 +318,14 @@
 .gi-edit,
 .gi-remove {
   font-family: "GlyphEditing";
+}
+
+/* media - outline */
+.gi-camera,
+.gi-pause,
+.gi-play,
+.gi-volume {
+  font-family: "GlyphMedia";
 }
 
 /* navigation - outline */
@@ -280,6 +364,8 @@
 .gi-arrow-right::before { content: "\e002"; }
 .gi-bell::before { content: "\e003"; }
 .gi-calendar::before { content: "\e004"; }
+.gi-camera::before { content: "\e040"; }
+.gi-chat::before { content: "\e041"; }
 .gi-check::before { content: "\e005"; }
 .gi-chevron-down::before { content: "\e006"; }
 .gi-chevron-left::before { content: "\e007"; }
@@ -295,22 +381,36 @@
 .gi-external-link::before { content: "\e011"; }
 .gi-eye::before { content: "\e012"; }
 .gi-eye-off::before { content: "\e013"; }
+.gi-file::before { content: "\e042"; }
 .gi-filter::before { content: "\e014"; }
+.gi-folder::before { content: "\e043"; }
 .gi-heart::before { content: "\e015"; }
+.gi-help::before { content: "\e044"; }
 .gi-home::before { content: "\e016"; }
 .gi-info::before { content: "\e017"; }
 .gi-link::before { content: "\e018"; }
 .gi-lock::before { content: "\e019"; }
+.gi-mail::before { content: "\e045"; }
 .gi-menu::before { content: "\e01a"; }
+.gi-message::before { content: "\e046"; }
+.gi-mic::before { content: "\e047"; }
+.gi-more::before { content: "\e048"; }
+.gi-pause::before { content: "\e049"; }
+.gi-phone::before { content: "\e04a"; }
+.gi-play::before { content: "\e04b"; }
+.gi-radio::before { content: "\e04c"; }
 .gi-refresh::before { content: "\e01b"; }
 .gi-remove::before { content: "\e01c"; }
 .gi-search::before { content: "\e01d"; }
+.gi-send::before { content: "\e04d"; }
 .gi-settings::before { content: "\e01e"; }
 .gi-share::before { content: "\e01f"; }
+.gi-signal::before { content: "\e04e"; }
 .gi-sort::before { content: "\e020"; }
 .gi-star::before { content: "\e021"; }
 .gi-unlock::before { content: "\e022"; }
 .gi-upload::before { content: "\e023"; }
 .gi-user::before { content: "\e024"; }
 .gi-users::before { content: "\e025"; }
+.gi-volume::before { content: "\e04f"; }
 .gi-warning::before { content: "\e026"; }
