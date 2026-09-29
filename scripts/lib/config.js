@@ -19,11 +19,12 @@ const snake = (s) => s.replace(/-/g, '_');
  *
  * Two axes, and they do different jobs:
  *
- *   variant - how an icon is drawn (outline vs filled). The same icon name in
- *             both variants is the *same icon*: it keeps one codepoint, and the
- *             variant is chosen by picking a font family. That is how Font
- *             Awesome's regular/solid split works, and it means switching an
- *             icon's weight never changes what you address it by.
+ *   variant - a (theme, weight) pair, and how an icon is drawn. Font Awesome's
+ *             model: `theme` is the design language (a neutral `core`, plus any
+ *             flavoured set a project wants) and `weight` is outline vs filled
+ *             within it. A name is the same icon across every variant - one
+ *             codepoint, picked apart by font family - so restyling or
+ *             reweighting an icon never changes what you address it by.
  *   group   - what the icon is for. Groups are the unit of bundling: one font
  *             per (variant, group), so an app only ships what it imports.
  */
@@ -67,15 +68,29 @@ export function loadConfig() {
     return { variant, ...declared, ...spec };
   };
 
-  /** Font family / Dart class for one (variant, group), e.g. "GlyphCoreFilled". */
-  const familyFor = (variant, group) =>
-    `${config.fontFamilyPrefix}${pascal(group)}${config.variants[variant].familySuffix}`;
-  const classFor = (variant, group) =>
-    `${config.classPrefix}${pascal(group)}${config.variants[variant].classSuffix}`;
-  const libraryFor = (variant, group) => {
-    const suffix = config.variants[variant].classSuffix;
-    return `${config.name}_${snake(group)}${suffix ? `_${snake(suffix.toLowerCase())}` : ''}.dart`;
+  /**
+   * The default theme and weight contribute nothing to a name, so the neutral
+   * set keeps the short names (`GlyphCore`) and flavoured or heavier sets
+   * extend them (`GlyphCoreFilled`, `GlyphCoreEve`, `GlyphCoreEveFilled`).
+   */
+  const parts = (variant) => {
+    const declared = config.variants[variant];
+    if (!declared) throw new Error(`svg/${variant}/ is not a declared variant`);
+    return [
+      declared.theme === config.defaultTheme ? '' : declared.theme,
+      declared.weight === config.defaultWeight ? '' : declared.weight,
+    ].filter(Boolean);
   };
+
+  const familyFor = (variant, group) =>
+    `${config.fontFamilyPrefix}${pascal(group)}${parts(variant).map(pascal).join('')}`;
+  const classFor = (variant, group) =>
+    `${config.classPrefix}${pascal(group)}${parts(variant).map(pascal).join('')}`;
+  const libraryFor = (variant, group) =>
+    `${[config.name, snake(group), ...parts(variant).map(snake)].join('_')}.dart`;
+
+  /** The CSS classes that select a variant, e.g. ["eve", "filled"]. */
+  const classesFor = (variant) => parts(variant);
 
   return {
     ...config,
@@ -87,6 +102,8 @@ export function loadConfig() {
     familyFor,
     classFor,
     libraryFor,
+    classesFor,
+    themes: [...new Set(Object.values(config.variants).map((v) => v.theme))],
     /** Every (variant, group, name) triple in the tree. */
     allIcons: () => variants.flatMap((v) =>
       v.groups.flatMap((g) => g.icons.map((name) => ({ variant: v.name, group: g.name, name })))),

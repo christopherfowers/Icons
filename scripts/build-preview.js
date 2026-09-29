@@ -572,9 +572,8 @@ function openDetail(icon, tile) {
   const rows = [];
   for (const v of VARIANTS) {
     if (!icon.d[v.name]) continue;
-    const cls = v.name === DEFAULT_VARIANT
-      ? CSS_PREFIX + '-' + icon.name
-      : CSS_PREFIX + '-' + v.name + ' ' + CSS_PREFIX + '-' + icon.name;
+    const cls = [...(VARIANT_CLASSES[v.name] || []).map((c) => CSS_PREFIX + '-' + c),
+      CSS_PREFIX + '-' + icon.name].join(' ');
     rows.push([v.name + ' · css', cls]);
     rows.push([v.name + ' · dart', icon.dart[v.name]]);
   }
@@ -639,13 +638,14 @@ export function buildPreview({ quiet = false } = {}) {
   const config = loadConfig();
   const metadata = readMetadata();
   const log = quiet ? () => {} : (...args) => console.log(...args);
-  const viewBox = config.variantSpec(config.defaultVariant).viewBox;
+  // Every style shares the grid, so any present variant answers for viewBox.
+  const viewBox = config.variantSpec(metadata.variants[0].name).viewBox;
 
-  const variantNames = metadata.variants.map((v) => v.name);
-  const ordered = [
-    ...variantNames.filter((v) => v === metadata.defaultVariant),
-    ...variantNames.filter((v) => v !== metadata.defaultVariant),
-  ];
+  // Defaults first, so the neutral set leads the gallery.
+  const ordered = metadata.variants
+    .slice()
+    .sort((a, b) => (a.classes.length - b.classes.length))
+    .map((v) => v.name);
 
   // Collapse (variant, group, icon) into one record per icon *name*, which is
   // what the codepoint is keyed by and what a missing variant is a gap in.
@@ -794,7 +794,8 @@ ${firstPage}
 <script>
 const VIEWBOX = ${viewBox};
 const CSS_PREFIX = ${JSON.stringify(metadata.cssPrefix)};
-const DEFAULT_VARIANT = ${JSON.stringify(metadata.defaultVariant)};
+const DEFAULT_VARIANT = ${JSON.stringify(metadata.variants.find((v) => v.classes.length === 0)?.name ?? ordered[0])};
+const VARIANT_CLASSES = ${JSON.stringify(Object.fromEntries(metadata.variants.map((v) => [v.name, v.classes])))};
 const VARIANTS = ${JSON.stringify(ordered.map((name) => ({ name })))};
 const ICONS = ${JSON.stringify(data)};
 ${SCRIPT}

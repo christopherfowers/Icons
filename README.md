@@ -3,10 +3,18 @@
 A self-hosted icon set — our own small Font Awesome. Icons are drawn once as
 SVGs and compiled into per-group icon fonts.
 
-Every icon ships in **two variants** — `outline` and `filled` — the way Font
-Awesome splits regular and solid. Crucially they are the *same icon*: one name,
-one codepoint, and the variant is chosen by picking a font family. Switching an
-icon's weight never changes what you address it by.
+The set is **general purpose**. The core icons are deliberately neutral so they
+suit any project; flavour is added by **theme**, never baked into the base.
+
+Two dimensions, Font Awesome's model:
+
+- **theme** — the design language. `core` is the neutral default. A project that
+  wants a house style gets its own theme rather than bending the base set.
+- **weight** — `outline` or `filled` within a theme.
+
+Crucially a name is the *same icon* across every theme and weight: one
+codepoint, told apart by font family. Restyling or reweighting an icon never
+changes what you address it by.
 
 ```
 svg/<variant>/<group>/<icon>.svg
@@ -23,16 +31,22 @@ flutter/           generated Flutter package (parked — see below)
 
 Two axes, doing different jobs.
 
-**Variant** is how an icon is drawn, and it decides which spec the linter
-applies:
+A **variant** is one (theme, weight) pair, and a directory under `svg/`. It
+decides which spec the linter applies:
 
-| Variant | Drawn as | Font family | Dart class |
-|---|---|---|---|
-| `outline` | 2px stroked centerlines, round caps and joins | `GlyphCore` | `GlyphCore` |
-| `filled` | solid silhouettes with interior cut-outs | `GlyphCoreFilled` | `GlyphCoreFilled` |
+| Variant | Theme | Weight | Font family | CSS |
+|---|---|---|---|---|
+| `outline` | core | outline | `GlyphCore` | `gi-home` |
+| `filled` | core | filled | `GlyphCoreFilled` | `gi-filled gi-home` |
+| `eve-outline` | eve | outline | `GlyphCoreEve` | `gi-eve gi-home` |
+| `eve-filled` | eve | filled | `GlyphCoreEveFilled` | `gi-eve gi-filled gi-home` |
 
-`outline` is the default variant: it gets the unsuffixed family name, and the
-plain CSS class resolves to it.
+The default theme and weight contribute nothing to a name, so the neutral set
+keeps the short names and the plain class resolves to it. Every other dimension
+adds one class and one name segment.
+
+Adding a theme is a directory and four lines of config — see `variants` in
+`icons.config.json`. The `eve` theme is declared but not drawn yet.
 
 **Group** is what an icon is for, and it is the unit of bundling — one font per
 (variant, group), so a project only ships what it imports:
@@ -85,9 +99,10 @@ per icon, so the whole set is two lines:
 ```html
 <link rel="stylesheet" href="fonts/glyph-icons.css">
 
-<i class="gi-home"></i>                <!-- default variant: outline -->
-<i class="gi-filled gi-home"></i>      <!-- same icon, filled -->
-<i class="gi-outline gi-home"></i>     <!-- explicit, same as the first -->
+<i class="gi-home"></i>                   <!-- core theme, outline -->
+<i class="gi-filled gi-home"></i>         <!-- same icon, filled -->
+<i class="gi-eve gi-home"></i>            <!-- eve theme, outline -->
+<i class="gi-eve gi-filled gi-home"></i>  <!-- eve theme, filled -->
 
 <i class="gi-star" style="font-size: 32px; color: #7fd0de"></i>
 ```
@@ -259,8 +274,9 @@ a built font is resolved by codepoint, not by name.
 - Restoring a deleted icon under its old name gives it its original codepoint
   back.
 - Renaming a *group* changes nothing: codepoints are keyed by icon name.
-- Variants share codepoints. `filled/core/home.svg` and `outline/core/home.svg`
-  are one icon at one codepoint, in two font families.
+- Themes and weights share codepoints. `outline/core/home.svg`,
+  `filled/core/home.svg` and `eve-outline/core/home.svg` are one icon at one
+  codepoint, in three font families.
 
 ## Flutter (parked)
 

@@ -70,7 +70,14 @@ export function buildOutlines({ quiet = false } = {}) {
         icons,
       };
     });
-    return { name: variant.name, style: spec.style, familySuffix: spec.familySuffix, groups };
+    return {
+      name: variant.name,
+      theme: spec.theme,
+      weight: spec.weight,
+      style: spec.style,
+      classes: config.classesFor(variant.name),
+      groups,
+    };
   });
 
   const metadata = {
@@ -79,7 +86,8 @@ export function buildOutlines({ quiet = false } = {}) {
     displayName: config.displayName,
     packageName: config.packageName,
     cssPrefix: config.cssPrefix,
-    defaultVariant: config.defaultVariant,
+    defaultTheme: config.defaultTheme,
+    defaultWeight: config.defaultWeight,
     styles: config.styles,
     font: config.font,
     variants,

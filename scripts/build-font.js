@@ -74,11 +74,14 @@ function svgFontFor(group, metadata) {
 /**
  * The web stylesheet.
  *
- * A name maps to one codepoint, so `content` is written once per icon. The
- * variant is chosen by swapping font family, which is what `.gi-filled` does:
+ * A name maps to one codepoint, so `content` is written once per icon. Theme
+ * and weight are chosen by swapping font family, and each contributes one
+ * class - the defaults contribute none:
  *
- *     <i class="gi-home"></i>              <!-- default variant -->
- *     <i class="gi-filled gi-home"></i>    <!-- same icon, filled -->
+ *     <i class="gi-home"></i>                     core, outline
+ *     <i class="gi-filled gi-home"></i>           core, filled
+ *     <i class="gi-eve gi-home"></i>              eve theme, outline
+ *     <i class="gi-eve gi-filled gi-home"></i>    eve theme, filled
  */
 function stylesheet(metadata, cssPrefix) {
   const px = cssPrefix;
@@ -122,13 +125,17 @@ function stylesheet(metadata, cssPrefix) {
   for (const variant of metadata.variants) {
     for (const group of variant.groups) {
       const names = group.icons.map((i) => i.name);
-      const scoped = names.map((n) => `.${px}-${variant.name}.${px}-${n}`);
+      const prefix = variant.classes.map((c) => `.${px}-${c}`).join('');
       lines.push(`/* ${group.name} - ${variant.name} */`);
-      if (variant.name === metadata.defaultVariant) {
+      // The default theme and weight need no class at all, so the bare icon
+      // class has to resolve on its own.
+      if (prefix === '') {
         lines.push(`${names.map((n) => `.${px}-${n}`).join(',\n')} {`,
-          `  font-family: "${group.family}";`, '}');
+          `  font-family: "${group.family}";`, '}', '');
+      } else {
+        lines.push(`${names.map((n) => `${prefix}.${px}-${n}`).join(',\n')} {`,
+          `  font-family: "${group.family}";`, '}', '');
       }
-      lines.push(`${scoped.join(',\n')} {`, `  font-family: "${group.family}";`, '}', '');
     }
   }
 

@@ -23,7 +23,7 @@ import 'glyph_status.dart';
 import 'glyph_toggles.dart';
 
 /// Every icon in the `core` group (`filled`), keyed by source name.
-const Map<String, IconData> glyphCoreFilledCatalog = <String, IconData>{
+const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
   'home': GlyphCoreFilled.home,
   'search': GlyphCoreFilled.search,
   'settings': GlyphCoreFilled.settings,
@@ -32,7 +32,7 @@ const Map<String, IconData> glyphCoreFilledCatalog = <String, IconData>{
 };
 
 /// Every icon in the `status` group (`filled`), keyed by source name.
-const Map<String, IconData> glyphStatusFilledCatalog = <String, IconData>{
+const Map<String, IconData> glyphStatusundefinedCatalog = <String, IconData>{
   'bell': GlyphStatusFilled.bell,
   'error': GlyphStatusFilled.error,
   'info': GlyphStatusFilled.info,
@@ -40,7 +40,7 @@ const Map<String, IconData> glyphStatusFilledCatalog = <String, IconData>{
 };
 
 /// Every icon in the `toggles` group (`filled`), keyed by source name.
-const Map<String, IconData> glyphTogglesFilledCatalog = <String, IconData>{
+const Map<String, IconData> glyphTogglesundefinedCatalog = <String, IconData>{
   'eye': GlyphTogglesFilled.eye,
   'heart': GlyphTogglesFilled.heart,
   'lock': GlyphTogglesFilled.lock,
@@ -49,7 +49,7 @@ const Map<String, IconData> glyphTogglesFilledCatalog = <String, IconData>{
 };
 
 /// Every icon in the `actions` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphActionsCatalog = <String, IconData>{
+const Map<String, IconData> glyphActionsundefinedCatalog = <String, IconData>{
   'download': GlyphActions.download,
   'refresh': GlyphActions.refresh,
   'share': GlyphActions.share,
@@ -57,7 +57,7 @@ const Map<String, IconData> glyphActionsCatalog = <String, IconData>{
 };
 
 /// Every icon in the `core` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphCoreCatalog = <String, IconData>{
+const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
   'close': GlyphCore.close,
   'home': GlyphCore.home,
   'menu': GlyphCore.menu,
@@ -68,7 +68,7 @@ const Map<String, IconData> glyphCoreCatalog = <String, IconData>{
 };
 
 /// Every icon in the `data` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphDataCatalog = <String, IconData>{
+const Map<String, IconData> glyphDataundefinedCatalog = <String, IconData>{
   'calendar': GlyphData.calendar,
   'clock': GlyphData.clock,
   'filter': GlyphData.filter,
@@ -76,7 +76,7 @@ const Map<String, IconData> glyphDataCatalog = <String, IconData>{
 };
 
 /// Every icon in the `editing` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphEditingCatalog = <String, IconData>{
+const Map<String, IconData> glyphEditingundefinedCatalog = <String, IconData>{
   'add': GlyphEditing.add,
   'check': GlyphEditing.check,
   'copy': GlyphEditing.copy,
@@ -86,7 +86,7 @@ const Map<String, IconData> glyphEditingCatalog = <String, IconData>{
 };
 
 /// Every icon in the `navigation` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphNavigationCatalog = <String, IconData>{
+const Map<String, IconData> glyphNavigationundefinedCatalog = <String, IconData>{
   'arrow-left': GlyphNavigation.arrowLeft,
   'arrow-right': GlyphNavigation.arrowRight,
   'chevron-down': GlyphNavigation.chevronDown,
@@ -98,7 +98,7 @@ const Map<String, IconData> glyphNavigationCatalog = <String, IconData>{
 };
 
 /// Every icon in the `status` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphStatusCatalog = <String, IconData>{
+const Map<String, IconData> glyphStatusundefinedCatalog = <String, IconData>{
   'bell': GlyphStatus.bell,
   'error': GlyphStatus.error,
   'info': GlyphStatus.info,
@@ -106,7 +106,7 @@ const Map<String, IconData> glyphStatusCatalog = <String, IconData>{
 };
 
 /// Every icon in the `toggles` group (`outline`), keyed by source name.
-const Map<String, IconData> glyphTogglesCatalog = <String, IconData>{
+const Map<String, IconData> glyphTogglesundefinedCatalog = <String, IconData>{
   'eye': GlyphToggles.eye,
   'eye-off': GlyphToggles.eyeOff,
   'heart': GlyphToggles.heart,
@@ -117,20 +117,20 @@ const Map<String, IconData> glyphTogglesCatalog = <String, IconData>{
 
 /// The `filled` variant, keyed by group name.
 const Map<String, Map<String, IconData>> glyphFilledCatalog = <String, Map<String, IconData>>{
-  'core': glyphCoreFilledCatalog,
-  'status': glyphStatusFilledCatalog,
-  'toggles': glyphTogglesFilledCatalog,
+  'core': glyphCoreundefinedCatalog,
+  'status': glyphStatusundefinedCatalog,
+  'toggles': glyphTogglesundefinedCatalog,
 };
 
 /// The `outline` variant, keyed by group name.
 const Map<String, Map<String, IconData>> glyphOutlineCatalog = <String, Map<String, IconData>>{
-  'actions': glyphActionsCatalog,
-  'core': glyphCoreCatalog,
-  'data': glyphDataCatalog,
-  'editing': glyphEditingCatalog,
-  'navigation': glyphNavigationCatalog,
-  'status': glyphStatusCatalog,
-  'toggles': glyphTogglesCatalog,
+  'actions': glyphActionsundefinedCatalog,
+  'core': glyphCoreundefinedCatalog,
+  'data': glyphDataundefinedCatalog,
+  'editing': glyphEditingundefinedCatalog,
+  'navigation': glyphNavigationundefinedCatalog,
+  'status': glyphStatusundefinedCatalog,
+  'toggles': glyphTogglesundefinedCatalog,
 };
 
 /// Every variant, keyed by variant name then group name.

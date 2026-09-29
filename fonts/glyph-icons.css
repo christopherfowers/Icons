@@ -137,12 +137,6 @@
 .gi-upload {
   font-family: "GlyphActions";
 }
-.gi-outline.gi-download,
-.gi-outline.gi-refresh,
-.gi-outline.gi-share,
-.gi-outline.gi-upload {
-  font-family: "GlyphActions";
-}
 
 /* core - outline */
 .gi-close,
@@ -154,27 +148,12 @@
 .gi-users {
   font-family: "GlyphCore";
 }
-.gi-outline.gi-close,
-.gi-outline.gi-home,
-.gi-outline.gi-menu,
-.gi-outline.gi-search,
-.gi-outline.gi-settings,
-.gi-outline.gi-user,
-.gi-outline.gi-users {
-  font-family: "GlyphCore";
-}
 
 /* data - outline */
 .gi-calendar,
 .gi-clock,
 .gi-filter,
 .gi-sort {
-  font-family: "GlyphData";
-}
-.gi-outline.gi-calendar,
-.gi-outline.gi-clock,
-.gi-outline.gi-filter,
-.gi-outline.gi-sort {
   font-family: "GlyphData";
 }
 
@@ -185,14 +164,6 @@
 .gi-delete,
 .gi-edit,
 .gi-remove {
-  font-family: "GlyphEditing";
-}
-.gi-outline.gi-add,
-.gi-outline.gi-check,
-.gi-outline.gi-copy,
-.gi-outline.gi-delete,
-.gi-outline.gi-edit,
-.gi-outline.gi-remove {
   font-family: "GlyphEditing";
 }
 
@@ -207,28 +178,12 @@
 .gi-link {
   font-family: "GlyphNavigation";
 }
-.gi-outline.gi-arrow-left,
-.gi-outline.gi-arrow-right,
-.gi-outline.gi-chevron-down,
-.gi-outline.gi-chevron-left,
-.gi-outline.gi-chevron-right,
-.gi-outline.gi-chevron-up,
-.gi-outline.gi-external-link,
-.gi-outline.gi-link {
-  font-family: "GlyphNavigation";
-}
 
 /* status - outline */
 .gi-bell,
 .gi-error,
 .gi-info,
 .gi-warning {
-  font-family: "GlyphStatus";
-}
-.gi-outline.gi-bell,
-.gi-outline.gi-error,
-.gi-outline.gi-info,
-.gi-outline.gi-warning {
   font-family: "GlyphStatus";
 }
 
@@ -239,14 +194,6 @@
 .gi-lock,
 .gi-star,
 .gi-unlock {
-  font-family: "GlyphToggles";
-}
-.gi-outline.gi-eye,
-.gi-outline.gi-eye-off,
-.gi-outline.gi-heart,
-.gi-outline.gi-lock,
-.gi-outline.gi-star,
-.gi-outline.gi-unlock {
   font-family: "GlyphToggles";
 }
 

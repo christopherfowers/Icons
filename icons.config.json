@@ -23,19 +23,32 @@
   },
   "variants": {
     "outline": {
+      "theme": "core",
+      "weight": "outline",
       "style": "line",
-      "familySuffix": "",
-      "classSuffix": "",
-      "description": "Stroked centerlines, converted to filled contours for the font."
+      "description": "Neutral stroked centerlines. The library default."
     },
     "filled": {
+      "theme": "core",
+      "weight": "filled",
       "style": "solid",
-      "familySuffix": "Filled",
-      "classSuffix": "Filled",
-      "description": "Solid silhouettes with interior cuts."
+      "description": "Neutral solid silhouettes."
+    },
+    "eve-outline": {
+      "theme": "eve",
+      "weight": "outline",
+      "style": "line",
+      "description": "Space-sim themed strokes. Not drawn yet."
+    },
+    "eve-filled": {
+      "theme": "eve",
+      "weight": "filled",
+      "style": "solid",
+      "description": "Space-sim themed silhouettes. Not drawn yet."
     }
   },
-  "defaultVariant": "outline",
+  "defaultTheme": "core",
+  "defaultWeight": "outline",
   "font": {
     "unitsPerEm": 1000,
     "descent": 0
