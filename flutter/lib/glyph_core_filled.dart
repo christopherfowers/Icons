@@ -10,7 +10,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 9 icons in the `core` group (`filled`).
+/// The 12 icons in the `core` group (`filled`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -22,6 +22,12 @@ class GlyphCoreFilled {
 
   /// Package that ships the font asset.
   static const String fontPackage = 'glyph_icons';
+
+  /// The `bulb` icon (U+E055).
+  ///
+  /// Source: `svg/filled/core/bulb.svg`
+  static const IconData bulb =
+      IconData(0xe055, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `close` icon (U+E00B).
   ///
@@ -64,6 +70,18 @@ class GlyphCoreFilled {
   /// Source: `svg/filled/core/settings.svg`
   static const IconData settings =
       IconData(0xe01e, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `sliders` icon (U+E051).
+  ///
+  /// Source: `svg/filled/core/sliders.svg`
+  static const IconData sliders =
+      IconData(0xe051, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `target` icon (U+E060).
+  ///
+  /// Source: `svg/filled/core/target.svg`
+  static const IconData target =
+      IconData(0xe060, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `user` icon (U+E024).
   ///

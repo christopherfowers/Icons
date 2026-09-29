@@ -12,7 +12,7 @@
  * Steps 2 and 3 run together because the outline pass is what enumerates the
  * icons that need codepoints.
  */
-import path from 'node:path';
+import { isMain } from './lib/paths.js';
 import { lintAll } from './lint.js';
 import { buildOutlines } from './build-outlines.js';
 import { buildFonts } from './build-font.js';
@@ -53,8 +53,7 @@ export async function build() {
   console.log(`\nbuild complete in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) {
+if (isMain(import.meta.url)) {
   build().catch((error) => {
     console.error(`\nbuild failed: ${error.message}`);
     process.exit(1);

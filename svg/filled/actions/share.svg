@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-  <circle cx="18" cy="5.4" r="3"/>
-  <circle cx="6" cy="12" r="3"/>
-  <circle cx="18" cy="18.6" r="3"/>
-  <polygon points="8.98,11.76 16.18,8.16 15.02,5.84 7.82,9.44"/>
-  <polygon points="7.82,14.56 15.02,18.16 16.18,15.84 8.98,12.24"/>
+  <path d="M4.25 10.25H8.75V13.75H4.25Z"/>
+  <path d="M15.25 4.25H19.75V8.75H15.25Z"/>
+  <path d="M15.25 15.25H19.75V19.75H15.25Z"/>
+  <path d="M8.25 11.25H12.75V12.75H8.25Z"/>
+  <path d="M11.25 6.5H12.75V17.5H11.25Z"/>
+  <path d="M12.75 6.5H15.25V8H12.75Z"/>
+  <path d="M12.75 16H15.25V17.5H12.75Z"/>
+  <path d="M1.75 7V1.75H7V3.25H3.25V7Z"/>
+  <path d="M22.25 17V22.25H17V20.75H20.75V17Z"/>
 </svg>

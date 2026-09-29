@@ -10,7 +10,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 4 icons in the `actions` group (`filled`).
+/// The 5 icons in the `actions` group (`filled`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -34,6 +34,12 @@ class GlyphActionsFilled {
   /// Source: `svg/filled/actions/refresh.svg`
   static const IconData refresh =
       IconData(0xe01b, fontFamily: fontFamily, fontPackage: fontPackage);
+
+  /// The `rocket` icon (U+E05B).
+  ///
+  /// Source: `svg/filled/actions/rocket.svg`
+  static const IconData rocket =
+      IconData(0xe05b, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `share` icon (U+E01F).
   ///

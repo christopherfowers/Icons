@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-  <polygon points="13.4,6.2 2.4,6.2 2.4,21.6 17.8,21.6 17.8,10.6 14.7,10.6 14.7,18.5 5.5,18.5 5.5,9.3 13.4,9.3"/>
-  <polygon points="13.6,12.8 20.8,5.6 18.4,3.2 11.2,10.4"/>
-  <polygon points="21.6,2.4 21.6,9.4 14.6,2.4"/>
+  <path d="M11 5.5H18.5V13H17V8.06L11.53 13.53L10.47 12.47L15.94 7H11Z"/>
+  <path d="M5.5 9H9V10.5H7V17H13.5V15H15V18.5H5.5Z"/>
+  <path d="M1.75 7V1.75H7V3.25H3.25V7Z"/>
+  <path d="M22.25 17V22.25H17V20.75H20.75V17Z"/>
 </svg>

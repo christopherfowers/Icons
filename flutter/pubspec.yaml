@@ -24,6 +24,12 @@ flutter:
     - family: GlyphActionsFilled
       fonts:
         - asset: fonts/GlyphActionsFilled.ttf
+    - family: GlyphAudioFilled
+      fonts:
+        - asset: fonts/GlyphAudioFilled.ttf
+    - family: GlyphBrandFilled
+      fonts:
+        - asset: fonts/GlyphBrandFilled.ttf
     - family: GlyphCommsFilled
       fonts:
         - asset: fonts/GlyphCommsFilled.ttf
@@ -45,12 +51,102 @@ flutter:
     - family: GlyphStatusFilled
       fonts:
         - asset: fonts/GlyphStatusFilled.ttf
+    - family: GlyphTabletopFilled
+      fonts:
+        - asset: fonts/GlyphTabletopFilled.ttf
     - family: GlyphTogglesFilled
       fonts:
         - asset: fonts/GlyphTogglesFilled.ttf
+    - family: GlyphToolsFilled
+      fonts:
+        - asset: fonts/GlyphToolsFilled.ttf
+    - family: GlyphActionsForgeFilled
+      fonts:
+        - asset: fonts/GlyphActionsForgeFilled.ttf
+    - family: GlyphAudioForgeFilled
+      fonts:
+        - asset: fonts/GlyphAudioForgeFilled.ttf
+    - family: GlyphBrandForgeFilled
+      fonts:
+        - asset: fonts/GlyphBrandForgeFilled.ttf
+    - family: GlyphCommsForgeFilled
+      fonts:
+        - asset: fonts/GlyphCommsForgeFilled.ttf
+    - family: GlyphCoreForgeFilled
+      fonts:
+        - asset: fonts/GlyphCoreForgeFilled.ttf
+    - family: GlyphDataForgeFilled
+      fonts:
+        - asset: fonts/GlyphDataForgeFilled.ttf
+    - family: GlyphEditingForgeFilled
+      fonts:
+        - asset: fonts/GlyphEditingForgeFilled.ttf
+    - family: GlyphMediaForgeFilled
+      fonts:
+        - asset: fonts/GlyphMediaForgeFilled.ttf
+    - family: GlyphNavigationForgeFilled
+      fonts:
+        - asset: fonts/GlyphNavigationForgeFilled.ttf
+    - family: GlyphStatusForgeFilled
+      fonts:
+        - asset: fonts/GlyphStatusForgeFilled.ttf
+    - family: GlyphTabletopForgeFilled
+      fonts:
+        - asset: fonts/GlyphTabletopForgeFilled.ttf
+    - family: GlyphTogglesForgeFilled
+      fonts:
+        - asset: fonts/GlyphTogglesForgeFilled.ttf
+    - family: GlyphToolsForgeFilled
+      fonts:
+        - asset: fonts/GlyphToolsForgeFilled.ttf
+    - family: GlyphActionsForge
+      fonts:
+        - asset: fonts/GlyphActionsForge.ttf
+    - family: GlyphAudioForge
+      fonts:
+        - asset: fonts/GlyphAudioForge.ttf
+    - family: GlyphBrandForge
+      fonts:
+        - asset: fonts/GlyphBrandForge.ttf
+    - family: GlyphCommsForge
+      fonts:
+        - asset: fonts/GlyphCommsForge.ttf
+    - family: GlyphCoreForge
+      fonts:
+        - asset: fonts/GlyphCoreForge.ttf
+    - family: GlyphDataForge
+      fonts:
+        - asset: fonts/GlyphDataForge.ttf
+    - family: GlyphEditingForge
+      fonts:
+        - asset: fonts/GlyphEditingForge.ttf
+    - family: GlyphMediaForge
+      fonts:
+        - asset: fonts/GlyphMediaForge.ttf
+    - family: GlyphNavigationForge
+      fonts:
+        - asset: fonts/GlyphNavigationForge.ttf
+    - family: GlyphStatusForge
+      fonts:
+        - asset: fonts/GlyphStatusForge.ttf
+    - family: GlyphTabletopForge
+      fonts:
+        - asset: fonts/GlyphTabletopForge.ttf
+    - family: GlyphTogglesForge
+      fonts:
+        - asset: fonts/GlyphTogglesForge.ttf
+    - family: GlyphToolsForge
+      fonts:
+        - asset: fonts/GlyphToolsForge.ttf
     - family: GlyphActions
       fonts:
         - asset: fonts/GlyphActions.ttf
+    - family: GlyphAudio
+      fonts:
+        - asset: fonts/GlyphAudio.ttf
+    - family: GlyphBrand
+      fonts:
+        - asset: fonts/GlyphBrand.ttf
     - family: GlyphComms
       fonts:
         - asset: fonts/GlyphComms.ttf
@@ -72,6 +168,12 @@ flutter:
     - family: GlyphStatus
       fonts:
         - asset: fonts/GlyphStatus.ttf
+    - family: GlyphTabletop
+      fonts:
+        - asset: fonts/GlyphTabletop.ttf
     - family: GlyphToggles
       fonts:
         - asset: fonts/GlyphToggles.ttf
+    - family: GlyphTools
+      fonts:
+        - asset: fonts/GlyphTools.ttf

@@ -27,7 +27,7 @@ import { Readable } from 'node:stream';
 import { SVGIcons2SVGFontStream } from 'svgicons2svgfont';
 import svg2ttf from 'svg2ttf';
 import { compress as woff2Compress } from 'wawoff2';
-import { PATHS, p } from './lib/paths.js';
+import { PATHS, p, isMain } from './lib/paths.js';
 import { loadConfig } from './lib/config.js';
 import { readMetadata } from './build-outlines.js';
 
@@ -207,5 +207,4 @@ export async function buildFonts({ quiet = false } = {}) {
   return built;
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) buildFonts();
+if (isMain(import.meta.url)) buildFonts();

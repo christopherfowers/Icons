@@ -16,7 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import crypto from 'node:crypto';
-import { REPO_ROOT, PATHS } from './lib/paths.js';
+import { REPO_ROOT, PATHS, isMain } from './lib/paths.js';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -173,8 +173,7 @@ export function serve(args) {
   return server;
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) {
+if (isMain(import.meta.url)) {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) {
     console.log(`usage: npm run serve -- [--port 4173] [--host 0.0.0.0] [--token SECRET]

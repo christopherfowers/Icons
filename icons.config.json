@@ -12,9 +12,9 @@
     "line": {
       "viewBox": 24,
       "padding": 2,
-      "strokeWidth": 2,
-      "linecap": "round",
-      "linejoin": "round"
+      "strokeWidth": 1.5,
+      "linecap": "butt",
+      "linejoin": "miter"
     },
     "solid": {
       "viewBox": 24,
@@ -34,17 +34,17 @@
       "style": "solid",
       "description": "Neutral solid silhouettes."
     },
-    "eve-outline": {
-      "theme": "eve",
+    "forge-outline": {
+      "theme": "forge",
       "weight": "outline",
       "style": "line",
-      "description": "Space-sim themed strokes. Not drawn yet."
+      "description": "Tsaraforge house style: strokes chipped and broken, as on worn stencilled plate."
     },
-    "eve-filled": {
-      "theme": "eve",
+    "forge-filled": {
+      "theme": "forge",
       "weight": "filled",
       "style": "solid",
-      "description": "Space-sim themed silhouettes. Not drawn yet."
+      "description": "Tsaraforge house style: silhouettes fractured by crack slivers, matching the mark."
     }
   },
   "defaultTheme": "core",

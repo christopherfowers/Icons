@@ -8,8 +8,7 @@
  * they are actually regenerated, so CI runs the build and then checks this.
  */
 import { execFileSync } from 'node:child_process';
-import path from 'node:path';
-import { REPO_ROOT } from './lib/paths.js';
+import { REPO_ROOT, isMain } from './lib/paths.js';
 
 const TRACKED = [
   'codepoints.json', 'fonts', 'preview',
@@ -18,8 +17,7 @@ const TRACKED = [
 
 const git = (...args) => execFileSync('git', args, { cwd: REPO_ROOT, encoding: 'utf8' });
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) {
+if (isMain(import.meta.url)) {
   const dirty = git('status', '--porcelain', '--', ...TRACKED).trim();
   if (!dirty) {
     console.log('generated files are up to date');

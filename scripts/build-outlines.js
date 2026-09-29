@@ -10,7 +10,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { PATHS } from './lib/paths.js';
+import { PATHS, isMain } from './lib/paths.js';
 import { loadConfig } from './lib/config.js';
 import { outlineSvg, flattenSolid } from './lib/outline.js';
 import { assignCodepoints, writeCodepoints } from './lib/codepoints.js';
@@ -109,5 +109,4 @@ export function readMetadata() {
   return JSON.parse(fs.readFileSync(PATHS.metadata, 'utf8'));
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) buildOutlines();
+if (isMain(import.meta.url)) buildOutlines();

@@ -23,6 +23,12 @@ class GlyphComms {
   /// Package that ships the font asset.
   static const String fontPackage = 'glyph_icons';
 
+  /// The `antenna` icon (U+E050).
+  ///
+  /// Source: `svg/outline/comms/antenna.svg`
+  static const IconData antenna =
+      IconData(0xe050, fontFamily: fontFamily, fontPackage: fontPackage);
+
   /// The `chat` icon (U+E041).
   ///
   /// Source: `svg/outline/comms/chat.svg`
@@ -40,12 +46,6 @@ class GlyphComms {
   /// Source: `svg/outline/comms/message.svg`
   static const IconData message =
       IconData(0xe046, fontFamily: fontFamily, fontPackage: fontPackage);
-
-  /// The `mic` icon (U+E047).
-  ///
-  /// Source: `svg/outline/comms/mic.svg`
-  static const IconData mic =
-      IconData(0xe047, fontFamily: fontFamily, fontPackage: fontPackage);
 
   /// The `phone` icon (U+E04A).
   ///

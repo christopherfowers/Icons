@@ -12,7 +12,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { PATHS, p } from './lib/paths.js';
+import { PATHS, p, isMain } from './lib/paths.js';
 import { loadConfig, camel, pascal } from './lib/config.js';
 import { readMetadata } from './build-outlines.js';
 
@@ -293,5 +293,4 @@ export function buildDart({ quiet = false } = {}) {
   return files.size;
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) buildDart();
+if (isMain(import.meta.url)) buildDart();

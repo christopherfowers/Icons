@@ -10,7 +10,7 @@ library;
 
 import 'package:flutter/widgets.dart';
 
-/// The 4 icons in the `media` group (`outline`).
+/// The 3 icons in the `media` group (`outline`).
 ///
 /// Every member is a `const IconData`, which lets `flutter build` strip the
 /// glyphs an app never references.
@@ -40,10 +40,4 @@ class GlyphMedia {
   /// Source: `svg/outline/media/play.svg`
   static const IconData play =
       IconData(0xe04b, fontFamily: fontFamily, fontPackage: fontPackage);
-
-  /// The `volume` icon (U+E04F).
-  ///
-  /// Source: `svg/outline/media/volume.svg`
-  static const IconData volume =
-      IconData(0xe04f, fontFamily: fontFamily, fontPackage: fontPackage);
 }

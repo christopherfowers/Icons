@@ -14,7 +14,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { PATHS } from './lib/paths.js';
+import { PATHS, REPO_ROOT, isMain } from './lib/paths.js';
 import { loadConfig } from './lib/config.js';
 import { dartMemberName } from './build-dart.js';
 import { readMetadata } from './build-outlines.js';
@@ -92,6 +92,11 @@ body {
   font-family: var(--sans);
   font-size: 14px;
   line-height: 1.5;
+  /* Fill the viewport so a short page doesn't leave the pager stranded
+     mid-screen above a band of empty background. */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
 
@@ -169,14 +174,19 @@ input[type=search]::placeholder { color: var(--fg-faint); }
 }
 
 /* ---- grid ------------------------------------------------------------ */
-main { padding: 20px; padding-bottom: 40px; transition: padding-right .16s; }
+main {
+  padding: 20px; padding-bottom: 40px; transition: padding-right .16s;
+  flex: 1; display: flex; flex-direction: column; gap: 20px;
+}
 @media (min-width: 721px) {
   :root.detail-open main { padding-right: 380px; }
 }
 @media (prefers-reduced-motion: reduce) { main { transition: none; } }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+  /* Columns track the chosen icon size: a tile holds two swatches side by side,
+     so a fixed min-width overflows the page once the slider goes large. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, max(124px, calc(var(--size, 32px) * var(--swatches, 2) + 42px))), 1fr));
   gap: 8px;
 }
 .tile {
@@ -195,11 +205,40 @@ main { padding: 20px; padding-bottom: 40px; transition: padding-right .16s; }
 }
 .tile:hover { background: var(--panel-2); border-color: var(--fg-faint); }
 .tile[aria-current="true"] { border-color: var(--accent); }
+.grid { flex: 1 0 auto; align-content: start; }
+
+/* ---- brand ----------------------------------------------------------- */
+.brand { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 14px 16px 16px; }
+.brand-title {
+  font-family: var(--cond); font-size: 12px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--fg-dim); margin: 0 0 12px; font-weight: 600;
+}
+.brand-title em { font-style: normal; text-transform: none; letter-spacing: 0; color: var(--fg-faint); margin-left: 8px; font-size: 11.5px; }
+.brand-row { display: flex; gap: 12px; flex-wrap: wrap; overflow-x: auto; }
+.brand-card { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 9px;
+  padding: 12px 10px 9px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+.brand-card.mono { color: var(--accent); }
+.brand-art, .brand-mini { display: flex; align-items: flex-end; gap: 9px; }
+/* Brand artwork rides the same size slider as the icons, at 3x since it is a
+   lockup rather than a glyph and needs the room to read. */
+.brand-art svg { width: calc(var(--size, 32px) * 3); height: calc(var(--size, 32px) * 3); }
+.brand-mini svg:nth-child(1) { width: calc(var(--size, 32px) * 1.5); height: calc(var(--size, 32px) * 1.5); }
+.brand-mini svg:nth-child(2) { width: var(--size, 32px); height: var(--size, 32px); }
+.brand-mini svg:nth-child(3) { width: calc(var(--size, 32px) * .5); height: calc(var(--size, 32px) * .5); }
+.brand-card { max-width: 100%; }
+.brand-art { max-width: 100%; overflow: hidden; }
+.brand-card figcaption { font-family: var(--mono); font-size: 10.5px; color: var(--fg-faint); }
 .swatches { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 34px; }
-.swatch svg { width: var(--size, 28px); height: var(--size, 28px); fill: currentColor; display: block; }
+.sizer { display: inline-flex; align-items: center; gap: 8px; margin-left: 4px; }
+.sizer input[type=range] { width: 132px; accent-color: var(--focus); cursor: pointer; }
+.sizer output {
+  font-family: var(--mono); font-size: 11.5px; color: var(--fg-dim);
+  font-variant-numeric: tabular-nums; min-width: 42px;
+}
+.swatch svg { width: var(--size, 32px); height: var(--size, 32px); fill: currentColor; display: block; }
 .swatch.absent {
-  width: var(--size, 28px);
-  height: var(--size, 28px);
+  width: var(--size, 32px);
+  height: var(--size, 32px);
   border: 1.5px dashed var(--line);
   border-radius: 4px;
 }
@@ -215,7 +254,7 @@ main { padding: 20px; padding-bottom: 40px; transition: padding-right .16s; }
 .pager {
   display: flex; align-items: center; justify-content: space-between;
   gap: 12px; flex-wrap: wrap;
-  margin-top: 20px; padding-top: 16px;
+  margin-top: auto; padding-top: 16px;
   border-top: 1px solid var(--line);
 }
 .pager-count {
@@ -338,7 +377,7 @@ main { padding: 20px; padding-bottom: 40px; transition: padding-right .16s; }
 
 const SCRIPT = String.raw`
 const $ = (s) => document.querySelector(s);
-const state = { q: '', group: 'all', variant: 'all', gapsOnly: false, page: 1, per: 48 };
+const state = { q: '', group: 'all', variant: 'all', gapsOnly: false, page: 1, per: 0 };
 
 const grid = $('#grid');
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -489,14 +528,25 @@ function bindChips(selector, key) {
 bindChips('.chip[data-group]', 'group');
 bindChips('.chip[data-variant]', 'variant');
 
-for (const chip of document.querySelectorAll('.chip[data-size]')) {
-  chip.addEventListener('click', () => {
-    document.documentElement.style.setProperty('--size', chip.dataset.size + 'px');
-    for (const other of document.querySelectorAll('.chip[data-size]')) {
-      other.setAttribute('aria-pressed', String(other === chip));
-    }
-  });
+const sizeRange = $('#size-range');
+const sizeOut = $('#size-out');
+
+/** Single place that moves the size, so chips and slider can never disagree. */
+function setSize(px) {
+  const n = Math.min(160, Math.max(12, Math.round(Number(px) || 32)));
+  document.documentElement.style.setProperty('--size', n + 'px');
+  sizeRange.value = String(n);
+  sizeOut.textContent = n + 'px';
+  for (const other of document.querySelectorAll('.chip[data-size]')) {
+    other.setAttribute('aria-pressed', String(Number(other.dataset.size) === n));
+  }
 }
+
+for (const chip of document.querySelectorAll('.chip[data-size]')) {
+  chip.addEventListener('click', () => setSize(chip.dataset.size));
+}
+sizeRange.addEventListener('input', () => setSize(sizeRange.value));
+setSize(32);
 
 const gapsChip = $('#gaps');
 gapsChip.addEventListener('click', () => {
@@ -710,6 +760,31 @@ export function buildPreview({ quiet = false } = {}) {
     ].join('\n');
   };
 
+  /* Brand assets live outside the icon tree: they are real artwork, not font
+     glyphs, so they are shown at their own scale rather than on the 24 grid. */
+  const brandDir = path.join(REPO_ROOT, 'brand');
+  const brandFiles = fs.existsSync(brandDir)
+    ? fs.readdirSync(brandDir).filter((f) => f.endsWith('.svg')).sort()
+    : [];
+  const brandStrip = brandFiles.length ? `
+  <section class="brand" aria-label="Brand assets">
+    <h2 class="brand-title">brand <em>${brandFiles.length} files &middot; vector, not font glyphs</em></h2>
+    <div class="brand-row">
+${brandFiles.map((file) => {
+    const raw = fs.readFileSync(path.join(brandDir, file), 'utf8')
+      .replace(/<\?xml[^>]*\?>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim();
+    const mono = file.includes('mono');
+    const inline = (px) => raw.replace('<svg ', `<svg width="${px}" height="${px}" `);
+    return `
+      <figure class="brand-card${mono ? ' mono' : ''}">
+        <div class="brand-art">${inline(104)}</div>
+        <div class="brand-mini">${inline(48)}${inline(32)}${inline(16)}</div>
+        <figcaption>${esc(file)}</figcaption>
+      </figure>`;
+  }).join('')}
+    </div>
+  </section>` : '';
+
   // The first page is rendered into the markup so the page is complete before
   // script runs; script re-renders from the data on every filter or page change.
   const FIRST_PAGE = 48;
@@ -720,6 +795,7 @@ export function buildPreview({ quiet = false } = {}) {
     `<span><b>${counts[v]}</b>/${icons.length} ${esc(v)}</span>`).join('\n      ');
 
   const head = `<title>${esc(metadata.displayName)}</title>
+<style>:root{--swatches:${ordered.length}}</style>
 <link rel="stylesheet" href="${FONTS}">
 <style>${STYLE}</style>`;
 
@@ -750,12 +826,17 @@ export function buildPreview({ quiet = false } = {}) {
     </div>
     <div class="chips" role="group" aria-label="Size">
       <span class="rail-label">size</span>
-      ${[16, 24, 28, 40].map((px) => `<button class="chip" type="button" data-size="${px}" aria-pressed="${px === 28}">${px}</button>`).join('\n      ')}
+      ${[16, 20, 24, 32, 48, 64, 96].map((px) => `<button class="chip" type="button" data-size="${px}" aria-pressed="${px === 32}">${px}</button>`).join('\n      ')}
+      <span class="sizer">
+        <input id="size-range" type="range" min="12" max="160" step="1" value="32"
+               aria-label="Icon size in pixels">
+        <output id="size-out" for="size-range">32px</output>
+      </span>
     </div>
   </div>
 </header>
 
-<main>
+<main>${brandStrip}
   <div class="grid" id="grid">
 ${firstPage}
   </div>
@@ -767,10 +848,10 @@ ${firstPage}
       <label for="per">Per page</label>
       <select id="per">
         <option value="24">24</option>
-        <option value="48" selected>48</option>
+        <option value="48">48</option>
         <option value="96">96</option>
         <option value="192">192</option>
-        <option value="0">All</option>
+        <option value="0" selected>All</option>
       </select>
     </span>
   </nav>
@@ -829,5 +910,4 @@ ${SCRIPT}
     + `(${(artifact.length / 1024).toFixed(0)} KiB)`);
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) buildPreview();
+if (isMain(import.meta.url)) buildPreview();

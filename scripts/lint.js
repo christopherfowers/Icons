@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
-import { PATHS } from './lib/paths.js';
+import { PATHS, isMain } from './lib/paths.js';
 import { loadConfig } from './lib/config.js';
 import { geometryBounds } from './lib/outline.js';
 
@@ -258,8 +258,7 @@ export function lintAll() {
   return report;
 }
 
-const isMain = process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`;
-if (isMain) {
+if (isMain(import.meta.url)) {
   const report = lintAll().filter((e) => !e.warning);
   const warnings = lintAll().filter((e) => e.warning);
   for (const { file, problems } of warnings) {

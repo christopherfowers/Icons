@@ -38,28 +38,37 @@ decides which spec the linter applies:
 |---|---|---|---|---|
 | `outline` | core | outline | `GlyphCore` | `gi-home` |
 | `filled` | core | filled | `GlyphCoreFilled` | `gi-filled gi-home` |
-| `eve-outline` | eve | outline | `GlyphCoreEve` | `gi-eve gi-home` |
-| `eve-filled` | eve | filled | `GlyphCoreEveFilled` | `gi-eve gi-filled gi-home` |
+| `forge-outline` | forge | outline | `GlyphCoreForge` | `gi-forge gi-home` |
+| `forge-filled` | forge | filled | `GlyphCoreForgeFilled` | `gi-forge gi-filled gi-home` |
 
 The default theme and weight contribute nothing to a name, so the neutral set
 keeps the short names and the plain class resolves to it. Every other dimension
 adds one class and one name segment.
 
 Adding a theme is a directory and four lines of config — see `variants` in
-`icons.config.json`. The `eve` theme is declared but not drawn yet.
+`icons.config.json`. The `forge` theme is the Tsaraforge house style: the same
+icons with their strokes chipped and their silhouettes fractured by crack
+slivers, matching the company mark. It is generated from the clean set, so the
+two stay in step.
 
 **Group** is what an icon is for, and it is the unit of bundling — one font per
 (variant, group), so a project only ships what it imports:
 
 | Group | Icons |
 |---|---|
-| `core` | home, search, settings, user, users, menu, close |
+| `core` | home, search, settings, sliders, user, users, menu, close, more, help, target, bulb |
 | `editing` | add, remove, edit, delete, check, copy |
 | `navigation` | chevrons, arrows, link, external-link |
-| `actions` | refresh, download, upload, share |
+| `actions` | refresh, download, upload, share, rocket |
 | `status` | bell, info, warning, error |
-| `data` | calendar, clock, filter, sort |
+| `data` | calendar, clock, file, folder, filter, sort, save |
 | `toggles` | eye, eye-off, lock, unlock, star, heart |
+| `comms` | chat, mail, message, phone, radio, antenna, send, signal |
+| `audio` | mic, speaker, volume, headphones |
+| `media` | camera, play, pause |
+| `tools` | hammer, wrench, bolt |
+| `tabletop` | dice, trophy, table, storefront, gamepad |
+| `brand` | tsaraforge, anvil, crown, spark |
 
 Groups and variants are just directories. Adding either is
 `npm run new -- <variant>/<group>/<icon>`; the build picks it up and generates
@@ -72,10 +81,8 @@ than failing.
 
 ### Coverage
 
-`outline` is complete at 39 icons. `filled` currently covers 14 of them
-(`home`, `user`, `users`, `search`, `settings`, `bell`, `info`, `warning`,
-`error`, `star`, `heart`, `lock`, `unlock`, `eye`) — enough to exercise the
-whole variant path end to end. The rest are still to draw.
+75 icons, complete across all four variants — `outline`, `filled`,
+`forge-outline` and `forge-filled` — for 300 glyphs and no gaps.
 
 ## Using the fonts
 
@@ -101,8 +108,8 @@ per icon, so the whole set is two lines:
 
 <i class="gi-home"></i>                   <!-- core theme, outline -->
 <i class="gi-filled gi-home"></i>         <!-- same icon, filled -->
-<i class="gi-eve gi-home"></i>            <!-- eve theme, outline -->
-<i class="gi-eve gi-filled gi-home"></i>  <!-- eve theme, filled -->
+<i class="gi-forge gi-home"></i>          <!-- forge theme, outline -->
+<i class="gi-forge gi-filled gi-home"></i><!-- forge theme, filled -->
 
 <i class="gi-star" style="font-size: 32px; color: #7fd0de"></i>
 ```
@@ -190,7 +197,7 @@ Then, per variant:
 | | `outline` | `filled` |
 |---|---|---|
 | root `<svg>` | `fill="none" stroke="currentColor"` | `fill="currentColor" stroke="none"` |
-| stroke | `stroke-width="2"`, `round` cap and join, uniform | none — silhouettes only |
+| stroke | `stroke-width="1.5"`, `butt` cap, `miter` join, uniform | none — silhouettes only |
 | holes | n/a | wind a contour against its parent; overlapping cut-outs wind back to filled |
 | padding | geometry inside `2 … 22` (centerlines) | geometry inside `1 … 23` (the silhouette) |
 | elements | `path` `circle` `ellipse` `rect` `line` `polyline` `polygon` | same, minus `line` and `polyline`, which have no area |

@@ -1,0 +1,14 @@
+# The build writes LF and its output is committed and diffed by `npm run check`.
+# Without this, a Windows clone (core.autocrlf=true) checks out CRLF, the build
+# rewrites LF, and every generated file shows as modified forever.
+* text=auto eol=lf
+
+# Generated font binaries — never touch these.
+*.ttf   binary
+*.woff  binary
+*.woff2 binary
+*.eot   binary
+*.otf   binary
+*.png   binary
+*.jpg   binary
+*.ico   binary

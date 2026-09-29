@@ -11,6 +11,24 @@
 }
 
 @font-face {
+  font-family: "GlyphAudioFilled";
+  src: url("GlyphAudioFilled.woff2") format("woff2"),
+       url("GlyphAudioFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphBrandFilled";
+  src: url("GlyphBrandFilled.woff2") format("woff2"),
+       url("GlyphBrandFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphCommsFilled";
   src: url("GlyphCommsFilled.woff2") format("woff2"),
        url("GlyphCommsFilled.ttf") format("truetype");
@@ -74,6 +92,15 @@
 }
 
 @font-face {
+  font-family: "GlyphTabletopFilled";
+  src: url("GlyphTabletopFilled.woff2") format("woff2"),
+       url("GlyphTabletopFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphTogglesFilled";
   src: url("GlyphTogglesFilled.woff2") format("woff2"),
        url("GlyphTogglesFilled.ttf") format("truetype");
@@ -83,9 +110,270 @@
 }
 
 @font-face {
+  font-family: "GlyphToolsFilled";
+  src: url("GlyphToolsFilled.woff2") format("woff2"),
+       url("GlyphToolsFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphActionsForgeFilled";
+  src: url("GlyphActionsForgeFilled.woff2") format("woff2"),
+       url("GlyphActionsForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphAudioForgeFilled";
+  src: url("GlyphAudioForgeFilled.woff2") format("woff2"),
+       url("GlyphAudioForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphBrandForgeFilled";
+  src: url("GlyphBrandForgeFilled.woff2") format("woff2"),
+       url("GlyphBrandForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCommsForgeFilled";
+  src: url("GlyphCommsForgeFilled.woff2") format("woff2"),
+       url("GlyphCommsForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCoreForgeFilled";
+  src: url("GlyphCoreForgeFilled.woff2") format("woff2"),
+       url("GlyphCoreForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphDataForgeFilled";
+  src: url("GlyphDataForgeFilled.woff2") format("woff2"),
+       url("GlyphDataForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphEditingForgeFilled";
+  src: url("GlyphEditingForgeFilled.woff2") format("woff2"),
+       url("GlyphEditingForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphMediaForgeFilled";
+  src: url("GlyphMediaForgeFilled.woff2") format("woff2"),
+       url("GlyphMediaForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphNavigationForgeFilled";
+  src: url("GlyphNavigationForgeFilled.woff2") format("woff2"),
+       url("GlyphNavigationForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphStatusForgeFilled";
+  src: url("GlyphStatusForgeFilled.woff2") format("woff2"),
+       url("GlyphStatusForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTabletopForgeFilled";
+  src: url("GlyphTabletopForgeFilled.woff2") format("woff2"),
+       url("GlyphTabletopForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTogglesForgeFilled";
+  src: url("GlyphTogglesForgeFilled.woff2") format("woff2"),
+       url("GlyphTogglesForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphToolsForgeFilled";
+  src: url("GlyphToolsForgeFilled.woff2") format("woff2"),
+       url("GlyphToolsForgeFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphActionsForge";
+  src: url("GlyphActionsForge.woff2") format("woff2"),
+       url("GlyphActionsForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphAudioForge";
+  src: url("GlyphAudioForge.woff2") format("woff2"),
+       url("GlyphAudioForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphBrandForge";
+  src: url("GlyphBrandForge.woff2") format("woff2"),
+       url("GlyphBrandForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCommsForge";
+  src: url("GlyphCommsForge.woff2") format("woff2"),
+       url("GlyphCommsForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCoreForge";
+  src: url("GlyphCoreForge.woff2") format("woff2"),
+       url("GlyphCoreForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphDataForge";
+  src: url("GlyphDataForge.woff2") format("woff2"),
+       url("GlyphDataForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphEditingForge";
+  src: url("GlyphEditingForge.woff2") format("woff2"),
+       url("GlyphEditingForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphMediaForge";
+  src: url("GlyphMediaForge.woff2") format("woff2"),
+       url("GlyphMediaForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphNavigationForge";
+  src: url("GlyphNavigationForge.woff2") format("woff2"),
+       url("GlyphNavigationForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphStatusForge";
+  src: url("GlyphStatusForge.woff2") format("woff2"),
+       url("GlyphStatusForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTabletopForge";
+  src: url("GlyphTabletopForge.woff2") format("woff2"),
+       url("GlyphTabletopForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTogglesForge";
+  src: url("GlyphTogglesForge.woff2") format("woff2"),
+       url("GlyphTogglesForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphToolsForge";
+  src: url("GlyphToolsForge.woff2") format("woff2"),
+       url("GlyphToolsForge.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphActions";
   src: url("GlyphActions.woff2") format("woff2"),
        url("GlyphActions.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphAudio";
+  src: url("GlyphAudio.woff2") format("woff2"),
+       url("GlyphAudio.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphBrand";
+  src: url("GlyphBrand.woff2") format("woff2"),
+       url("GlyphBrand.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -155,9 +443,27 @@
 }
 
 @font-face {
+  font-family: "GlyphTabletop";
+  src: url("GlyphTabletop.woff2") format("woff2"),
+       url("GlyphTabletop.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphToggles";
   src: url("GlyphToggles.woff2") format("woff2"),
        url("GlyphToggles.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTools";
+  src: url("GlyphTools.woff2") format("woff2"),
+       url("GlyphTools.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -179,16 +485,33 @@
 /* actions - filled */
 .gi-filled.gi-download,
 .gi-filled.gi-refresh,
+.gi-filled.gi-rocket,
 .gi-filled.gi-share,
 .gi-filled.gi-upload {
   font-family: "GlyphActionsFilled";
 }
 
+/* audio - filled */
+.gi-filled.gi-headphones,
+.gi-filled.gi-mic,
+.gi-filled.gi-speaker,
+.gi-filled.gi-volume {
+  font-family: "GlyphAudioFilled";
+}
+
+/* brand - filled */
+.gi-filled.gi-anvil,
+.gi-filled.gi-crown,
+.gi-filled.gi-spark,
+.gi-filled.gi-tsaraforge {
+  font-family: "GlyphBrandFilled";
+}
+
 /* comms - filled */
+.gi-filled.gi-antenna,
 .gi-filled.gi-chat,
 .gi-filled.gi-mail,
 .gi-filled.gi-message,
-.gi-filled.gi-mic,
 .gi-filled.gi-phone,
 .gi-filled.gi-radio,
 .gi-filled.gi-send,
@@ -197,6 +520,7 @@
 }
 
 /* core - filled */
+.gi-filled.gi-bulb,
 .gi-filled.gi-close,
 .gi-filled.gi-help,
 .gi-filled.gi-home,
@@ -204,6 +528,8 @@
 .gi-filled.gi-more,
 .gi-filled.gi-search,
 .gi-filled.gi-settings,
+.gi-filled.gi-sliders,
+.gi-filled.gi-target,
 .gi-filled.gi-user,
 .gi-filled.gi-users {
   font-family: "GlyphCoreFilled";
@@ -215,6 +541,7 @@
 .gi-filled.gi-file,
 .gi-filled.gi-filter,
 .gi-filled.gi-folder,
+.gi-filled.gi-save,
 .gi-filled.gi-sort {
   font-family: "GlyphDataFilled";
 }
@@ -232,8 +559,7 @@
 /* media - filled */
 .gi-filled.gi-camera,
 .gi-filled.gi-pause,
-.gi-filled.gi-play,
-.gi-filled.gi-volume {
+.gi-filled.gi-play {
   font-family: "GlyphMediaFilled";
 }
 
@@ -257,6 +583,15 @@
   font-family: "GlyphStatusFilled";
 }
 
+/* tabletop - filled */
+.gi-filled.gi-dice,
+.gi-filled.gi-gamepad,
+.gi-filled.gi-storefront,
+.gi-filled.gi-table,
+.gi-filled.gi-trophy {
+  font-family: "GlyphTabletopFilled";
+}
+
 /* toggles - filled */
 .gi-filled.gi-eye,
 .gi-filled.gi-eye-off,
@@ -267,19 +602,297 @@
   font-family: "GlyphTogglesFilled";
 }
 
+/* tools - filled */
+.gi-filled.gi-bolt,
+.gi-filled.gi-hammer,
+.gi-filled.gi-wrench {
+  font-family: "GlyphToolsFilled";
+}
+
+/* actions - forge-filled */
+.gi-forge.gi-filled.gi-download,
+.gi-forge.gi-filled.gi-refresh,
+.gi-forge.gi-filled.gi-rocket,
+.gi-forge.gi-filled.gi-share,
+.gi-forge.gi-filled.gi-upload {
+  font-family: "GlyphActionsForgeFilled";
+}
+
+/* audio - forge-filled */
+.gi-forge.gi-filled.gi-headphones,
+.gi-forge.gi-filled.gi-mic,
+.gi-forge.gi-filled.gi-speaker,
+.gi-forge.gi-filled.gi-volume {
+  font-family: "GlyphAudioForgeFilled";
+}
+
+/* brand - forge-filled */
+.gi-forge.gi-filled.gi-anvil,
+.gi-forge.gi-filled.gi-crown,
+.gi-forge.gi-filled.gi-spark,
+.gi-forge.gi-filled.gi-tsaraforge {
+  font-family: "GlyphBrandForgeFilled";
+}
+
+/* comms - forge-filled */
+.gi-forge.gi-filled.gi-antenna,
+.gi-forge.gi-filled.gi-chat,
+.gi-forge.gi-filled.gi-mail,
+.gi-forge.gi-filled.gi-message,
+.gi-forge.gi-filled.gi-phone,
+.gi-forge.gi-filled.gi-radio,
+.gi-forge.gi-filled.gi-send,
+.gi-forge.gi-filled.gi-signal {
+  font-family: "GlyphCommsForgeFilled";
+}
+
+/* core - forge-filled */
+.gi-forge.gi-filled.gi-bulb,
+.gi-forge.gi-filled.gi-close,
+.gi-forge.gi-filled.gi-help,
+.gi-forge.gi-filled.gi-home,
+.gi-forge.gi-filled.gi-menu,
+.gi-forge.gi-filled.gi-more,
+.gi-forge.gi-filled.gi-search,
+.gi-forge.gi-filled.gi-settings,
+.gi-forge.gi-filled.gi-sliders,
+.gi-forge.gi-filled.gi-target,
+.gi-forge.gi-filled.gi-user,
+.gi-forge.gi-filled.gi-users {
+  font-family: "GlyphCoreForgeFilled";
+}
+
+/* data - forge-filled */
+.gi-forge.gi-filled.gi-calendar,
+.gi-forge.gi-filled.gi-clock,
+.gi-forge.gi-filled.gi-file,
+.gi-forge.gi-filled.gi-filter,
+.gi-forge.gi-filled.gi-folder,
+.gi-forge.gi-filled.gi-save,
+.gi-forge.gi-filled.gi-sort {
+  font-family: "GlyphDataForgeFilled";
+}
+
+/* editing - forge-filled */
+.gi-forge.gi-filled.gi-add,
+.gi-forge.gi-filled.gi-check,
+.gi-forge.gi-filled.gi-copy,
+.gi-forge.gi-filled.gi-delete,
+.gi-forge.gi-filled.gi-edit,
+.gi-forge.gi-filled.gi-remove {
+  font-family: "GlyphEditingForgeFilled";
+}
+
+/* media - forge-filled */
+.gi-forge.gi-filled.gi-camera,
+.gi-forge.gi-filled.gi-pause,
+.gi-forge.gi-filled.gi-play {
+  font-family: "GlyphMediaForgeFilled";
+}
+
+/* navigation - forge-filled */
+.gi-forge.gi-filled.gi-arrow-left,
+.gi-forge.gi-filled.gi-arrow-right,
+.gi-forge.gi-filled.gi-chevron-down,
+.gi-forge.gi-filled.gi-chevron-left,
+.gi-forge.gi-filled.gi-chevron-right,
+.gi-forge.gi-filled.gi-chevron-up,
+.gi-forge.gi-filled.gi-external-link,
+.gi-forge.gi-filled.gi-link {
+  font-family: "GlyphNavigationForgeFilled";
+}
+
+/* status - forge-filled */
+.gi-forge.gi-filled.gi-bell,
+.gi-forge.gi-filled.gi-error,
+.gi-forge.gi-filled.gi-info,
+.gi-forge.gi-filled.gi-warning {
+  font-family: "GlyphStatusForgeFilled";
+}
+
+/* tabletop - forge-filled */
+.gi-forge.gi-filled.gi-dice,
+.gi-forge.gi-filled.gi-gamepad,
+.gi-forge.gi-filled.gi-storefront,
+.gi-forge.gi-filled.gi-table,
+.gi-forge.gi-filled.gi-trophy {
+  font-family: "GlyphTabletopForgeFilled";
+}
+
+/* toggles - forge-filled */
+.gi-forge.gi-filled.gi-eye,
+.gi-forge.gi-filled.gi-eye-off,
+.gi-forge.gi-filled.gi-heart,
+.gi-forge.gi-filled.gi-lock,
+.gi-forge.gi-filled.gi-star,
+.gi-forge.gi-filled.gi-unlock {
+  font-family: "GlyphTogglesForgeFilled";
+}
+
+/* tools - forge-filled */
+.gi-forge.gi-filled.gi-bolt,
+.gi-forge.gi-filled.gi-hammer,
+.gi-forge.gi-filled.gi-wrench {
+  font-family: "GlyphToolsForgeFilled";
+}
+
+/* actions - forge-outline */
+.gi-forge.gi-download,
+.gi-forge.gi-refresh,
+.gi-forge.gi-rocket,
+.gi-forge.gi-share,
+.gi-forge.gi-upload {
+  font-family: "GlyphActionsForge";
+}
+
+/* audio - forge-outline */
+.gi-forge.gi-headphones,
+.gi-forge.gi-mic,
+.gi-forge.gi-speaker,
+.gi-forge.gi-volume {
+  font-family: "GlyphAudioForge";
+}
+
+/* brand - forge-outline */
+.gi-forge.gi-anvil,
+.gi-forge.gi-crown,
+.gi-forge.gi-spark,
+.gi-forge.gi-tsaraforge {
+  font-family: "GlyphBrandForge";
+}
+
+/* comms - forge-outline */
+.gi-forge.gi-antenna,
+.gi-forge.gi-chat,
+.gi-forge.gi-mail,
+.gi-forge.gi-message,
+.gi-forge.gi-phone,
+.gi-forge.gi-radio,
+.gi-forge.gi-send,
+.gi-forge.gi-signal {
+  font-family: "GlyphCommsForge";
+}
+
+/* core - forge-outline */
+.gi-forge.gi-bulb,
+.gi-forge.gi-close,
+.gi-forge.gi-help,
+.gi-forge.gi-home,
+.gi-forge.gi-menu,
+.gi-forge.gi-more,
+.gi-forge.gi-search,
+.gi-forge.gi-settings,
+.gi-forge.gi-sliders,
+.gi-forge.gi-target,
+.gi-forge.gi-user,
+.gi-forge.gi-users {
+  font-family: "GlyphCoreForge";
+}
+
+/* data - forge-outline */
+.gi-forge.gi-calendar,
+.gi-forge.gi-clock,
+.gi-forge.gi-file,
+.gi-forge.gi-filter,
+.gi-forge.gi-folder,
+.gi-forge.gi-save,
+.gi-forge.gi-sort {
+  font-family: "GlyphDataForge";
+}
+
+/* editing - forge-outline */
+.gi-forge.gi-add,
+.gi-forge.gi-check,
+.gi-forge.gi-copy,
+.gi-forge.gi-delete,
+.gi-forge.gi-edit,
+.gi-forge.gi-remove {
+  font-family: "GlyphEditingForge";
+}
+
+/* media - forge-outline */
+.gi-forge.gi-camera,
+.gi-forge.gi-pause,
+.gi-forge.gi-play {
+  font-family: "GlyphMediaForge";
+}
+
+/* navigation - forge-outline */
+.gi-forge.gi-arrow-left,
+.gi-forge.gi-arrow-right,
+.gi-forge.gi-chevron-down,
+.gi-forge.gi-chevron-left,
+.gi-forge.gi-chevron-right,
+.gi-forge.gi-chevron-up,
+.gi-forge.gi-external-link,
+.gi-forge.gi-link {
+  font-family: "GlyphNavigationForge";
+}
+
+/* status - forge-outline */
+.gi-forge.gi-bell,
+.gi-forge.gi-error,
+.gi-forge.gi-info,
+.gi-forge.gi-warning {
+  font-family: "GlyphStatusForge";
+}
+
+/* tabletop - forge-outline */
+.gi-forge.gi-dice,
+.gi-forge.gi-gamepad,
+.gi-forge.gi-storefront,
+.gi-forge.gi-table,
+.gi-forge.gi-trophy {
+  font-family: "GlyphTabletopForge";
+}
+
+/* toggles - forge-outline */
+.gi-forge.gi-eye,
+.gi-forge.gi-eye-off,
+.gi-forge.gi-heart,
+.gi-forge.gi-lock,
+.gi-forge.gi-star,
+.gi-forge.gi-unlock {
+  font-family: "GlyphTogglesForge";
+}
+
+/* tools - forge-outline */
+.gi-forge.gi-bolt,
+.gi-forge.gi-hammer,
+.gi-forge.gi-wrench {
+  font-family: "GlyphToolsForge";
+}
+
 /* actions - outline */
 .gi-download,
 .gi-refresh,
+.gi-rocket,
 .gi-share,
 .gi-upload {
   font-family: "GlyphActions";
 }
 
+/* audio - outline */
+.gi-headphones,
+.gi-mic,
+.gi-speaker,
+.gi-volume {
+  font-family: "GlyphAudio";
+}
+
+/* brand - outline */
+.gi-anvil,
+.gi-crown,
+.gi-spark,
+.gi-tsaraforge {
+  font-family: "GlyphBrand";
+}
+
 /* comms - outline */
+.gi-antenna,
 .gi-chat,
 .gi-mail,
 .gi-message,
-.gi-mic,
 .gi-phone,
 .gi-radio,
 .gi-send,
@@ -288,6 +901,7 @@
 }
 
 /* core - outline */
+.gi-bulb,
 .gi-close,
 .gi-help,
 .gi-home,
@@ -295,6 +909,8 @@
 .gi-more,
 .gi-search,
 .gi-settings,
+.gi-sliders,
+.gi-target,
 .gi-user,
 .gi-users {
   font-family: "GlyphCore";
@@ -306,6 +922,7 @@
 .gi-file,
 .gi-filter,
 .gi-folder,
+.gi-save,
 .gi-sort {
   font-family: "GlyphData";
 }
@@ -323,8 +940,7 @@
 /* media - outline */
 .gi-camera,
 .gi-pause,
-.gi-play,
-.gi-volume {
+.gi-play {
   font-family: "GlyphMedia";
 }
 
@@ -348,6 +964,15 @@
   font-family: "GlyphStatus";
 }
 
+/* tabletop - outline */
+.gi-dice,
+.gi-gamepad,
+.gi-storefront,
+.gi-table,
+.gi-trophy {
+  font-family: "GlyphTabletop";
+}
+
 /* toggles - outline */
 .gi-eye,
 .gi-eye-off,
@@ -358,11 +983,22 @@
   font-family: "GlyphToggles";
 }
 
+/* tools - outline */
+.gi-bolt,
+.gi-hammer,
+.gi-wrench {
+  font-family: "GlyphTools";
+}
+
 /* codepoints */
 .gi-add::before { content: "\e000"; }
+.gi-antenna::before { content: "\e050"; }
+.gi-anvil::before { content: "\e053"; }
 .gi-arrow-left::before { content: "\e001"; }
 .gi-arrow-right::before { content: "\e002"; }
 .gi-bell::before { content: "\e003"; }
+.gi-bolt::before { content: "\e054"; }
+.gi-bulb::before { content: "\e055"; }
 .gi-calendar::before { content: "\e004"; }
 .gi-camera::before { content: "\e040"; }
 .gi-chat::before { content: "\e041"; }
@@ -374,7 +1010,9 @@
 .gi-clock::before { content: "\e00a"; }
 .gi-close::before { content: "\e00b"; }
 .gi-copy::before { content: "\e00c"; }
+.gi-crown::before { content: "\e056"; }
 .gi-delete::before { content: "\e00d"; }
+.gi-dice::before { content: "\e057"; }
 .gi-download::before { content: "\e00e"; }
 .gi-edit::before { content: "\e00f"; }
 .gi-error::before { content: "\e010"; }
@@ -384,6 +1022,9 @@
 .gi-file::before { content: "\e042"; }
 .gi-filter::before { content: "\e014"; }
 .gi-folder::before { content: "\e043"; }
+.gi-gamepad::before { content: "\e058"; }
+.gi-hammer::before { content: "\e059"; }
+.gi-headphones::before { content: "\e05a"; }
 .gi-heart::before { content: "\e015"; }
 .gi-help::before { content: "\e044"; }
 .gi-home::before { content: "\e016"; }
@@ -401,16 +1042,27 @@
 .gi-radio::before { content: "\e04c"; }
 .gi-refresh::before { content: "\e01b"; }
 .gi-remove::before { content: "\e01c"; }
+.gi-rocket::before { content: "\e05b"; }
+.gi-save::before { content: "\e05c"; }
 .gi-search::before { content: "\e01d"; }
 .gi-send::before { content: "\e04d"; }
 .gi-settings::before { content: "\e01e"; }
 .gi-share::before { content: "\e01f"; }
 .gi-signal::before { content: "\e04e"; }
+.gi-sliders::before { content: "\e051"; }
 .gi-sort::before { content: "\e020"; }
+.gi-spark::before { content: "\e05d"; }
+.gi-speaker::before { content: "\e052"; }
 .gi-star::before { content: "\e021"; }
+.gi-storefront::before { content: "\e05e"; }
+.gi-table::before { content: "\e05f"; }
+.gi-target::before { content: "\e060"; }
+.gi-trophy::before { content: "\e061"; }
+.gi-tsaraforge::before { content: "\e063"; }
 .gi-unlock::before { content: "\e022"; }
 .gi-upload::before { content: "\e023"; }
 .gi-user::before { content: "\e024"; }
 .gi-users::before { content: "\e025"; }
 .gi-volume::before { content: "\e04f"; }
 .gi-warning::before { content: "\e026"; }
+.gi-wrench::before { content: "\e062"; }
