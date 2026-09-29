@@ -108,7 +108,12 @@ below.
 built around what is *missing* as much as what exists. Open it straight from a
 clone: no build step, no server, no network beyond the webfont.
 
-To read it on a phone, serve it on your own network:
+There are three ways to read it on a phone. They trade privacy against
+convenience, so pick per situation.
+
+### 1. On your own network (most private)
+
+Nothing leaves your wifi.
 
 ```bash
 npm run serve
@@ -128,6 +133,23 @@ it — no tunnel, no public host, no outbound calls.
 The server has no dependencies and serves exactly three things: the gallery,
 `fonts/`, and `svg/`. It refuses anything else and anything that tries to climb
 out of them.
+
+### 2. GitHub Pages (a real URL, public)
+
+`.github/workflows/pages.yml` deploys the committed gallery on every push.
+Enable it once in **Settings → Pages → Source: GitHub Actions**, and the site
+lands at `https://<owner>.github.io/<repo>/`.
+
+Pages sites are public on the free plan even when the repository is private, so
+this publishes the icons to anyone with the URL. That is fine for an icon set
+in a public repo and wrong if the set is meant to stay internal.
+
+### 3. Vercel (a real URL, private options)
+
+`vercel.json` is set up for it: import the repo at vercel.com, no other
+configuration. Vercel's Standard Protection keeps preview and production
+deployments behind your team's login, which is the middle ground — a URL that
+works anywhere, visible only to you.
 
 In the gallery: `/` focuses search, arrow keys page, Escape closes the detail
 panel or clears the search. The **incomplete** filter isolates icons that are

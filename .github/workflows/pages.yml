@@ -1,0 +1,61 @@
+name: Publish gallery
+
+# Deploys the generated gallery to GitHub Pages.
+#
+# One-time setup: repository Settings -> Pages -> Source: "GitHub Actions".
+# After that every push to this branch republishes it.
+#
+# NOTE: GitHub Pages sites are public, even from a private repository, on the
+# free plan. For a private view, use the hosted artifact link or `npm run serve`
+# on your own network instead.
+
+on:
+  push:
+    branches:
+      - main
+      - claude/custom-icon-set-repo-du6jhe
+    paths:
+      - 'preview/**'
+      - 'fonts/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+# Let a queued deploy supersede a running one, but never cancel one midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy to Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # The gallery is committed and CI already fails if it is stale, so this
+      # ships exactly what is in the repo rather than rebuilding it.
+      - name: Assemble the site
+        run: |
+          mkdir -p site
+          cp preview/index.html site/index.html
+          cp -r fonts site/fonts
+          # Pages runs Jekyll by default, which would strip anything it does
+          # not recognise. This opts out.
+          touch site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
