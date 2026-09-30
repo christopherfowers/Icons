@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="butt" stroke-linejoin="miter">
-  <path d="M5 10.5H8V13.5H5Z"/>
-  <path d="M16 5H19V8H16Z"/>
-  <path d="M16 16H19V19H16Z"/>
-  <path d="M8 12H12V6.5H16"/>
-  <path d="M12 12V17.5H16"/>
+  <path d="M4.4,10.37143h3.25714v3.25714h-3.25714z"/>
+  <path d="M16.34286,4.4h3.25714v3.25714h-3.25714z"/>
+  <path d="M16.34286,16.34286h3.25714v3.25714h-3.25714z"/>
+  <path d="M7.65714,12h4.34286v-5.97143h4.34286"/>
+  <path d="M12,12v5.97143h4.34286"/>
   <path d="M2.5 7V2.5H7"/>
   <path d="M21.5 17V21.5H17"/>
 </svg>
