@@ -17,7 +17,8 @@
     "build:preview": "node scripts/build-preview.js",
     "check": "node scripts/build.js && node scripts/check-clean.js",
     "new": "node scripts/new-icon.js",
-    "serve": "node scripts/serve.js"
+    "serve": "node scripts/serve.js",
+    "derive": "node scripts/derive-filled.js"
   },
   "dependencies": {
     "fast-xml-parser": "^4.5.0",
