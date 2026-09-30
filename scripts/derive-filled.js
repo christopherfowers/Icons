@@ -61,7 +61,10 @@ export function deriveFilled({ from, to, strokeWidth, quiet = false } = {}) {
 
       const scope = paperScope(24);
       const compound = new paper.CompoundPath(closed.join('') + ribbons);
-      compound.reorient(true, true);
+      // nonZero MUST be false here. With true, paper winds every child the same
+      // way so nested contours can never cut — eyes, ring holes and ribbon cuts
+      // all fill in and the icon collapses to a blob.
+      compound.reorient(false, true);
       const d = compound.pathData;
       scope.project.clear();
       if (!d) throw new Error(`${from}/${group}/${file} produced empty geometry`);
