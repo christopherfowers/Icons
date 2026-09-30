@@ -138,6 +138,42 @@ flutter:
     - family: GlyphToolsForge
       fonts:
         - asset: fonts/GlyphToolsForge.ttf
+    - family: GlyphActionsMerryFilled
+      fonts:
+        - asset: fonts/GlyphActionsMerryFilled.ttf
+    - family: GlyphCommsMerryFilled
+      fonts:
+        - asset: fonts/GlyphCommsMerryFilled.ttf
+    - family: GlyphCoreMerryFilled
+      fonts:
+        - asset: fonts/GlyphCoreMerryFilled.ttf
+    - family: GlyphHolidayMerryFilled
+      fonts:
+        - asset: fonts/GlyphHolidayMerryFilled.ttf
+    - family: GlyphStatusMerryFilled
+      fonts:
+        - asset: fonts/GlyphStatusMerryFilled.ttf
+    - family: GlyphTogglesMerryFilled
+      fonts:
+        - asset: fonts/GlyphTogglesMerryFilled.ttf
+    - family: GlyphActionsMerry
+      fonts:
+        - asset: fonts/GlyphActionsMerry.ttf
+    - family: GlyphCommsMerry
+      fonts:
+        - asset: fonts/GlyphCommsMerry.ttf
+    - family: GlyphCoreMerry
+      fonts:
+        - asset: fonts/GlyphCoreMerry.ttf
+    - family: GlyphHolidayMerry
+      fonts:
+        - asset: fonts/GlyphHolidayMerry.ttf
+    - family: GlyphStatusMerry
+      fonts:
+        - asset: fonts/GlyphStatusMerry.ttf
+    - family: GlyphTogglesMerry
+      fonts:
+        - asset: fonts/GlyphTogglesMerry.ttf
     - family: GlyphActions
       fonts:
         - asset: fonts/GlyphActions.ttf

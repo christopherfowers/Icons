@@ -68,8 +68,12 @@ function lintFile({ spec, name, file }) {
   const problems = [];
   const fail = (message) => problems.push(message);
   const { style, viewBox, padding, strokeWidth, linecap, linejoin } = spec;
-  const allowedElements = ALLOWED_ELEMENTS[style];
-  const rootAttributes = ROOT_ATTRIBUTES[style];
+  // A style's NAME is free (line, round, ...); its KIND decides the rules, so a
+  // new stroked style does not need a parallel copy of every table below.
+  const kind = spec.kind ?? style;
+  const allowedElements = ALLOWED_ELEMENTS[kind];
+  const rootAttributes = ROOT_ATTRIBUTES[kind];
+  if (!allowedElements) return [`uses unknown style kind "${kind}"`];
 
   if (!KEBAB_CASE.test(name)) {
     fail(`filename "${name}.svg" is not kebab-case (lowercase letters, digits and single hyphens)`);
@@ -96,7 +100,7 @@ function lintFile({ spec, name, file }) {
   if (attr(root, 'viewBox') !== expectedViewBox) {
     fail(`root viewBox is "${attr(root, 'viewBox') ?? '(missing)'}", expected "${expectedViewBox}"`);
   }
-  if (style === 'line') {
+  if (kind === 'line') {
     if (attr(root, 'fill') !== 'none') fail('root <svg> must carry fill="none"');
     if (attr(root, 'stroke') !== 'currentColor') fail('root <svg> must carry stroke="currentColor"');
     if (String(attr(root, 'stroke-width')) !== String(strokeWidth)) {
@@ -135,7 +139,7 @@ function lintFile({ spec, name, file }) {
         fail(`<${node.name}> carries an unexpected attribute "${bare}"`);
       }
     }
-    if (node !== root && style === 'line') {
+    if (node !== root && kind === 'line') {
       const fill = attr(node, 'fill');
       if (fill !== undefined && fill !== 'none') {
         fail(`<${node.name}> sets fill="${fill}" - line icons are strokes only, fills must stay "none"`);
@@ -149,7 +153,7 @@ function lintFile({ spec, name, file }) {
         fail(`<${node.name}> overrides stroke-width to "${width}" - the set is a uniform ${strokeWidth}px weight`);
       }
     }
-    if (node !== root && style === 'solid') {
+    if (node !== root && kind === 'solid') {
       const fill = attr(node, 'fill');
       if (fill !== undefined && fill !== 'currentColor') {
         fail(`<${node.name}> sets fill="${fill}" - solid icons inherit fill="currentColor" from the root`);
@@ -184,7 +188,7 @@ function lintFile({ spec, name, file }) {
         fail(
           `geometry spans (${round(bounds.x)}, ${round(bounds.y)}) to `
           + `(${round(bounds.x + bounds.width)}, ${round(bounds.y + bounds.height)}), `
-          + `which breaks the ${padding}px padding - keep ${style === 'line' ? 'centerlines' : 'the silhouette'} inside ${min}..${max}`,
+          + `which breaks the ${padding}px padding - keep ${kind === 'line' ? 'centerlines' : 'the silhouette'} inside ${min}..${max}`,
         );
       }
     }

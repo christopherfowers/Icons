@@ -353,6 +353,114 @@
 }
 
 @font-face {
+  font-family: "GlyphActionsMerryFilled";
+  src: url("GlyphActionsMerryFilled.woff2") format("woff2"),
+       url("GlyphActionsMerryFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCommsMerryFilled";
+  src: url("GlyphCommsMerryFilled.woff2") format("woff2"),
+       url("GlyphCommsMerryFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCoreMerryFilled";
+  src: url("GlyphCoreMerryFilled.woff2") format("woff2"),
+       url("GlyphCoreMerryFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphHolidayMerryFilled";
+  src: url("GlyphHolidayMerryFilled.woff2") format("woff2"),
+       url("GlyphHolidayMerryFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphStatusMerryFilled";
+  src: url("GlyphStatusMerryFilled.woff2") format("woff2"),
+       url("GlyphStatusMerryFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTogglesMerryFilled";
+  src: url("GlyphTogglesMerryFilled.woff2") format("woff2"),
+       url("GlyphTogglesMerryFilled.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphActionsMerry";
+  src: url("GlyphActionsMerry.woff2") format("woff2"),
+       url("GlyphActionsMerry.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCommsMerry";
+  src: url("GlyphCommsMerry.woff2") format("woff2"),
+       url("GlyphCommsMerry.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphCoreMerry";
+  src: url("GlyphCoreMerry.woff2") format("woff2"),
+       url("GlyphCoreMerry.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphHolidayMerry";
+  src: url("GlyphHolidayMerry.woff2") format("woff2"),
+       url("GlyphHolidayMerry.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphStatusMerry";
+  src: url("GlyphStatusMerry.woff2") format("woff2"),
+       url("GlyphStatusMerry.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "GlyphTogglesMerry";
+  src: url("GlyphTogglesMerry.woff2") format("woff2"),
+       url("GlyphTogglesMerry.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
   font-family: "GlyphActions";
   src: url("GlyphActions.woff2") format("woff2"),
        url("GlyphActions.ttf") format("truetype");
@@ -863,6 +971,100 @@
   font-family: "GlyphToolsForge";
 }
 
+/* actions - merry-filled */
+.gi-merry.gi-filled.gi-refresh {
+  font-family: "GlyphActionsMerryFilled";
+}
+
+/* comms - merry-filled */
+.gi-merry.gi-filled.gi-message {
+  font-family: "GlyphCommsMerryFilled";
+}
+
+/* core - merry-filled */
+.gi-merry.gi-filled.gi-close {
+  font-family: "GlyphCoreMerryFilled";
+}
+
+/* holiday - merry-filled */
+.gi-merry.gi-filled.gi-advent-door,
+.gi-merry.gi-filled.gi-bell,
+.gi-merry.gi-filled.gi-candy-cane,
+.gi-merry.gi-filled.gi-elf,
+.gi-merry.gi-filled.gi-gift,
+.gi-merry.gi-filled.gi-magic,
+.gi-merry.gi-filled.gi-nice,
+.gi-merry.gi-filled.gi-penguin,
+.gi-merry.gi-filled.gi-reindeer,
+.gi-merry.gi-filled.gi-santa,
+.gi-merry.gi-filled.gi-sleigh,
+.gi-merry.gi-filled.gi-snowflake,
+.gi-merry.gi-filled.gi-snowman,
+.gi-merry.gi-filled.gi-stocking,
+.gi-merry.gi-filled.gi-teddy,
+.gi-merry.gi-filled.gi-tree,
+.gi-merry.gi-filled.gi-wreath {
+  font-family: "GlyphHolidayMerryFilled";
+}
+
+/* status - merry-filled */
+.gi-merry.gi-filled.gi-error {
+  font-family: "GlyphStatusMerryFilled";
+}
+
+/* toggles - merry-filled */
+.gi-merry.gi-filled.gi-heart,
+.gi-merry.gi-filled.gi-star {
+  font-family: "GlyphTogglesMerryFilled";
+}
+
+/* actions - merry-outline */
+.gi-merry.gi-refresh {
+  font-family: "GlyphActionsMerry";
+}
+
+/* comms - merry-outline */
+.gi-merry.gi-message {
+  font-family: "GlyphCommsMerry";
+}
+
+/* core - merry-outline */
+.gi-merry.gi-close {
+  font-family: "GlyphCoreMerry";
+}
+
+/* holiday - merry-outline */
+.gi-merry.gi-advent-door,
+.gi-merry.gi-bell,
+.gi-merry.gi-candy-cane,
+.gi-merry.gi-elf,
+.gi-merry.gi-gift,
+.gi-merry.gi-magic,
+.gi-merry.gi-nice,
+.gi-merry.gi-penguin,
+.gi-merry.gi-reindeer,
+.gi-merry.gi-santa,
+.gi-merry.gi-sleigh,
+.gi-merry.gi-snowflake,
+.gi-merry.gi-snowman,
+.gi-merry.gi-stocking,
+.gi-merry.gi-teddy,
+.gi-merry.gi-tree,
+.gi-merry.gi-wreath {
+  font-family: "GlyphHolidayMerry";
+}
+
+/* status - merry-outline */
+.gi-merry.gi-error {
+  font-family: "GlyphStatusMerry";
+}
+
+/* toggles - merry-outline */
+.gi-merry.gi-heart,
+.gi-merry.gi-star {
+  font-family: "GlyphTogglesMerry";
+}
+
 /* actions - outline */
 .gi-download,
 .gi-refresh,
@@ -992,6 +1194,7 @@
 
 /* codepoints */
 .gi-add::before { content: "\e000"; }
+.gi-advent-door::before { content: "\e064"; }
 .gi-antenna::before { content: "\e050"; }
 .gi-anvil::before { content: "\e053"; }
 .gi-arrow-left::before { content: "\e001"; }
@@ -1001,6 +1204,7 @@
 .gi-bulb::before { content: "\e055"; }
 .gi-calendar::before { content: "\e004"; }
 .gi-camera::before { content: "\e040"; }
+.gi-candy-cane::before { content: "\e065"; }
 .gi-chat::before { content: "\e041"; }
 .gi-check::before { content: "\e005"; }
 .gi-chevron-down::before { content: "\e006"; }
@@ -1015,6 +1219,7 @@
 .gi-dice::before { content: "\e057"; }
 .gi-download::before { content: "\e00e"; }
 .gi-edit::before { content: "\e00f"; }
+.gi-elf::before { content: "\e066"; }
 .gi-error::before { content: "\e010"; }
 .gi-external-link::before { content: "\e011"; }
 .gi-eye::before { content: "\e012"; }
@@ -1023,6 +1228,7 @@
 .gi-filter::before { content: "\e014"; }
 .gi-folder::before { content: "\e043"; }
 .gi-gamepad::before { content: "\e058"; }
+.gi-gift::before { content: "\e067"; }
 .gi-hammer::before { content: "\e059"; }
 .gi-headphones::before { content: "\e05a"; }
 .gi-heart::before { content: "\e015"; }
@@ -1031,32 +1237,43 @@
 .gi-info::before { content: "\e017"; }
 .gi-link::before { content: "\e018"; }
 .gi-lock::before { content: "\e019"; }
+.gi-magic::before { content: "\e068"; }
 .gi-mail::before { content: "\e045"; }
 .gi-menu::before { content: "\e01a"; }
 .gi-message::before { content: "\e046"; }
 .gi-mic::before { content: "\e047"; }
 .gi-more::before { content: "\e048"; }
+.gi-nice::before { content: "\e069"; }
 .gi-pause::before { content: "\e049"; }
+.gi-penguin::before { content: "\e06a"; }
 .gi-phone::before { content: "\e04a"; }
 .gi-play::before { content: "\e04b"; }
 .gi-radio::before { content: "\e04c"; }
 .gi-refresh::before { content: "\e01b"; }
+.gi-reindeer::before { content: "\e06b"; }
 .gi-remove::before { content: "\e01c"; }
 .gi-rocket::before { content: "\e05b"; }
+.gi-santa::before { content: "\e06c"; }
 .gi-save::before { content: "\e05c"; }
 .gi-search::before { content: "\e01d"; }
 .gi-send::before { content: "\e04d"; }
 .gi-settings::before { content: "\e01e"; }
 .gi-share::before { content: "\e01f"; }
 .gi-signal::before { content: "\e04e"; }
+.gi-sleigh::before { content: "\e06d"; }
 .gi-sliders::before { content: "\e051"; }
+.gi-snowflake::before { content: "\e06e"; }
+.gi-snowman::before { content: "\e06f"; }
 .gi-sort::before { content: "\e020"; }
 .gi-spark::before { content: "\e05d"; }
 .gi-speaker::before { content: "\e052"; }
 .gi-star::before { content: "\e021"; }
+.gi-stocking::before { content: "\e070"; }
 .gi-storefront::before { content: "\e05e"; }
 .gi-table::before { content: "\e05f"; }
 .gi-target::before { content: "\e060"; }
+.gi-teddy::before { content: "\e071"; }
+.gi-tree::before { content: "\e072"; }
 .gi-trophy::before { content: "\e061"; }
 .gi-tsaraforge::before { content: "\e063"; }
 .gi-unlock::before { content: "\e022"; }
@@ -1065,4 +1282,5 @@
 .gi-users::before { content: "\e025"; }
 .gi-volume::before { content: "\e04f"; }
 .gi-warning::before { content: "\e026"; }
+.gi-wreath::before { content: "\e073"; }
 .gi-wrench::before { content: "\e062"; }

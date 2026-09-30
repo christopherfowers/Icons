@@ -50,6 +50,18 @@ import 'glyph_status_forge.dart';
 import 'glyph_tabletop_forge.dart';
 import 'glyph_toggles_forge.dart';
 import 'glyph_tools_forge.dart';
+import 'glyph_actions_merry_filled.dart';
+import 'glyph_comms_merry_filled.dart';
+import 'glyph_core_merry_filled.dart';
+import 'glyph_holiday_merry_filled.dart';
+import 'glyph_status_merry_filled.dart';
+import 'glyph_toggles_merry_filled.dart';
+import 'glyph_actions_merry.dart';
+import 'glyph_comms_merry.dart';
+import 'glyph_core_merry.dart';
+import 'glyph_holiday_merry.dart';
+import 'glyph_status_merry.dart';
+import 'glyph_toggles_merry.dart';
 import 'glyph_actions.dart';
 import 'glyph_audio.dart';
 import 'glyph_brand.dart';
@@ -445,6 +457,100 @@ const Map<String, IconData> glyphToolsundefinedCatalog = <String, IconData>{
   'wrench': GlyphToolsForge.wrench,
 };
 
+/// Every icon in the `actions` group (`merry-filled`), keyed by source name.
+const Map<String, IconData> glyphActionsundefinedCatalog = <String, IconData>{
+  'refresh': GlyphActionsMerryFilled.refresh,
+};
+
+/// Every icon in the `comms` group (`merry-filled`), keyed by source name.
+const Map<String, IconData> glyphCommsundefinedCatalog = <String, IconData>{
+  'message': GlyphCommsMerryFilled.message,
+};
+
+/// Every icon in the `core` group (`merry-filled`), keyed by source name.
+const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
+  'close': GlyphCoreMerryFilled.close,
+};
+
+/// Every icon in the `holiday` group (`merry-filled`), keyed by source name.
+const Map<String, IconData> glyphHolidayundefinedCatalog = <String, IconData>{
+  'advent-door': GlyphHolidayMerryFilled.adventDoor,
+  'bell': GlyphHolidayMerryFilled.bell,
+  'candy-cane': GlyphHolidayMerryFilled.candyCane,
+  'elf': GlyphHolidayMerryFilled.elf,
+  'gift': GlyphHolidayMerryFilled.gift,
+  'magic': GlyphHolidayMerryFilled.magic,
+  'nice': GlyphHolidayMerryFilled.nice,
+  'penguin': GlyphHolidayMerryFilled.penguin,
+  'reindeer': GlyphHolidayMerryFilled.reindeer,
+  'santa': GlyphHolidayMerryFilled.santa,
+  'sleigh': GlyphHolidayMerryFilled.sleigh,
+  'snowflake': GlyphHolidayMerryFilled.snowflake,
+  'snowman': GlyphHolidayMerryFilled.snowman,
+  'stocking': GlyphHolidayMerryFilled.stocking,
+  'teddy': GlyphHolidayMerryFilled.teddy,
+  'tree': GlyphHolidayMerryFilled.tree,
+  'wreath': GlyphHolidayMerryFilled.wreath,
+};
+
+/// Every icon in the `status` group (`merry-filled`), keyed by source name.
+const Map<String, IconData> glyphStatusundefinedCatalog = <String, IconData>{
+  'error': GlyphStatusMerryFilled.error,
+};
+
+/// Every icon in the `toggles` group (`merry-filled`), keyed by source name.
+const Map<String, IconData> glyphTogglesundefinedCatalog = <String, IconData>{
+  'heart': GlyphTogglesMerryFilled.heart,
+  'star': GlyphTogglesMerryFilled.star,
+};
+
+/// Every icon in the `actions` group (`merry-outline`), keyed by source name.
+const Map<String, IconData> glyphActionsundefinedCatalog = <String, IconData>{
+  'refresh': GlyphActionsMerry.refresh,
+};
+
+/// Every icon in the `comms` group (`merry-outline`), keyed by source name.
+const Map<String, IconData> glyphCommsundefinedCatalog = <String, IconData>{
+  'message': GlyphCommsMerry.message,
+};
+
+/// Every icon in the `core` group (`merry-outline`), keyed by source name.
+const Map<String, IconData> glyphCoreundefinedCatalog = <String, IconData>{
+  'close': GlyphCoreMerry.close,
+};
+
+/// Every icon in the `holiday` group (`merry-outline`), keyed by source name.
+const Map<String, IconData> glyphHolidayundefinedCatalog = <String, IconData>{
+  'advent-door': GlyphHolidayMerry.adventDoor,
+  'bell': GlyphHolidayMerry.bell,
+  'candy-cane': GlyphHolidayMerry.candyCane,
+  'elf': GlyphHolidayMerry.elf,
+  'gift': GlyphHolidayMerry.gift,
+  'magic': GlyphHolidayMerry.magic,
+  'nice': GlyphHolidayMerry.nice,
+  'penguin': GlyphHolidayMerry.penguin,
+  'reindeer': GlyphHolidayMerry.reindeer,
+  'santa': GlyphHolidayMerry.santa,
+  'sleigh': GlyphHolidayMerry.sleigh,
+  'snowflake': GlyphHolidayMerry.snowflake,
+  'snowman': GlyphHolidayMerry.snowman,
+  'stocking': GlyphHolidayMerry.stocking,
+  'teddy': GlyphHolidayMerry.teddy,
+  'tree': GlyphHolidayMerry.tree,
+  'wreath': GlyphHolidayMerry.wreath,
+};
+
+/// Every icon in the `status` group (`merry-outline`), keyed by source name.
+const Map<String, IconData> glyphStatusundefinedCatalog = <String, IconData>{
+  'error': GlyphStatusMerry.error,
+};
+
+/// Every icon in the `toggles` group (`merry-outline`), keyed by source name.
+const Map<String, IconData> glyphTogglesundefinedCatalog = <String, IconData>{
+  'heart': GlyphTogglesMerry.heart,
+  'star': GlyphTogglesMerry.star,
+};
+
 /// Every icon in the `actions` group (`outline`), keyed by source name.
 const Map<String, IconData> glyphActionsundefinedCatalog = <String, IconData>{
   'download': GlyphActions.download,
@@ -623,6 +729,26 @@ const Map<String, Map<String, IconData>> glyphForgeOutlineCatalog = <String, Map
   'tools': glyphToolsundefinedCatalog,
 };
 
+/// The `merry-filled` variant, keyed by group name.
+const Map<String, Map<String, IconData>> glyphMerryFilledCatalog = <String, Map<String, IconData>>{
+  'actions': glyphActionsundefinedCatalog,
+  'comms': glyphCommsundefinedCatalog,
+  'core': glyphCoreundefinedCatalog,
+  'holiday': glyphHolidayundefinedCatalog,
+  'status': glyphStatusundefinedCatalog,
+  'toggles': glyphTogglesundefinedCatalog,
+};
+
+/// The `merry-outline` variant, keyed by group name.
+const Map<String, Map<String, IconData>> glyphMerryOutlineCatalog = <String, Map<String, IconData>>{
+  'actions': glyphActionsundefinedCatalog,
+  'comms': glyphCommsundefinedCatalog,
+  'core': glyphCoreundefinedCatalog,
+  'holiday': glyphHolidayundefinedCatalog,
+  'status': glyphStatusundefinedCatalog,
+  'toggles': glyphTogglesundefinedCatalog,
+};
+
 /// The `outline` variant, keyed by group name.
 const Map<String, Map<String, IconData>> glyphOutlineCatalog = <String, Map<String, IconData>>{
   'actions': glyphActionsundefinedCatalog,
@@ -646,5 +772,7 @@ const Map<String, Map<String, Map<String, IconData>>> glyphCatalog =
   'filled': glyphFilledCatalog,
   'forge-filled': glyphForgeFilledCatalog,
   'forge-outline': glyphForgeOutlineCatalog,
+  'merry-filled': glyphMerryFilledCatalog,
+  'merry-outline': glyphMerryOutlineCatalog,
   'outline': glyphOutlineCatalog,
 };

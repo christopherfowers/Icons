@@ -40,7 +40,7 @@ export function buildOutlines({ quiet = false } = {}) {
         const source = fs.readFileSync(path.join(group.dir, `${name}.svg`), 'utf8');
         // Outline sources are stroked centerlines and must be converted; filled
         // sources are already silhouettes and only need a normalising union.
-        const { pathData, bounds, shapeCount, fallback } = spec.style === 'solid'
+        const { pathData, bounds, shapeCount, fallback } = (spec.kind ?? spec.style) === 'solid'
           ? flattenSolid(source, { viewBox: spec.viewBox })
           : outlineSvg(source, { viewBox: spec.viewBox, strokeWidth: spec.strokeWidth });
         if (fallback) {

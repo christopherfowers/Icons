@@ -3,7 +3,7 @@
   "displayName": "Glyph Icons",
   "packageName": "glyph_icons",
   "packageVersion": "0.1.0",
-  "packageDescription": "Glyph Icons \u2014 a grouped, self-hosted icon set for Flutter.",
+  "packageDescription": "Glyph Icons — a grouped, self-hosted icon set for Flutter.",
   "classPrefix": "Glyph",
   "fontFamilyPrefix": "Glyph",
   "cssPrefix": "gi",
@@ -14,11 +14,21 @@
       "padding": 2,
       "strokeWidth": 1.5,
       "linecap": "butt",
-      "linejoin": "miter"
+      "linejoin": "miter",
+      "kind": "line"
     },
     "solid": {
       "viewBox": 24,
-      "padding": 1
+      "padding": 1,
+      "kind": "solid"
+    },
+    "round": {
+      "kind": "line",
+      "viewBox": 24,
+      "padding": 2,
+      "strokeWidth": 2,
+      "linecap": "round",
+      "linejoin": "round"
     }
   },
   "variants": {
@@ -45,6 +55,18 @@
       "weight": "filled",
       "style": "solid",
       "description": "Tsaraforge house style: silhouettes fractured by crack slivers, matching the mark."
+    },
+    "merry-outline": {
+      "theme": "merry",
+      "weight": "outline",
+      "style": "round",
+      "description": "Warm rounded strokes for the Christmas Magic child app."
+    },
+    "merry-filled": {
+      "theme": "merry",
+      "weight": "filled",
+      "style": "solid",
+      "description": "Warm rounded silhouettes for the Christmas Magic child app."
     }
   },
   "defaultTheme": "core",

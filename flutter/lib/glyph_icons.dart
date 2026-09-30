@@ -2,7 +2,7 @@
 //
 // Regenerate with `npm run build` from the repository root.
 
-/// Glyph Icons: 300 icons across 52 group/variant libraries.
+/// Glyph Icons: 346 icons across 64 group/variant libraries.
 ///
 /// Prefer importing a single group library when you only need part of the set:
 ///
@@ -50,6 +50,18 @@ export 'glyph_status_forge.dart';
 export 'glyph_tabletop_forge.dart';
 export 'glyph_toggles_forge.dart';
 export 'glyph_tools_forge.dart';
+export 'glyph_actions_merry_filled.dart';
+export 'glyph_comms_merry_filled.dart';
+export 'glyph_core_merry_filled.dart';
+export 'glyph_holiday_merry_filled.dart';
+export 'glyph_status_merry_filled.dart';
+export 'glyph_toggles_merry_filled.dart';
+export 'glyph_actions_merry.dart';
+export 'glyph_comms_merry.dart';
+export 'glyph_core_merry.dart';
+export 'glyph_holiday_merry.dart';
+export 'glyph_status_merry.dart';
+export 'glyph_toggles_merry.dart';
 export 'glyph_actions.dart';
 export 'glyph_audio.dart';
 export 'glyph_brand.dart';
