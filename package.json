@@ -18,7 +18,8 @@
     "check": "node scripts/build.js && node scripts/check-clean.js",
     "new": "node scripts/new-icon.js",
     "serve": "node scripts/serve.js",
-    "derive": "node scripts/derive-filled.js"
+    "derive": "node scripts/derive-filled.js",
+    "derive:forge": "node scripts/derive-forge.js ."
   },
   "dependencies": {
     "fast-xml-parser": "^4.5.0",
