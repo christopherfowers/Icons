@@ -12,7 +12,7 @@
     "line": {
       "viewBox": 24,
       "padding": 2,
-      "strokeWidth": 1.25,
+      "strokeWidth": 1.0,
       "linecap": "butt",
       "linejoin": "miter",
       "kind": "line"
@@ -26,7 +26,7 @@
       "kind": "line",
       "viewBox": 24,
       "padding": 2,
-      "strokeWidth": 1.0,
+      "strokeWidth": 0.8,
       "linecap": "round",
       "linejoin": "round"
     }
